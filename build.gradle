@@ -1,60 +1,61 @@
-
-// For those who want the bleeding edge
-buildscript {
-    repositories {
-        jcenter()
-        maven {
-            name = "forge"
-            url = "http://files.minecraftforge.net/maven"
-        }
-    }
-    dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
-    }
+plugins {
+    id 'net.neoforged.moddev' version '2.0.46-beta'
 }
-apply plugin: 'net.minecraftforge.gradle.forge'
+
+version = '2.5.0'
+group = 'com.zerofall.ezstorage2'
 
 repositories {
-    mavenLocal()
+    mavenCentral()
     maven {
-       url "http://dvs1.progwml6.com/files/maven"
+        name = 'ProgrammingLife'
+        url = 'https://maven.blamejared.com'
     }
 }
 
-version = "2.5.0"
-group= "com.zerofall.ezstorage2"
-archivesBaseName = "ezstorage"
+base {
+    archivesName = 'ezstorage'
+}
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
-minecraft {
-	version = "1.12.2-14.23.2.2613"
-	runDir = "run"
-	useDepAts = true
-	mappings = "snapshot_20180210"
+neoForge {
+    version = '21.1.77'
+    
+    runs {
+        client {
+            client()
+        }
+        server {
+            server()
+        }
+    }
+    
+    mods {
+        ezstorage {
+            sourceSet sourceSets.main
+        }
+    }
 }
 
 dependencies {
-	deobfCompile "mezz.jei:jei_1.12.2:4.8.4.131"
+    // JEI integration - commented out for initial build
+    // compileOnly "mezz.jei:jei-1.21.1-common-api:19.8.4.119"
+    // compileOnly "mezz.jei:jei-1.21.1-neoforge-api:19.8.4.119"
+    // runtimeOnly "mezz.jei:jei-1.21.1-neoforge:19.8.4.119"
+    
+    // Test dependencies
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.1'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    
+    // Add Minecraft/NeoForge to test classpath
+    testImplementation "net.neoforged:neoforge:21.1.77"
 }
 
-processResources
-{
-    // this will ensure that this task is redone when the versions change.
-    inputs.property "version", project.version
-    inputs.property "mcversion", project.minecraft.version
-
-    // replace stuff in mcmod.info, nothing else
-    from(sourceSets.main.resources.srcDirs) {
-        include 'mcmod.info'
-                
-        // replace version and mcversion
-        expand 'version':project.version, 'mcversion':project.minecraft.version
-    }
-        
-    // copy everything else, thats not the mcmod.info
-    from(sourceSets.main.resources.srcDirs) {
-        exclude 'mcmod.info'
-    }
+test {
+    useJUnitPlatform()
+    
+    // Use the same classpath as the main compilation
+    classpath += configurations.compileClasspath
+    classpath += sourceSets.main.output
 }

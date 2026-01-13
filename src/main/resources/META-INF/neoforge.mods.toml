@@ -1,0 +1,24 @@
+modLoader="javafml"
+loaderVersion="[4,)"
+license="MIT"
+
+[[mods]]
+modId="ezstorage"
+version="2.5.0"
+displayName="EZStorage 2"
+description='''Storage: Simplified again.'''
+authors="zerofall, SBlectric"
+
+[[dependencies.ezstorage]]
+modId="neoforge"
+type="required"
+versionRange="[21.1,22)"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.ezstorage]]
+modId="minecraft"
+type="required"
+versionRange="[1.21.1,1.22)"
+ordering="NONE"
+side="BOTH"

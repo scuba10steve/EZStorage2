@@ -1,54 +1,32 @@
 package com.zerofall.ezstorage.init;
 
-import com.zerofall.ezstorage.config.EZConfig;
-import com.zerofall.ezstorage.item.EZItem;
 import com.zerofall.ezstorage.item.ItemDolly;
 import com.zerofall.ezstorage.item.ItemKey;
-import com.zerofall.ezstorage.registry.IRegistryItem;
-import com.zerofall.ezstorage.registry.RegistryHelper;
-import com.zerofall.ezstorage.util.JointList;
+import com.zerofall.ezstorage.ref.EZTab;
+import com.zerofall.ezstorage.ref.RefStrings;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import java.util.function.Supplier;
 
-/** Mod items */
 public class EZItems {
+    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(BuiltInRegistries.ITEM, RefStrings.MODID);
 
-	private static JointList<IRegistryItem> items;
+    // Block items
+    public static final Supplier<Item> STORAGE_BOX = ITEMS.register("storage_box", 
+        () -> new BlockItem(EZBlocks.STORAGE_BOX.get(), new Item.Properties()));
+    public static final Supplier<Item> STORAGE_CORE = ITEMS.register("storage_core", 
+        () -> new BlockItem(EZBlocks.STORAGE_CORE.get(), new Item.Properties()));
 
-	public static void mainRegistry() {
-		items = new JointList();
-		init();
-		register();
-	}
+    // Items
+    public static final Supplier<Item> KEY = ITEMS.register("key", ItemKey::new);
+    public static final Supplier<Item> DOLLY = ITEMS.register("dolly", () -> new ItemDolly(6));
+    public static final Supplier<Item> DOLLY_SUPER = ITEMS.register("dolly_super", () -> new ItemDolly(16));
 
-	public static EZItem key;
-	public static EZItem dolly_basic;
-	public static EZItem dolly_super;
-
-	private static void init() {
-		items.join(
-			key = new ItemKey(),
-			dolly_basic = new ItemDolly(6, "dolly"),
-			dolly_super = new ItemDolly(16, "dolly_super")
-		);
-		if(!EZConfig.enableSecurity) items.remove(key); // security disabled
-		if(!EZConfig.enableDolly) {
-			items.remove(dolly_basic); // dollies disabled
-			items.remove(dolly_super);
-		}
-	}
-
-	private static void register() {
-		RegistryHelper.registerItems(items);
-	}
-
-	/** Register model information */
-	@SideOnly(Side.CLIENT)
-	public static void registerRenders() {
-		for (IRegistryItem item : items) {
-			item.registerRender();
-		}
-	}
-
+    public static void register(IEventBus eventBus) {
+        ITEMS.register(eventBus);
+    }
 }

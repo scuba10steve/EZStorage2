@@ -3,9 +3,6 @@ package com.zerofall.ezstorage;
 import com.zerofall.ezstorage.config.EZConfig;
 import com.zerofall.ezstorage.events.CoreEvents;
 import com.zerofall.ezstorage.events.SecurityEvents;
-import com.zerofall.ezstorage.init.EZBlocks;
-import com.zerofall.ezstorage.init.EZBlockEntities;
-import com.zerofall.ezstorage.init.EZItems;
 import com.zerofall.ezstorage.network.EZNetwork;
 import com.zerofall.ezstorage.ref.EZTab;
 import com.zerofall.ezstorage.ref.Log;
@@ -24,17 +21,18 @@ import net.neoforged.neoforge.common.NeoForge;
 public class EZStorage {
 
 	public static EZStorage instance;
+	public static EZTab creativeTab;
 
 	public EZStorage(IEventBus modEventBus, ModContainer modContainer) {
 		instance = this;
 		
-		// Register deferred registers
-		EZBlocks.register(modEventBus);
-		EZItems.register(modEventBus);
-		EZBlockEntities.register(modEventBus);
-		
 		modEventBus.addListener(this::commonSetup);
 		modContainer.registerConfig(ModConfig.Type.COMMON, EZConfig.SPEC);
+		
+		this.creativeTab = new EZTab();
+		
+		NeoForge.EVENT_BUS.register(new CoreEvents());
+		NeoForge.EVENT_BUS.register(new SecurityEvents());
 	}
 
 	private void commonSetup(final FMLCommonSetupEvent event) {
