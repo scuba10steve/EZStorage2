@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "ezstorage:items/dolly_super"
+    "layer0": "ezstorage:item/dolly_super"
   }
 }
