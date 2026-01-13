@@ -65,4 +65,9 @@ public class EZInventory {
     public void setMaxItems(long maxItems) {
         this.maxItems = maxItems;
     }
+    
+    public void syncFromServer(List<StoredItemStack> serverItems) {
+        items.clear();
+        items.addAll(serverItems);
+    }
 }

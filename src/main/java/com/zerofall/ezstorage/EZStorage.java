@@ -23,6 +23,7 @@ import net.neoforged.neoforge.common.NeoForge;
 /** EZStorage main mod class */
 @Mod(RefStrings.MODID)
 public class EZStorage {
+	public static final String MODID = RefStrings.MODID;
 
 	public static EZStorage instance;
 
@@ -40,7 +41,6 @@ public class EZStorage {
 	}
 
 	private void commonSetup(final FMLCommonSetupEvent event) {
-		EZNetwork.registerNetwork();
 		EZStorageUtils.getModNameFromID(RefStrings.MODID);
 		Log.logger.info("Loading complete.");
 	}
