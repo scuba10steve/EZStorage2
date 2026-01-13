@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "DDD",
+    "DSG",
+    "DDD"
+  ],
+  "key": {
+    "D": {
+      "item": "minecraft:diamond"
+    },
+    "S": {
+      "item": "ezstorage:ultra_storage_box"
+    }
+  },
+  "result": {
+    "item": "ezstorage:hyper_storage_box"
+  }
+}

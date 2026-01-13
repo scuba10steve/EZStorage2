@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "III",
+    "ISI",
+    "III"
+  ],
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "S": {
+      "item": "ezstorage:condensed_storage_box"
+    }
+  },
+  "result": {
+    "item": "ezstorage:super_storage_box"
+  }
+}

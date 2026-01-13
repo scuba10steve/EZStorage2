@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "GGG",
+    "GSG",
+    "GGG"
+  ],
+  "key": {
+    "G": {
+      "item": "minecraft:gold_ingot"
+    },
+    "S": {
+      "item": "ezstorage:super_storage_box"
+    }
+  },
+  "result": {
+    "item": "ezstorage:ultra_storage_box"
+  }
+}

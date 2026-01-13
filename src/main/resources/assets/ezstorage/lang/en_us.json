@@ -3,6 +3,10 @@
   
   "block.ezstorage.storage_core": "Storage Core",
   "block.ezstorage.storage_box": "Storage Box",
+  "block.ezstorage.condensed_storage_box": "Condensed Storage Box",
+  "block.ezstorage.super_storage_box": "Super Storage Box",
+  "block.ezstorage.ultra_storage_box": "Ultra Storage Box",
+  "block.ezstorage.hyper_storage_box": "Hyper Storage Box",
   
   "item.ezstorage.key": "EZ Key",
   "item.ezstorage.dolly": "Dolly",

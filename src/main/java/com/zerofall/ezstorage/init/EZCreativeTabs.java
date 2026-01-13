@@ -22,6 +22,10 @@ public class EZCreativeTabs {
                 // Add all blocks
                 output.accept(EZBlocks.STORAGE_CORE.get());
                 output.accept(EZBlocks.STORAGE_BOX.get());
+                output.accept(EZBlocks.CONDENSED_STORAGE_BOX.get());
+                output.accept(EZBlocks.SUPER_STORAGE_BOX.get());
+                output.accept(EZBlocks.ULTRA_STORAGE_BOX.get());
+                output.accept(EZBlocks.HYPER_STORAGE_BOX.get());
                 
                 // Add all items
                 output.accept(EZItems.KEY.get());

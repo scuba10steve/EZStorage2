@@ -1,6 +1,10 @@
 {
   "values": [
     "ezstorage:storage_core",
-    "ezstorage:storage_box"
+    "ezstorage:storage_box",
+    "ezstorage:condensed_storage_box",
+    "ezstorage:super_storage_box",
+    "ezstorage:ultra_storage_box",
+    "ezstorage:hyper_storage_box"
   ]
 }
