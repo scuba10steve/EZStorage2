@@ -10,6 +10,7 @@ This directory contains comprehensive technical documentation for the EZStorage 
 - **[GUI System](gui-system.md)** - User interface implementation and layout
 - **[Networking](networking.md)** - Client-server communication and packet system
 - **[Multiblock System](multiblock-system.md)** - Multiblock structure detection and validation
+- **[Configuration](configuration.md)** - TOML configuration system and options
 - **[JEI Integration](jei-integration.md)** - Just Enough Items integration details
 - **[Asset System](asset-system.md)** - Textures, models, recipes, and language files
 - **[Build System](build-system.md)** - Gradle configuration and build process

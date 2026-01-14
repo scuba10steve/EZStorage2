@@ -126,6 +126,33 @@ This mod is in active development for the 1.21.1 update. The registration founda
 5. **JEI Integration** - Restore JEI compatibility
 6. **Multiblock Logic** - Port storage multiblock system
 
+## Configuration
+
+EZStorage 2 uses TOML configuration files located at `config/ezstorage-common.toml`. The configuration is organized into sections:
+
+### Storage Capacities
+- `basicCapacity` - Storage Box capacity (default: 10,000)
+- `condensedCapacity` - Condensed Storage Box capacity (default: 40,000)
+- `superCapacity` - Super Storage Box capacity (default: 160,000)
+- `ultraCapacity` - Ultra Storage Box capacity (default: 640,000)
+- `hyperCapacity` - Hyper Storage Box capacity (default: 2,560,000)
+
+### Feature Toggles
+- `enableSecurity` - Enable Security Box and Key item (default: true)
+- `enableTerminal` - Enable Access Terminal block (default: true)
+- `enableDolly` - Enable Dolly items for moving blocks (default: true)
+- `enableSearchModes` - Enable advanced search modes (default: true)
+- `enableOpOverride` - Allow operators to override security (default: true)
+
+### Recipe Options
+- `classicRecipes` - Use classic (easier) recipes (default: false)
+- `toughHyper` - Make Hyper Storage Box recipe more expensive (default: false)
+
+### Mod Integration
+- `jeiIntegration` - Enable JEI integration features (default: true)
+
+Configuration changes require a game restart to take effect.
+
 ## License
 
 This Open Source project is licensed under the MIT License (see [LICENSE](LICENSE)).
