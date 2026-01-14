@@ -13,12 +13,17 @@ import java.util.function.Supplier;
 public class EZBlocks {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(BuiltInRegistries.BLOCK, RefStrings.MODID);
 
-    // Storage blocks with different capacities
-    public static final Supplier<Block> STORAGE_BOX = BLOCKS.register("storage_box", () -> new BlockStorage(10000));
-    public static final Supplier<Block> CONDENSED_STORAGE_BOX = BLOCKS.register("condensed_storage_box", () -> new BlockStorage(40000));
-    public static final Supplier<Block> SUPER_STORAGE_BOX = BLOCKS.register("super_storage_box", () -> new BlockStorage(160000));
-    public static final Supplier<Block> ULTRA_STORAGE_BOX = BLOCKS.register("ultra_storage_box", () -> new BlockStorage(640000));
-    public static final Supplier<Block> HYPER_STORAGE_BOX = BLOCKS.register("hyper_storage_box", () -> new BlockStorage(2560000));
+    // Storage blocks with default capacities (config values applied at runtime)
+    public static final Supplier<Block> STORAGE_BOX = BLOCKS.register("storage_box", 
+        () -> new BlockStorage(10000));
+    public static final Supplier<Block> CONDENSED_STORAGE_BOX = BLOCKS.register("condensed_storage_box", 
+        () -> new BlockStorage(40000));
+    public static final Supplier<Block> SUPER_STORAGE_BOX = BLOCKS.register("super_storage_box", 
+        () -> new BlockStorage(160000));
+    public static final Supplier<Block> ULTRA_STORAGE_BOX = BLOCKS.register("ultra_storage_box", 
+        () -> new BlockStorage(640000));
+    public static final Supplier<Block> HYPER_STORAGE_BOX = BLOCKS.register("hyper_storage_box", 
+        () -> new BlockStorage(2560000));
     public static final Supplier<Block> STORAGE_CORE = BLOCKS.register("storage_core", BlockStorageCore::new);
 
     public static void register(IEventBus eventBus) {
