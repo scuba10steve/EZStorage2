@@ -3,6 +3,7 @@ package io.github.scuba10steve.ezstorage.gui.server;
 import io.github.scuba10steve.ezstorage.blockentity.StorageCoreBlockEntity;
 import io.github.scuba10steve.ezstorage.gui.slot.StorageSlot;
 import io.github.scuba10steve.ezstorage.init.EZMenuTypes;
+import io.github.scuba10steve.ezstorage.storage.EZInventory;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -34,6 +35,14 @@ public class StorageCoreMenu extends AbstractContainerMenu {
         
         // Add player inventory slots
         addPlayerInventory(playerInventory);
+    }
+    
+    public EZInventory getInventory() {
+        return blockEntity != null ? blockEntity.getInventory() : null;
+    }
+    
+    public BlockPos getPos() {
+        return pos;
     }
     
     private void addStorageSlots() {

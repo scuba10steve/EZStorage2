@@ -1,25 +1,19 @@
 package io.github.scuba10steve.ezstorage;
 
 import io.github.scuba10steve.ezstorage.config.EZConfig;
-import io.github.scuba10steve.ezstorage.events.CoreEvents;
-import io.github.scuba10steve.ezstorage.events.SecurityEvents;
-import io.github.scuba10steve.ezstorage.init.EZBlocks;
 import io.github.scuba10steve.ezstorage.init.EZBlockEntities;
+import io.github.scuba10steve.ezstorage.init.EZBlocks;
 import io.github.scuba10steve.ezstorage.init.EZCreativeTabs;
 import io.github.scuba10steve.ezstorage.init.EZItems;
 import io.github.scuba10steve.ezstorage.init.EZMenuTypes;
-import io.github.scuba10steve.ezstorage.network.EZNetwork;
-import io.github.scuba10steve.ezstorage.ref.EZTab;
 import io.github.scuba10steve.ezstorage.ref.Log;
 import io.github.scuba10steve.ezstorage.ref.RefStrings;
 import io.github.scuba10steve.ezstorage.util.EZStorageUtils;
-
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.neoforged.neoforge.common.NeoForge;
 
 /** EZStorage main mod class */
 @Mod(RefStrings.MODID)

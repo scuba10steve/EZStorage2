@@ -14,19 +14,36 @@ This repository contains EZStorage 2 updated for **Minecraft 1.21.1** and **NeoF
 - ✅ Uses NeoForge 21.1.77 with ModDevGradle 2.0.46-beta
 - ✅ Modern registration system with DeferredRegister
 - ✅ Basic blocks: Storage Box, Storage Core
+- ✅ Tiered storage blocks: Condensed, Super, Ultra, Hyper Storage Boxes
 - ✅ Basic items: Key, Dolly (basic & super), Block Items
 - ✅ Block entities: Storage Core Block Entity
-- ✅ GUI system: Storage Core menu and screen
-- ✅ Storage system: Basic inventory with insert/extract logic
-- ✅ Networking: Storage sync packets for client-server communication
+- ✅ GUI system: Storage Core menu and screen with sidebar
+- ✅ Storage system: Inventory with insert/extract logic, item display, scrolling
+- ✅ Networking: Storage sync and click packets for client-server communication
 - ✅ JEI integration: Recipe transfer and storage item lookup
 - ✅ Multiblock structures: Core scanning and validation system
 - ✅ Assets: Recipes, language files, loot tables, and block tags
 - ✅ Unit tests for core constants
 - ✅ Mod loads successfully in development environment
 
+### Not Yet Ported
+- ❌ Crafting Box (crafting grid integration)
+- ❌ Search Box (item filtering and search)
+- ❌ Security Box (player access control)
+- ❌ Sort Box (automatic sorting modes)
+- ❌ Access Terminal (remote storage access)
+- ❌ Input Port (item input automation)
+- ❌ Extract Port (item extraction automation)
+- ❌ Eject Port (item ejection)
+- ❌ Blank Box (decorative multiblock component)
+- ❌ Crafting GUI integration
+- ❌ Search and filtering system
+- ❌ Security system with player permissions
+- ❌ Sorting modes (alphabetical, quantity, mod)
+- ❌ Extract list filtering (whitelist/blacklist)
+
 ### Port Complete! 🎉
-EZStorage 2 has been successfully ported from Minecraft 1.12.2 to 1.21.1 with all major features implemented.
+EZStorage 2 core functionality has been successfully ported from Minecraft 1.12.2 to 1.21.1. The basic storage system is fully functional with item storage, retrieval, and multiblock capacity scaling. Advanced features listed above are planned for future updates.
 
 The original 1.12.2 source code has been preserved in `src/main/java-backup/` for reference during the porting process.
 

@@ -26,7 +26,24 @@ This directory contains comprehensive technical documentation for the EZStorage 
 - **Gradle**: 8.10.2
 
 ### Project Status
-✅ **Version 1.0.0** - Complete port with all major features implemented and functional
+✅ **Version 1.0.0** - Core storage functionality complete and functional
+
+**Implemented Features:**
+- Basic storage system with multiblock capacity scaling
+- Storage Core GUI with sidebar item display and scrolling
+- Tiered storage blocks (Storage Box, Condensed, Super, Ultra, Hyper)
+- Item insertion and extraction with proper client-server sync
+- JEI integration for recipe transfer
+- Dolly and Key items
+
+**Planned Features (Not Yet Ported):**
+- Crafting Box with crafting grid integration
+- Search Box with item filtering
+- Security Box with player access control
+- Sort Box with automatic sorting modes
+- Access Terminal for remote access
+- Input/Extract/Eject Ports for automation
+- Blank Box for decorative multiblock components
 
 ### Getting Started
 1. See [Build System](build-system.md) for setup instructions

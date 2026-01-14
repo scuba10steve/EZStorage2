@@ -77,6 +77,10 @@ public class EZInventory {
         return items.stream().mapToLong(StoredItemStack::getCount).sum();
     }
     
+    public long getMaxItems() {
+        return maxItems;
+    }
+    
     public void setMaxItems(long maxItems) {
         LOGGER.info("Setting max items to: {}", maxItems);
         this.maxItems = maxItems;

@@ -47,15 +47,8 @@ dependencies {
     // Test dependencies
     testImplementation 'org.junit.jupiter:junit-jupiter:5.10.1'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-    
-    // Add Minecraft/NeoForge to test classpath
-    testImplementation "net.neoforged:neoforge:21.1.77"
 }
 
 test {
     useJUnitPlatform()
-    
-    // Use the same classpath as the main compilation
-    classpath += configurations.compileClasspath
-    classpath += sourceSets.main.output
 }

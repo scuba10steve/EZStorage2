@@ -18,5 +18,11 @@ public class EZNetwork {
             StorageSyncPacket.STREAM_CODEC,
             StorageSyncPacket::handle
         );
+        
+        registrar.playToServer(
+            StorageClickPacket.TYPE,
+            StorageClickPacket.STREAM_CODEC,
+            StorageClickPacket::handle
+        );
     }
 }
