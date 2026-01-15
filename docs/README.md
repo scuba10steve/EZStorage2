@@ -5,16 +5,11 @@ This directory contains comprehensive technical documentation for the EZStorage 
 ## Documentation Structure
 
 - **[Port Overview](port-overview.md)** - High-level overview of the porting process and major changes
-- **[Architecture](architecture.md)** - System architecture and component relationships
 - **[Storage System](storage-system.md)** - Detailed storage system implementation
 - **[GUI System](gui-system.md)** - User interface implementation and layout
-- **[Networking](networking.md)** - Client-server communication and packet system
-- **[Multiblock System](multiblock-system.md)** - Multiblock structure detection and validation
 - **[Configuration](configuration.md)** - TOML configuration system and options
-- **[JEI Integration](jei-integration.md)** - Just Enough Items integration details
-- **[Asset System](asset-system.md)** - Textures, models, recipes, and language files
 - **[Build System](build-system.md)** - Gradle configuration and build process
-- **[Testing](testing.md)** - Unit tests and testing methodology
+- **[Dependencies](dependencies.md)** - Dependency versions and update tracking
 - **[Troubleshooting](troubleshooting.md)** - Common issues and solutions
 
 ## Quick Reference

@@ -1,5 +1,5 @@
 plugins {
-    id 'net.neoforged.moddev' version '2.0.46-beta'
+    id 'net.neoforged.moddev' version '2.0.139'
 }
 
 version = '1.0.0'
@@ -20,7 +20,7 @@ base {
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
 neoForge {
-    version = '21.1.77'
+    version = '21.1.218'
     
     runs {
         client {
@@ -40,12 +40,12 @@ neoForge {
 
 dependencies {
     // JEI integration
-    compileOnly "mezz.jei:jei-1.21.1-common-api:19.19.6.233"
-    compileOnly "mezz.jei:jei-1.21.1-neoforge-api:19.19.6.233"
-    runtimeOnly "mezz.jei:jei-1.21.1-neoforge:19.19.6.233"
+    compileOnly "mezz.jei:jei-1.21.1-common-api:19.27.0.336"
+    compileOnly "mezz.jei:jei-1.21.1-neoforge-api:19.27.0.336"
+    runtimeOnly "mezz.jei:jei-1.21.1-neoforge:19.27.0.336"
     
     // Test dependencies
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.1'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.11.4'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
