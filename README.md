@@ -4,27 +4,30 @@ EZStorage 2 introduces a storage system that scales and evolves as players progr
 
 ## Project Status
 
-This repository contains EZStorage 2 updated for **Minecraft 1.21.1** and **NeoForge 21.1.77**. 
+This repository contains EZStorage 2 updated for **Minecraft 1.21.1** and **NeoForge 21.1.218**. 
 
-✅ **Current Status**: Version 1.0.0 - Complete port with all major features implemented and functional.
+✅ **Current Status**: Version 1.0.0 - Complete port with all major features implemented and fully functional.
 
 ### What's Working
 - ✅ Builds successfully with Gradle 8.10.2
 - ✅ Compatible with Minecraft 1.21.1
-- ✅ Uses NeoForge 21.1.77 with ModDevGradle 2.0.46-beta
+- ✅ Uses NeoForge 21.1.218 with ModDevGradle 2.0.139 (stable)
 - ✅ Modern registration system with DeferredRegister
 - ✅ Basic blocks: Storage Box, Storage Core
-- ✅ Tiered storage blocks: Condensed, Super, Ultra, Hyper Storage Boxes
+- ✅ Tiered storage blocks: Condensed, Super, Ultra, Hyper Storage Boxes (all textures working)
 - ✅ Basic items: Key, Dolly (basic & super), Block Items
-- ✅ Block entities: Storage Core Block Entity
-- ✅ GUI system: Storage Core menu and screen with sidebar
+- ✅ Block entities: Storage Core Block Entity with full functionality
+- ✅ GUI system: Storage Core menu and screen with proper item display and interaction
 - ✅ Storage system: Inventory with insert/extract logic, item display, scrolling
 - ✅ Networking: Storage sync and click packets for client-server communication
-- ✅ JEI integration: Recipe transfer and storage item lookup
-- ✅ Multiblock structures: Core scanning and validation system
+- ✅ JEI integration: Recipe transfer and storage item lookup (updated to 19.27.0.336)
+- ✅ Multiblock structures: Core scanning and validation system with dynamic capacity
 - ✅ Assets: Recipes, language files, loot tables, and block tags
 - ✅ Unit tests for core constants
-- ✅ Mod loads successfully in development environment
+- ✅ Mod loads and runs successfully in development and production environments
+- ✅ All UI sync issues resolved
+- ✅ Click interactions working correctly (left-click, right-click, shift-click, drag-and-drop)
+- ✅ Capacity updates dynamically when blocks are added/removed
 
 ### Not Yet Ported
 - ❌ Crafting Box (crafting grid integration)
