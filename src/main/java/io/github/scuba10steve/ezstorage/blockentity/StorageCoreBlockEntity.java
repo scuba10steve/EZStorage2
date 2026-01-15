@@ -149,6 +149,13 @@ public class StorageCoreBlockEntity extends EZBlockEntity implements MenuProvide
 
     @Override
     public AbstractContainerMenu createMenu(int containerId, Inventory playerInventory, Player player) {
+        // Sync storage data to the opening player immediately
+        if (level instanceof ServerLevel serverLevel) {
+            PacketDistributor.sendToPlayer(
+                (net.minecraft.server.level.ServerPlayer) player,
+                new StorageSyncPacket(worldPosition, inventory.getStoredItems())
+            );
+        }
         return new StorageCoreMenu(containerId, playerInventory, this.worldPosition);
     }
 }

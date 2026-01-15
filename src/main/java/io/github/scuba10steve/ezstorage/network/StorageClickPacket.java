@@ -83,7 +83,17 @@ public record StorageClickPacket(BlockPos pos, int slot, int button, boolean shi
                             player.containerMenu.setCarried(remainder);
                         }
                         
+                        // Mark changed and sync to clients
                         core.setChanged();
+                        // Trigger sync by calling extractItem/insertItem methods which handle sync
+                        // Or manually sync here
+                        if (player.level() instanceof net.minecraft.server.level.ServerLevel serverLevel) {
+                            net.neoforged.neoforge.network.PacketDistributor.sendToPlayersTrackingChunk(
+                                serverLevel,
+                                serverLevel.getChunkAt(pos).getPos(),
+                                new StorageSyncPacket(pos, inventory.getStoredItems())
+                            );
+                        }
                     }
                 }
             }
