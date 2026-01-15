@@ -6,7 +6,7 @@ EZStorage 2 introduces a storage system that scales and evolves as players progr
 
 This repository contains EZStorage 2 updated for **Minecraft 1.21.1** and **NeoForge 21.1.218**. 
 
-✅ **Current Status**: Version 1.0.0 - Complete port with all major features implemented and fully functional.
+✅ **Current Status**: Version 0.1.0-beta - Core storage functionality complete and stable. Advanced features planned for future releases.
 
 ### What's Working
 - ✅ Builds successfully with Gradle 8.10.2

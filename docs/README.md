@@ -23,7 +23,7 @@ This directory contains comprehensive technical documentation for the EZStorage 
 - **Gradle**: 8.10.2
 
 ### Project Status
-✅ **Version 1.0.0** - Core storage functionality complete and functional
+✅ **Version 0.1.0-beta** - Core storage functionality complete and functional
 
 **Implemented Features:**
 - Basic storage system with multiblock capacity scaling

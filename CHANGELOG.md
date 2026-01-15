@@ -2,7 +2,10 @@
 
 All notable changes to EZStorage 2 for Minecraft 1.21.1 will be documented in this file.
 
-## [1.0.0] - 2026-01-14
+## [0.1.0-beta] - 2026-01-14
+
+### Status
+**Beta Release** - Core storage functionality complete and stable. Advanced features planned for future releases.
 
 ### Added
 - Complete port of EZStorage 2 core functionality to Minecraft 1.21.1
@@ -62,5 +65,5 @@ All notable changes to EZStorage 2 for Minecraft 1.21.1 will be documented in th
 
 ## Version History
 
-### Version 1.0.0 - Initial Release
-First stable release of EZStorage 2 for Minecraft 1.21.1 with complete core functionality.
+### Version 0.1.0-beta - Initial Beta Release
+First beta release of EZStorage 2 for Minecraft 1.21.1 with complete core storage functionality. Advanced features (Crafting Box, Search Box, etc.) planned for future releases.
