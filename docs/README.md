@@ -11,6 +11,7 @@ This directory contains comprehensive technical documentation for the EZStorage 
 - **[Build System](build-system.md)** - Gradle configuration and build process
 - **[Dependencies](dependencies.md)** - Dependency versions and update tracking
 - **[Troubleshooting](troubleshooting.md)** - Common issues and solutions
+- **[Changelog](../CHANGELOG.md)** - Version history and changes
 
 ## Quick Reference
 
