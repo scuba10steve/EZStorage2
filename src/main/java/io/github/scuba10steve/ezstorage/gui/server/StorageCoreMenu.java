@@ -46,13 +46,9 @@ public class StorageCoreMenu extends AbstractContainerMenu {
     }
     
     private void addStorageSlots() {
-        // Add 6 rows of 9 storage slots
-        for (int row = 0; row < 6; row++) {
-            for (int col = 0; col < 9; col++) {
-                int index = col + row * 9;
-                this.addSlot(new StorageSlot(storageContainer, blockEntity, index, 8 + col * 18, 18 + row * 18));
-            }
-        }
+        // Storage items are rendered directly in the GUI, not as actual slots
+        // This prevents conflicts with drag-and-drop and click handling
+        // All storage interactions are handled via StorageClickPacket
     }
 
     private void addPlayerInventory(Inventory playerInventory) {
@@ -80,22 +76,16 @@ public class StorageCoreMenu extends AbstractContainerMenu {
             ItemStack slotStack = slot.getItem();
             itemstack = slotStack.copy();
             
-            if (index < 54) {
-                // Moving from storage to player inventory
-                if (!this.moveItemStackTo(slotStack, 54, this.slots.size(), true)) {
-                    return ItemStack.EMPTY;
+            // All slots are now player inventory (no storage slots)
+            // Try to insert into storage
+            if (blockEntity != null) {
+                ItemStack remainder = blockEntity.insertItem(slotStack);
+                slot.set(remainder);
+                if (remainder.isEmpty()) {
+                    slot.set(ItemStack.EMPTY);
+                } else {
+                    slot.setChanged();
                 }
-            } else {
-                // Moving from player inventory to storage
-                if (!this.moveItemStackTo(slotStack, 0, 54, false)) {
-                    return ItemStack.EMPTY;
-                }
-            }
-            
-            if (slotStack.isEmpty()) {
-                slot.set(ItemStack.EMPTY);
-            } else {
-                slot.setChanged();
             }
         }
         

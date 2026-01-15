@@ -10,6 +10,7 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.item.ItemStack;
 
 import java.text.DecimalFormat;
 import java.util.List;
@@ -113,13 +114,26 @@ public class StorageCoreScreen extends AbstractContainerScreen<StorageCoreMenu> 
         Integer slot = getSlotAt((int)mouseX, (int)mouseY);
         if (slot != null) {
             EZInventory inventory = menu.getInventory();
-            if (inventory != null) {
+            if (inventory != null && minecraft != null && minecraft.player != null) {
+                // Check if player is holding items - if so, insert them
+                ItemStack carried = minecraft.player.containerMenu.getCarried();
+                if (!carried.isEmpty()) {
+                    // Player is trying to place items into storage
+                    if (minecraft.getConnection() != null) {
+                        minecraft.getConnection().send(
+                            new StorageClickPacket(menu.getPos(), -1, button, hasShiftDown())
+                        );
+                    }
+                    return true;
+                }
+                
+                // Otherwise, try to extract from the clicked slot
                 List<StoredItemStack> storedItems = inventory.getStoredItems();
                 if (slot < storedItems.size()) {
                     StoredItemStack stored = storedItems.get(slot);
                     if (stored != null && !stored.getItemStack().isEmpty()) {
                         // Send packet to server to handle extraction
-                        if (minecraft != null && minecraft.getConnection() != null) {
+                        if (minecraft.getConnection() != null) {
                             minecraft.getConnection().send(
                                 new StorageClickPacket(menu.getPos(), slot, button, hasShiftDown())
                             );

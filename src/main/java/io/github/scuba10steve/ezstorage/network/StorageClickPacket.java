@@ -46,54 +46,62 @@ public record StorageClickPacket(BlockPos pos, int slot, int button, boolean shi
             if (player.level().getBlockEntity(pos) instanceof StorageCoreBlockEntity core) {
                 EZInventory inventory = core.getInventory();
                 if (inventory != null) {
-                    List<StoredItemStack> items = inventory.getStoredItems();
-                    if (slot >= 0 && slot < items.size()) {
-                        StoredItemStack stored = items.get(slot);
-                        ItemStack heldStack = player.containerMenu.getCarried();
-                        
-                        // If player is holding nothing, extract from storage
-                        if (heldStack.isEmpty()) {
-                            int maxStack = stored.getItemStack().getMaxStackSize();
-                            int amount;
-                            
-                            if (shift) {
-                                // Shift-click: try to move full stack to inventory
-                                amount = maxStack;
-                                ItemStack extracted = inventory.extractItem(stored.getItemStack(), amount);
-                                if (!extracted.isEmpty()) {
-                                    if (!player.getInventory().add(extracted)) {
-                                        // Couldn't add, put back
-                                        inventory.insertItem(extracted);
-                                    }
-                                }
-                            } else {
-                                // Normal click: pick up stack
-                                if (button == 0) {
-                                    amount = maxStack; // Left click = full stack
-                                } else {
-                                    amount = maxStack / 2; // Right click = half stack
-                                    if (amount == 0) amount = 1;
-                                }
-                                ItemStack extracted = inventory.extractItem(stored.getItemStack(), amount);
-                                player.containerMenu.setCarried(extracted);
-                            }
-                        } else {
-                            // Player is holding something, insert into storage
+                    ItemStack heldStack = player.containerMenu.getCarried();
+                    
+                    // Special case: slot -1 means insert whatever player is holding
+                    if (slot == -1) {
+                        if (!heldStack.isEmpty()) {
                             ItemStack remainder = inventory.insertItem(heldStack);
                             player.containerMenu.setCarried(remainder);
                         }
-                        
-                        // Mark changed and sync to clients
-                        core.setChanged();
-                        // Trigger sync by calling extractItem/insertItem methods which handle sync
-                        // Or manually sync here
-                        if (player.level() instanceof net.minecraft.server.level.ServerLevel serverLevel) {
-                            net.neoforged.neoforge.network.PacketDistributor.sendToPlayersTrackingChunk(
-                                serverLevel,
-                                serverLevel.getChunkAt(pos).getPos(),
-                                new StorageSyncPacket(pos, inventory.getStoredItems())
-                            );
+                    } else {
+                        // Normal slot interaction
+                        List<StoredItemStack> items = inventory.getStoredItems();
+                        if (slot >= 0 && slot < items.size()) {
+                            StoredItemStack stored = items.get(slot);
+                            
+                            // If player is holding nothing, extract from storage
+                            if (heldStack.isEmpty()) {
+                                int maxStack = stored.getItemStack().getMaxStackSize();
+                                int amount;
+                                
+                                if (shift) {
+                                    // Shift-click: try to move full stack to inventory
+                                    amount = maxStack;
+                                    ItemStack extracted = inventory.extractItem(stored.getItemStack(), amount);
+                                    if (!extracted.isEmpty()) {
+                                        if (!player.getInventory().add(extracted)) {
+                                            // Couldn't add, put back
+                                            inventory.insertItem(extracted);
+                                        }
+                                    }
+                                } else {
+                                    // Normal click: pick up stack
+                                    if (button == 0) {
+                                        amount = maxStack; // Left click = full stack
+                                    } else {
+                                        amount = maxStack / 2; // Right click = half stack
+                                        if (amount == 0) amount = 1;
+                                    }
+                                    ItemStack extracted = inventory.extractItem(stored.getItemStack(), amount);
+                                    player.containerMenu.setCarried(extracted);
+                                }
+                            } else {
+                                // Player is holding something, insert into storage
+                                ItemStack remainder = inventory.insertItem(heldStack);
+                                player.containerMenu.setCarried(remainder);
+                            }
                         }
+                    }
+                    
+                    // Mark changed and sync to clients
+                    core.setChanged();
+                    if (player.level() instanceof net.minecraft.server.level.ServerLevel serverLevel) {
+                        net.neoforged.neoforge.network.PacketDistributor.sendToPlayersTrackingChunk(
+                            serverLevel,
+                            serverLevel.getChunkAt(pos).getPos(),
+                            new StorageSyncPacket(pos, inventory.getStoredItems())
+                        );
                     }
                 }
             }
