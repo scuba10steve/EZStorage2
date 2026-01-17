@@ -18,6 +18,8 @@ public class EZBlocks {
         () -> new BlockStorage(10000));
     public static final Supplier<Block> CONDENSED_STORAGE_BOX = BLOCKS.register("condensed_storage_box", 
         () -> new BlockStorage(40000));
+    public static final Supplier<Block> COMPRESSED_STORAGE_BOX = BLOCKS.register("compressed_storage_box", 
+        () -> new BlockStorage(80000));
     public static final Supplier<Block> SUPER_STORAGE_BOX = BLOCKS.register("super_storage_box", 
         () -> new BlockStorage(160000));
     public static final Supplier<Block> ULTRA_STORAGE_BOX = BLOCKS.register("ultra_storage_box", 

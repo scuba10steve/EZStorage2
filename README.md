@@ -14,7 +14,7 @@ This repository contains EZStorage 2 updated for **Minecraft 1.21.1** and **NeoF
 - ✅ Uses NeoForge 21.1.218 with ModDevGradle 2.0.139 (stable)
 - ✅ Modern registration system with DeferredRegister
 - ✅ Basic blocks: Storage Box, Storage Core
-- ✅ Tiered storage blocks: Condensed, Super, Ultra, Hyper Storage Boxes (all textures working)
+- ✅ Tiered storage blocks: Condensed, Compressed, Super, Ultra, Hyper Storage Boxes (all textures working)
 - ✅ Basic items: Key, Dolly (basic & super), Block Items
 - ✅ Block entities: Storage Core Block Entity with full functionality
 - ✅ GUI system: Storage Core menu and screen with proper item display and interaction
@@ -136,6 +136,8 @@ EZStorage 2 uses TOML configuration files located at `config/ezstorage-common.to
 ### Storage Capacities
 - `basicCapacity` - Storage Box capacity (default: 10,000)
 - `condensedCapacity` - Condensed Storage Box capacity (default: 40,000)
+- `compressedCapacity` - Compressed Storage Box capacity (default: 80,000)
+- `superCapacity` - Super Storage Box capacity (default: 160,000)
 - `superCapacity` - Super Storage Box capacity (default: 160,000)
 - `ultraCapacity` - Ultra Storage Box capacity (default: 640,000)
 - `hyperCapacity` - Hyper Storage Box capacity (default: 2,560,000)

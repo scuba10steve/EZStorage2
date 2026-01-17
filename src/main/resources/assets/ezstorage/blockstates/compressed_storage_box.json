@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "ezstorage:block/compressed_storage_box"
+    }
+  }
+}

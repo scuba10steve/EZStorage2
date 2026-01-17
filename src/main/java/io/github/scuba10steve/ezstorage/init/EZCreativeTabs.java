@@ -23,6 +23,7 @@ public class EZCreativeTabs {
                 output.accept(EZBlocks.STORAGE_CORE.get());
                 output.accept(EZBlocks.STORAGE_BOX.get());
                 output.accept(EZBlocks.CONDENSED_STORAGE_BOX.get());
+                output.accept(EZBlocks.COMPRESSED_STORAGE_BOX.get());
                 output.accept(EZBlocks.SUPER_STORAGE_BOX.get());
                 output.accept(EZBlocks.ULTRA_STORAGE_BOX.get());
                 output.accept(EZBlocks.HYPER_STORAGE_BOX.get());

@@ -20,6 +20,8 @@ public class EZItems {
         () -> new BlockItem(EZBlocks.STORAGE_BOX.get(), new Item.Properties()));
     public static final Supplier<Item> CONDENSED_STORAGE_BOX = ITEMS.register("condensed_storage_box", 
         () -> new BlockItem(EZBlocks.CONDENSED_STORAGE_BOX.get(), new Item.Properties()));
+    public static final Supplier<Item> COMPRESSED_STORAGE_BOX = ITEMS.register("compressed_storage_box", 
+        () -> new BlockItem(EZBlocks.COMPRESSED_STORAGE_BOX.get(), new Item.Properties()));
     public static final Supplier<Item> SUPER_STORAGE_BOX = ITEMS.register("super_storage_box", 
         () -> new BlockItem(EZBlocks.SUPER_STORAGE_BOX.get(), new Item.Properties()));
     public static final Supplier<Item> ULTRA_STORAGE_BOX = ITEMS.register("ultra_storage_box", 

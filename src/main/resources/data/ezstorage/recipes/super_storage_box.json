@@ -10,7 +10,7 @@
       "item": "minecraft:iron_ingot"
     },
     "S": {
-      "item": "ezstorage:condensed_storage_box"
+      "item": "ezstorage:compressed_storage_box"
     }
   },
   "result": {

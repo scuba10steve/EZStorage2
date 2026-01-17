@@ -8,6 +8,7 @@ public class EZConfig {
     // Storage Capacities
     public static final ModConfigSpec.IntValue BASIC_CAPACITY;
     public static final ModConfigSpec.IntValue CONDENSED_CAPACITY;
+    public static final ModConfigSpec.IntValue COMPRESSED_CAPACITY;
     public static final ModConfigSpec.IntValue SUPER_CAPACITY;
     public static final ModConfigSpec.IntValue ULTRA_CAPACITY;
     public static final ModConfigSpec.IntValue HYPER_CAPACITY;
@@ -36,6 +37,10 @@ public class EZConfig {
         CONDENSED_CAPACITY = BUILDER
             .comment("Storage capacity for Condensed Storage Box")
             .defineInRange("condensedCapacity", 40000, 1, Integer.MAX_VALUE);
+        
+        COMPRESSED_CAPACITY = BUILDER
+            .comment("Storage capacity for Compressed Storage Box")
+            .defineInRange("compressedCapacity", 80000, 1, Integer.MAX_VALUE);
         
         SUPER_CAPACITY = BUILDER
             .comment("Storage capacity for Super Storage Box")

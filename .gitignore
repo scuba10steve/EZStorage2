@@ -35,3 +35,5 @@ changelog.txt
 *.7z
 
 *.class
+
+.idea/
