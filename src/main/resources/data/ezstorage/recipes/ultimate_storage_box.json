@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "DDD",
+    "NSN",
+    "DDD"
+  ],
+  "key": {
+    "D": {
+      "item": "minecraft:diamond"
+    },
+    "N": {
+      "item": "minecraft:netherite_ingot"
+    },
+    "S": {
+      "item": "ezstorage:hyper_storage_box"
+    }
+  },
+  "result": {
+    "item": "ezstorage:ultimate_storage_box"
+  }
+}

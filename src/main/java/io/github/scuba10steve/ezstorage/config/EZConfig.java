@@ -12,6 +12,7 @@ public class EZConfig {
     public static final ModConfigSpec.IntValue SUPER_CAPACITY;
     public static final ModConfigSpec.IntValue ULTRA_CAPACITY;
     public static final ModConfigSpec.IntValue HYPER_CAPACITY;
+    public static final ModConfigSpec.IntValue ULTIMATE_CAPACITY;
     
     // Feature Toggles
     public static final ModConfigSpec.BooleanValue ENABLE_SECURITY;
@@ -53,6 +54,10 @@ public class EZConfig {
         HYPER_CAPACITY = BUILDER
             .comment("Storage capacity for Hyper Storage Box")
             .defineInRange("hyperCapacity", 2560000, 1, Integer.MAX_VALUE);
+        
+        ULTIMATE_CAPACITY = BUILDER
+            .comment("Storage capacity for Ultimate Storage Box")
+            .defineInRange("ultimateCapacity", 10240000, 1, Integer.MAX_VALUE);
         
         BUILDER.pop();
         

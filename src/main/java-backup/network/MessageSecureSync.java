@@ -71,7 +71,7 @@ public class MessageSecureSync implements IMessage {
 				TileEntitySecurityBox tile = (TileEntitySecurityBox) Minecraft.getMinecraft().world.getTileEntity(m.pos);
 				tile.setAllowedPlayers(m.whitelist);
 			} catch (Exception e) {
-				System.out.println("Message exception caught: " + e.getMessage());
+				LOGGER.info("Message exception caught: " + e.getMessage());
 			}
 		}
 	}

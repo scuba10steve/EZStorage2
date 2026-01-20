@@ -26,6 +26,8 @@ public class EZBlocks {
         () -> new BlockStorage(640000));
     public static final Supplier<Block> HYPER_STORAGE_BOX = BLOCKS.register("hyper_storage_box", 
         () -> new BlockStorage(2560000));
+    public static final Supplier<Block> ULTIMATE_STORAGE_BOX = BLOCKS.register("ultimate_storage_box", 
+        () -> new BlockStorage(10240000));
     public static final Supplier<Block> STORAGE_CORE = BLOCKS.register("storage_core", BlockStorageCore::new);
 
     public static void register(IEventBus eventBus) {

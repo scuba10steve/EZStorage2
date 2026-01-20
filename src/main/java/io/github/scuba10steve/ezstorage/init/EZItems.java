@@ -28,6 +28,8 @@ public class EZItems {
         () -> new BlockItem(EZBlocks.ULTRA_STORAGE_BOX.get(), new Item.Properties()));
     public static final Supplier<Item> HYPER_STORAGE_BOX = ITEMS.register("hyper_storage_box", 
         () -> new BlockItem(EZBlocks.HYPER_STORAGE_BOX.get(), new Item.Properties()));
+    public static final Supplier<Item> ULTIMATE_STORAGE_BOX = ITEMS.register("ultimate_storage_box", 
+        () -> new BlockItem(EZBlocks.ULTIMATE_STORAGE_BOX.get(), new Item.Properties()));
     public static final Supplier<Item> STORAGE_CORE = ITEMS.register("storage_core", 
         () -> new BlockItem(EZBlocks.STORAGE_CORE.get(), new Item.Properties()));
 
