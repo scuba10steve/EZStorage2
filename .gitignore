@@ -37,3 +37,4 @@ changelog.txt
 *.class
 
 .idea/
+logs/

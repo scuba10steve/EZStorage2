@@ -56,10 +56,15 @@ public abstract class StorageMultiblock extends EZBlock {
             scanned = new HashSet<>();
         }
         
+        LOGGER.debug("Searching for core from position {}", br.pos);
         List<BlockRef> neighbors = EZStorageUtils.getNeighbors(br.pos, level);
+        LOGGER.debug("Found {} neighbors", neighbors.size());
+        
         for (BlockRef blockRef : neighbors) {
+            LOGGER.debug("Checking neighbor at {} - block: {}", blockRef.pos, blockRef.block.getClass().getSimpleName());
             if (blockRef.block instanceof StorageMultiblock) {
                 if (blockRef.block instanceof BlockStorageCore) {
+                    LOGGER.info("Found storage core at {}", blockRef.pos);
                     return (StorageCoreBlockEntity) level.getBlockEntity(blockRef.pos);
                 } else {
                     if (scanned.add(blockRef)) {
@@ -71,6 +76,7 @@ public abstract class StorageMultiblock extends EZBlock {
                 }
             }
         }
+        LOGGER.debug("No core found from position {}", br.pos);
         return null;
     }
 }

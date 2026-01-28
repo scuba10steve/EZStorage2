@@ -6,7 +6,7 @@ import net.minecraft.world.item.Items;
 
 public class EZTab {
     public static final CreativeModeTab TAB = CreativeModeTab.builder()
-        .title(net.minecraft.network.chat.Component.translatable("itemGroup.ezstorage"))
+        .title(net.minecraft.network.chat.Component.translatable("itemGroup.s3"))
         .icon(() -> new ItemStack(Items.CHEST))
         .build();
 }

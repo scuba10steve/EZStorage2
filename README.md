@@ -30,7 +30,7 @@ This repository contains EZStorage 2 updated for **Minecraft 1.21.1** and **NeoF
 - ✅ Capacity updates dynamically when blocks are added/removed
 
 ### Not Yet Ported
-- ❌ Crafting Box (crafting grid integration)
+- 🔄 Crafting Box (crafting grid integration) - **IN PROGRESS**
 - ❌ Search Box (item filtering and search)
 - ❌ Security Box (player access control)
 - ❌ Sort Box (automatic sorting modes)
@@ -44,6 +44,11 @@ This repository contains EZStorage 2 updated for **Minecraft 1.21.1** and **NeoF
 - ❌ Security system with player permissions
 - ❌ Sorting modes (alphabetical, quantity, mod)
 - ❌ Extract list filtering (whitelist/blacklist)
+
+### Known Issues
+- ⚠️ Dolly item (basic & super) - Not functional, needs implementation fix
+- ⚠️ Crafting Box - Block is placed and registered, but GUI does not open when right-clicked. Requires further investigation into block entity/menu initialization
+- ⚠️ Crafting Box GUI - Result slot positioning needs adjustment (too far right), crafting functionality and storage integration not yet implemented
 
 ### Port Complete! 🎉
 EZStorage 2 core functionality has been successfully ported from Minecraft 1.12.2 to 1.21.1. The basic storage system is fully functional with item storage, retrieval, and multiblock capacity scaling. Advanced features listed above are planned for future updates.

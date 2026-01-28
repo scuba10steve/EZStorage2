@@ -1,7 +1,9 @@
 package io.github.scuba10steve.s3.blockentity;
 
+import io.github.scuba10steve.s3.block.BlockCraftingBox;
 import io.github.scuba10steve.s3.block.BlockStorage;
 import io.github.scuba10steve.s3.block.StorageMultiblock;
+import io.github.scuba10steve.s3.gui.server.StorageCoreCraftingMenu;
 import io.github.scuba10steve.s3.gui.server.StorageCoreMenu;
 import io.github.scuba10steve.s3.init.EZBlockEntities;
 import io.github.scuba10steve.s3.network.StorageSyncPacket;
@@ -32,6 +34,7 @@ public class StorageCoreBlockEntity extends EZBlockEntity implements MenuProvide
     
     private final EZInventory inventory = new EZInventory();
     private final Set<BlockRef> multiblock = new HashSet<>();
+    private boolean hasCraftingBox = false;
     
     public StorageCoreBlockEntity(BlockPos pos, BlockState state) {
         super(EZBlockEntities.STORAGE_CORE.get(), pos, state);
@@ -46,20 +49,25 @@ public class StorageCoreBlockEntity extends EZBlockEntity implements MenuProvide
         
         long totalCapacity = 0;
         multiblock.clear();
+        hasCraftingBox = false;
         
         BlockRef coreRef = new BlockRef(getBlockState().getBlock(), worldPosition);
         multiblock.add(coreRef);
         getValidNeighbors(coreRef);
         
-        // Calculate total capacity from storage blocks
+        // Calculate total capacity from storage blocks and detect crafting boxes
         for (BlockRef blockRef : multiblock) {
             if (blockRef.block instanceof BlockStorage storage) {
                 totalCapacity += storage.getCapacity();
                 LOGGER.debug("Found storage block at {} with capacity {}", blockRef.pos, storage.getCapacity());
+            } else if (blockRef.block instanceof BlockCraftingBox) {
+                hasCraftingBox = true;
+                LOGGER.info("Found crafting box at {}", blockRef.pos);
             }
         }
 
-        LOGGER.info("Multiblock scan complete. Found {} blocks, total capacity: {}", multiblock.size(), totalCapacity);
+        LOGGER.info("Multiblock scan complete. Found {} blocks, total capacity: {}, has crafting box: {}", 
+                   multiblock.size(), totalCapacity, hasCraftingBox);
         inventory.setMaxItems(totalCapacity);
         setChanged();
         syncToClients();
@@ -154,6 +162,13 @@ public class StorageCoreBlockEntity extends EZBlockEntity implements MenuProvide
                 new StorageSyncPacket(worldPosition, inventory.getStoredItems(), inventory.getMaxItems())
             );
         }
-        return new StorageCoreMenu(containerId, playerInventory, this.worldPosition);
+        
+        // Open crafting GUI if we have a crafting box, otherwise normal storage GUI
+        if (hasCraftingBox) {
+            LOGGER.info("Opening crafting GUI for storage core at {}", worldPosition);
+            return new StorageCoreCraftingMenu(containerId, playerInventory, this.worldPosition);
+        } else {
+            return new StorageCoreMenu(containerId, playerInventory, this.worldPosition);
+        }
     }
 }

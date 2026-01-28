@@ -10,6 +10,8 @@
   "block.s3.ultra_storage_box": "Ultra Storage Box",
   "block.s3.hyper_storage_box": "Hyper Storage Box",
   "block.s3.ultimate_storage_box": "Ultimate Storage Box",
+  "block.s3.crafting_box": "Crafting Box",
+  "block.s3.search_box": "Search Box",
   
   "item.s3.key": "EZ Key",
   "item.s3.dolly": "Dolly",

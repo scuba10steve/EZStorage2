@@ -1,5 +1,7 @@
 {
-	"variants": {
-		"normal": {"model": "s3:search_box"}
-	}
+  "variants": {
+    "": {
+      "model": "s3:block/search_box"
+    }
+  }
 }

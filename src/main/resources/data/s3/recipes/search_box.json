@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "EDE",
+    "CBC",
+    "CEC"
+  ],
+  "key": {
+    "E": {
+      "item": "minecraft:enchanted_book"
+    },
+    "D": {
+      "item": "minecraft:compass"
+    },
+    "C": {
+      "item": "minecraft:iron_block"
+    },
+    "B": {
+      "item": "s3:storage_box"
+    }
+  },
+  "result": {
+    "item": "s3:search_box"
+  }
+}

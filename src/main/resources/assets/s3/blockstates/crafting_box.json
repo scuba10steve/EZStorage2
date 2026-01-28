@@ -1,5 +1,7 @@
 {
-	"variants": {
-		"normal": {"model": "s3:crafting_box"}
-	}
+  "variants": {
+    "": {
+      "model": "s3:block/crafting_box"
+    }
+  }
 }

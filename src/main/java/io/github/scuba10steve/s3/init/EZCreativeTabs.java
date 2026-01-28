@@ -14,20 +14,22 @@ public class EZCreativeTabs {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = 
         DeferredRegister.create(Registries.CREATIVE_MODE_TAB, RefStrings.MODID);
 
-    public static final Supplier<CreativeModeTab> EZSTORAGE_TAB = CREATIVE_MODE_TABS.register("ezstorage", () -> 
+    public static final Supplier<CreativeModeTab> EZSTORAGE_TAB = CREATIVE_MODE_TABS.register("s3", () -> 
         CreativeModeTab.builder()
-            .title(Component.translatable("itemGroup.ezstorage"))
+            .title(Component.translatable("itemGroup.s3"))
             .icon(() -> new ItemStack(EZBlocks.STORAGE_CORE.get()))
             .displayItems((parameters, output) -> {
                 // Add all blocks
-                output.accept(EZBlocks.STORAGE_CORE.get());
-                output.accept(EZBlocks.STORAGE_BOX.get());
-                output.accept(EZBlocks.CONDENSED_STORAGE_BOX.get());
-                output.accept(EZBlocks.COMPRESSED_STORAGE_BOX.get());
-                output.accept(EZBlocks.SUPER_STORAGE_BOX.get());
-                output.accept(EZBlocks.ULTRA_STORAGE_BOX.get());
-                output.accept(EZBlocks.HYPER_STORAGE_BOX.get());
-                output.accept(EZBlocks.ULTIMATE_STORAGE_BOX.get());
+                output.accept(EZItems.STORAGE_CORE.get());
+                output.accept(EZItems.STORAGE_BOX.get());
+                output.accept(EZItems.CONDENSED_STORAGE_BOX.get());
+                output.accept(EZItems.COMPRESSED_STORAGE_BOX.get());
+                output.accept(EZItems.SUPER_STORAGE_BOX.get());
+                output.accept(EZItems.ULTRA_STORAGE_BOX.get());
+                output.accept(EZItems.HYPER_STORAGE_BOX.get());
+                output.accept(EZItems.ULTIMATE_STORAGE_BOX.get());
+                output.accept(EZItems.CRAFTING_BOX.get());
+                output.accept(EZItems.SEARCH_BOX.get());
                 
                 // Add all items
                 output.accept(EZItems.KEY.get());

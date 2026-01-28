@@ -32,6 +32,10 @@ public class EZItems {
         () -> new BlockItem(EZBlocks.ULTIMATE_STORAGE_BOX.get(), new Item.Properties()));
     public static final Supplier<Item> STORAGE_CORE = ITEMS.register("storage_core", 
         () -> new BlockItem(EZBlocks.STORAGE_CORE.get(), new Item.Properties()));
+    public static final Supplier<Item> CRAFTING_BOX = ITEMS.register("crafting_box", 
+        () -> new BlockItem(EZBlocks.CRAFTING_BOX.get(), new Item.Properties()));
+    public static final Supplier<Item> SEARCH_BOX = ITEMS.register("search_box", 
+        () -> new BlockItem(EZBlocks.SEARCH_BOX.get(), new Item.Properties()));
 
     // Items
     public static final Supplier<Item> KEY = ITEMS.register("key", ItemKey::new);
