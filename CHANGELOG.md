@@ -2,6 +2,20 @@
 
 All notable changes to EZStorage 2 for Minecraft 1.21.1 will be documented in this file.
 
+## [Unreleased]
+
+### Added
+- Crafting Box with 3x3 crafting grid connected to storage system
+- Shift-click crafting with automatic ingredient repopulation from storage
+- JEI recipe/usage lookup (R/U keys) for items in storage grids
+- Hover highlight effect for storage items
+- Shared `AbstractStorageScreen` base class for consistent GUI behavior
+
+### Fixed
+- JEI hotkeys (R/U) not working on storage items (was only recipe transfer)
+
+---
+
 ## [0.1.0-beta] - 2026-01-14
 
 ### Status
@@ -14,7 +28,7 @@ All notable changes to EZStorage 2 for Minecraft 1.21.1 will be documented in th
 - Five tiers of storage blocks (Basic, Condensed, Super, Ultra, Hyper)
 - Multiblock structure system with automatic detection
 - Dynamic capacity scaling based on connected blocks
-- JEI integration for recipe transfer and item lookup (v19.27.0.336)
+- JEI integration for recipe transfer (v19.27.0.336)
 - Custom click handling for storage interactions
 - Real-time UI synchronization
 - Comprehensive TOML configuration system

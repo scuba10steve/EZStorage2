@@ -16,25 +16,34 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class StorageCoreMenu extends AbstractContainerMenu {
-    private static final Logger LOGGER = LoggerFactory.getLogger(StorageCoreMenu.class);
-    
-    private final StorageCoreBlockEntity blockEntity;
-    private final BlockPos pos;
+    protected static final Logger LOGGER = LoggerFactory.getLogger(StorageCoreMenu.class);
+
+    protected final StorageCoreBlockEntity blockEntity;
+    protected final BlockPos pos;
+    protected final Player player;
     private final SimpleContainer storageContainer;
 
     public StorageCoreMenu(int containerId, Inventory playerInventory, BlockPos pos) {
-        super(EZMenuTypes.STORAGE_CORE.get(), containerId);
-        this.pos = pos;
-        this.blockEntity = (StorageCoreBlockEntity) playerInventory.player.level().getBlockEntity(pos);
-        this.storageContainer = new SimpleContainer(54); // 6 rows of 9 slots
-        
-        LOGGER.debug("Creating StorageCoreMenu at {}", pos);
-        
+        this(EZMenuTypes.STORAGE_CORE.get(), containerId, playerInventory, pos);
+
         // Add storage slots (6 rows of 9 slots)
         addStorageSlots();
-        
-        // Add player inventory slots
-        addPlayerInventory(playerInventory);
+
+        // Add player inventory slots at default positions
+        addPlayerInventory(playerInventory, 140, 198);
+    }
+
+    /**
+     * Protected constructor for subclasses to specify their own menu type.
+     */
+    protected StorageCoreMenu(net.minecraft.world.inventory.MenuType<?> menuType, int containerId, Inventory playerInventory, BlockPos pos) {
+        super(menuType, containerId);
+        this.pos = pos;
+        this.player = playerInventory.player;
+        this.blockEntity = (StorageCoreBlockEntity) player.level().getBlockEntity(pos);
+        this.storageContainer = new SimpleContainer(54); // 6 rows of 9 slots
+
+        LOGGER.debug("Creating {} at {}", getClass().getSimpleName(), pos);
     }
     
     public EZInventory getInventory() {
@@ -51,17 +60,23 @@ public class StorageCoreMenu extends AbstractContainerMenu {
         // All storage interactions are handled via StorageClickPacket
     }
 
-    private void addPlayerInventory(Inventory playerInventory) {
+    /**
+     * Adds player inventory slots at the specified Y positions.
+     * @param playerInventory The player's inventory
+     * @param inventoryY Y position for the main inventory (3 rows)
+     * @param hotbarY Y position for the hotbar
+     */
+    protected void addPlayerInventory(Inventory playerInventory, int inventoryY, int hotbarY) {
         // Player inventory (3 rows)
         for (int i = 0; i < 3; ++i) {
             for (int j = 0; j < 9; ++j) {
-                this.addSlot(new Slot(playerInventory, j + i * 9 + 9, 8 + j * 18, 140 + i * 18));
+                this.addSlot(new Slot(playerInventory, j + i * 9 + 9, 8 + j * 18, inventoryY + i * 18));
             }
         }
-        
+
         // Player hotbar
         for (int i = 0; i < 9; ++i) {
-            this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 198));
+            this.addSlot(new Slot(playerInventory, i, 8 + i * 18, hotbarY));
         }
     }
 
