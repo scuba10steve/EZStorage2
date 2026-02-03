@@ -1,6 +1,7 @@
 package io.github.scuba10steve.s3.blockentity;
 
 import io.github.scuba10steve.s3.block.BlockCraftingBox;
+import io.github.scuba10steve.s3.block.BlockSearchBox;
 import io.github.scuba10steve.s3.block.BlockStorage;
 import io.github.scuba10steve.s3.block.StorageMultiblock;
 import io.github.scuba10steve.s3.gui.server.StorageCoreCraftingMenu;
@@ -35,6 +36,7 @@ public class StorageCoreBlockEntity extends EZBlockEntity implements MenuProvide
     private final EZInventory inventory = new EZInventory();
     private final Set<BlockRef> multiblock = new HashSet<>();
     private boolean hasCraftingBox = false;
+    private boolean hasSearchBox = false;
     
     public StorageCoreBlockEntity(BlockPos pos, BlockState state) {
         super(EZBlockEntities.STORAGE_CORE.get(), pos, state);
@@ -50,6 +52,7 @@ public class StorageCoreBlockEntity extends EZBlockEntity implements MenuProvide
         long totalCapacity = 0;
         multiblock.clear();
         hasCraftingBox = false;
+        hasSearchBox = false;
         
         BlockRef coreRef = new BlockRef(getBlockState().getBlock(), worldPosition);
         multiblock.add(coreRef);
@@ -63,11 +66,14 @@ public class StorageCoreBlockEntity extends EZBlockEntity implements MenuProvide
             } else if (blockRef.block instanceof BlockCraftingBox) {
                 hasCraftingBox = true;
                 LOGGER.info("Found crafting box at {}", blockRef.pos);
+            } else if (blockRef.block instanceof BlockSearchBox) {
+                hasSearchBox = true;
+                LOGGER.info("Found search box at {}", blockRef.pos);
             }
         }
 
-        LOGGER.info("Multiblock scan complete. Found {} blocks, total capacity: {}, has crafting box: {}", 
-                   multiblock.size(), totalCapacity, hasCraftingBox);
+        LOGGER.info("Multiblock scan complete. Found {} blocks, total capacity: {}, has crafting box: {}, has search box: {}",
+                   multiblock.size(), totalCapacity, hasCraftingBox, hasSearchBox);
         inventory.setMaxItems(totalCapacity);
         setChanged();
         syncToClients();
@@ -123,13 +129,17 @@ public class StorageCoreBlockEntity extends EZBlockEntity implements MenuProvide
             PacketDistributor.sendToPlayersTrackingChunk(
                 serverLevel, 
                 level.getChunkAt(worldPosition).getPos(),
-                new StorageSyncPacket(worldPosition, inventory.getStoredItems(), inventory.getMaxItems())
+                new StorageSyncPacket(worldPosition, inventory.getStoredItems(), inventory.getMaxItems(), hasSearchBox)
             );
         }
     }
     
     public EZInventory getInventory() {
         return inventory;
+    }
+
+    public boolean hasSearchBox() {
+        return hasSearchBox;
     }
 
     @Override
@@ -159,7 +169,7 @@ public class StorageCoreBlockEntity extends EZBlockEntity implements MenuProvide
         if (level instanceof ServerLevel serverLevel) {
             PacketDistributor.sendToPlayer(
                 (net.minecraft.server.level.ServerPlayer) player,
-                new StorageSyncPacket(worldPosition, inventory.getStoredItems(), inventory.getMaxItems())
+                new StorageSyncPacket(worldPosition, inventory.getStoredItems(), inventory.getMaxItems(), hasSearchBox)
             );
         }
         

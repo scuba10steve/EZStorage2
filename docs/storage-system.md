@@ -249,11 +249,14 @@ private void syncToClients() {
 [DEBUG] Creating new storage entry for minecraft:cobblestone x64
 ```
 
+## Implemented Enhancements
+
+- **Search System** ✅: Quick item lookup via Search Box with multiple search modes
+
 ## Future Enhancements
 
 ### Potential Improvements
 - **Item Filtering**: Filter what items can be stored
-- **Auto-Sorting**: Automatic item organization
-- **Search System**: Quick item lookup in large inventories
+- **Auto-Sorting**: Automatic item organization (Sort Box)
 - **Void Overflow**: Option to void items when full
 - **Priority System**: Preferred storage locations for specific items

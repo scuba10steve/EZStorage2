@@ -273,24 +273,26 @@ LOGGER.debug("StorageSlot.set: {} x{}", stack.getItem(), stack.getCount());
 
 ## Future Enhancements
 
-### Planned Features
+### Implemented Features
 
-1. **Item Retrieval**:
+1. **Item Retrieval** ✅:
    - Click storage slots to retrieve items
    - Shift-click to move to player inventory
-   - Right-click for single item retrieval
+   - Right-click for half stack retrieval
 
-2. **Search System**:
+2. **Search System** ✅ (requires Search Box in multiblock):
    - Search bar for finding specific items
-   - Filter display based on search terms
-   - Quick access to commonly used items
+   - Real-time filter display based on search terms
+   - Multiple search modes: standard, `$` tags, `@` mod, `%` name
 
-3. **Sorting Options**:
+### Planned Features
+
+1. **Sorting Options**:
    - Sort by item name, quantity, or type
    - Auto-sort functionality
    - Custom sorting preferences
 
-4. **Visual Enhancements**:
+2. **Visual Enhancements**:
    - Item quantity overlays for large stacks
    - Progress bars for storage capacity
    - Visual indicators for full/empty slots

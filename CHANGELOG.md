@@ -10,6 +10,8 @@ All notable changes to Steve's Simple Storage (S3) for Minecraft 1.21.1 will be 
 - JEI recipe/usage lookup (R/U keys) for items in storage grids
 - Hover highlight effect for storage items
 - Shared `AbstractStorageScreen` base class for consistent GUI behavior
+- Search Box enabling item filtering in Storage Core GUI
+- Real-time search with 4 modes: standard (name/tooltip), `$` (tags), `@` (mod ID), `%` (item name)
 
 ### Fixed
 - JEI hotkeys (R/U) not working on storage items (was only recipe transfer)

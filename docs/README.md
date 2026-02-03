@@ -33,10 +33,10 @@ This directory contains comprehensive technical documentation for the Steve's Si
 - JEI integration for recipe transfer and ingredient lookup
 - Crafting Box with 3x3 crafting grid connected to storage
 - Shift-click crafting with automatic ingredient repopulation
+- Search Box with real-time filtering (name, tags, mod, tooltips)
 - Dolly and Key items
 
 **Planned Features (Not Yet Ported):**
-- Search Box with item filtering
 - Security Box with player access control
 - Sort Box with automatic sorting modes
 - Access Terminal for remote access

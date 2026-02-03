@@ -15,16 +15,29 @@ import net.neoforged.neoforge.network.handling.IPayloadContext;
 import java.util.ArrayList;
 import java.util.List;
 
-public record StorageSyncPacket(BlockPos pos, List<StoredItemStack> items, long maxCapacity) implements CustomPacketPayload {
+public record StorageSyncPacket(BlockPos pos, List<StoredItemStack> items, long maxCapacity, boolean hasSearchBox) implements CustomPacketPayload {
     
     public static final Type<StorageSyncPacket> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("ezstorage", "storage_sync"));
     
-    public static final StreamCodec<RegistryFriendlyByteBuf, StorageSyncPacket> STREAM_CODEC = StreamCodec.composite(
-        BlockPos.STREAM_CODEC, StorageSyncPacket::pos,
-        StreamCodec.of(StorageSyncPacket::writeItems, StorageSyncPacket::readItems), StorageSyncPacket::items,
-        StreamCodec.of((buf, capacity) -> buf.writeLong(capacity), buf -> buf.readLong()), StorageSyncPacket::maxCapacity,
-        StorageSyncPacket::new
+    public static final StreamCodec<RegistryFriendlyByteBuf, StorageSyncPacket> STREAM_CODEC = StreamCodec.of(
+        StorageSyncPacket::encode,
+        StorageSyncPacket::decode
     );
+
+    private static void encode(RegistryFriendlyByteBuf buf, StorageSyncPacket packet) {
+        BlockPos.STREAM_CODEC.encode(buf, packet.pos());
+        writeItems(buf, packet.items());
+        buf.writeLong(packet.maxCapacity());
+        buf.writeBoolean(packet.hasSearchBox());
+    }
+
+    private static StorageSyncPacket decode(RegistryFriendlyByteBuf buf) {
+        BlockPos pos = BlockPos.STREAM_CODEC.decode(buf);
+        List<StoredItemStack> items = readItems(buf);
+        long maxCapacity = buf.readLong();
+        boolean hasSearchBox = buf.readBoolean();
+        return new StorageSyncPacket(pos, items, maxCapacity, hasSearchBox);
+    }
 
     private static void writeItems(RegistryFriendlyByteBuf buf, List<StoredItemStack> items) {
         buf.writeInt(items.size());
@@ -57,8 +70,8 @@ public record StorageSyncPacket(BlockPos pos, List<StoredItemStack> items, long 
                 BlockEntity blockEntity = mc.level.getBlockEntity(packet.pos());
                 if (blockEntity instanceof StorageCoreBlockEntity storageCore) {
                     // Update client-side storage data
-                    storageCore.getInventory().syncFromServer(packet.items(), packet.maxCapacity());
-                    
+                    storageCore.getInventory().syncFromServer(packet.items(), packet.maxCapacity(), packet.hasSearchBox());
+
                     // Force screen refresh if open
                     if (mc.screen != null) {
                         mc.screen.init(mc, mc.screen.width, mc.screen.height);

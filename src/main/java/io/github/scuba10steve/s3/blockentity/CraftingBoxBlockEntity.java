@@ -41,7 +41,7 @@ public class CraftingBoxBlockEntity extends MultiblockBlockEntity implements Men
             LOGGER.info("Syncing storage data from core at {}", core.getBlockPos());
             PacketDistributor.sendToPlayer(
                 (net.minecraft.server.level.ServerPlayer) player,
-                new StorageSyncPacket(this.worldPosition, core.getInventory().getStoredItems(), core.getInventory().getMaxItems())
+                new StorageSyncPacket(this.worldPosition, core.getInventory().getStoredItems(), core.getInventory().getMaxItems(), core.hasSearchBox())
             );
         } else {
             LOGGER.warn("No core found or not server level");

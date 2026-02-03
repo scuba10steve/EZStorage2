@@ -15,6 +15,7 @@ public class EZInventory {
     
     private final List<StoredItemStack> items = new ArrayList<>();
     private long maxItems = 10000; // Default capacity
+    private boolean hasSearchBox = false;
     
     public ItemStack insertItem(ItemStack stack) {
         LOGGER.debug("EZInventory.insertItem: {} x{}, current capacity: {}/{}", 
@@ -88,12 +89,21 @@ public class EZInventory {
         LOGGER.info("Setting max items to: {}", maxItems);
         this.maxItems = maxItems;
     }
+
+    public boolean hasSearchBox() {
+        return hasSearchBox;
+    }
+
+    public void setHasSearchBox(boolean hasSearchBox) {
+        this.hasSearchBox = hasSearchBox;
+    }
     
-    public void syncFromServer(List<StoredItemStack> serverItems, long maxCapacity) {
+    public void syncFromServer(List<StoredItemStack> serverItems, long maxCapacity, boolean hasSearchBox) {
         items.clear();
         items.addAll(serverItems);
         this.maxItems = maxCapacity;
-        LOGGER.debug("Synced from server: {} items, max capacity: {}", serverItems.size(), maxCapacity);
+        this.hasSearchBox = hasSearchBox;
+        LOGGER.debug("Synced from server: {} items, max capacity: {}, has search box: {}", serverItems.size(), maxCapacity, hasSearchBox);
     }
     
     public CompoundTag save(HolderLookup.Provider registries) {

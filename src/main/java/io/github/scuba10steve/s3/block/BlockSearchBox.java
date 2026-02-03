@@ -9,10 +9,14 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.Level;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.EntityBlock;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.phys.BlockHitResult;
 
+/**
+ * The Search Box block enables search functionality in the Storage Core GUI.
+ * When placed adjacent to a Storage Core multiblock, it enables the search field
+ * in the Storage Core GUI, allowing players to filter stored items.
+ *
+ * This block does not have its own GUI - it simply acts as a detection flag.
+ */
 public class BlockSearchBox extends StorageMultiblock implements EntityBlock {
     public BlockSearchBox() {
         super(Properties.of().strength(2.0f));
@@ -25,19 +29,7 @@ public class BlockSearchBox extends StorageMultiblock implements EntityBlock {
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return type == EZBlockEntities.SEARCH_BOX.get() ? (level1, pos, state1, blockEntity) -> {
-            // Ticker logic will be implemented later
-        } : null;
-    }
-
-    @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-        if (!level.isClientSide) {
-            BlockEntity blockEntity = level.getBlockEntity(pos);
-            if (blockEntity instanceof SearchBoxBlockEntity searchBox) {
-                player.openMenu(searchBox, pos);
-            }
-        }
-        return InteractionResult.sidedSuccess(level.isClientSide);
+        // No tick logic needed for Search Box
+        return null;
     }
 }
