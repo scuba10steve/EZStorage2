@@ -76,10 +76,10 @@ public record StorageSyncPacket(BlockPos pos, List<StoredItemStack> items, long 
                     // Update client-side storage data
                     storageCore.getInventory().syncFromServer(packet.items(), packet.maxCapacity(), packet.hasSearchBox(), packet.hasSortBox(), packet.sortModeOrdinal());
 
-                    // Force screen refresh if open
-                    if (mc.screen != null) {
-                        mc.screen.init(mc, mc.screen.width, mc.screen.height);
-                    }
+                    // Note: We intentionally do NOT call screen.init() here.
+                    // The screen reads fresh data from inventory on each render frame,
+                    // so it will naturally update. Calling init() would reset the search
+                    // field and cause UI issues when items are frequently inserted.
                 }
             }
         });

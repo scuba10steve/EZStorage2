@@ -38,6 +38,10 @@ public class EZItems {
         () -> new BlockItem(EZBlocks.SEARCH_BOX.get(), new Item.Properties()));
     public static final Supplier<Item> SORT_BOX = ITEMS.register("sort_box",
         () -> new BlockItem(EZBlocks.SORT_BOX.get(), new Item.Properties()));
+    public static final Supplier<Item> BLANK_BOX = ITEMS.register("blank_box",
+        () -> new BlockItem(EZBlocks.BLANK_BOX.get(), new Item.Properties()));
+    public static final Supplier<Item> INPUT_PORT = ITEMS.register("input_port",
+        () -> new BlockItem(EZBlocks.INPUT_PORT.get(), new Item.Properties()));
 
     // Items
     public static final Supplier<Item> KEY = ITEMS.register("key", ItemKey::new);

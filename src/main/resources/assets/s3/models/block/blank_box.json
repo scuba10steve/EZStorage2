@@ -1,6 +1,6 @@
 {
-    "parent": "block/cube_all",
-    "textures": {
-        "all": "s3:blocks/box_side_wood"
-    }
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "s3:block/box_side_wood"
+  }
 }

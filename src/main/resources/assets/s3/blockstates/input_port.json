@@ -1,5 +1,7 @@
 {
-	"variants": {
-		"normal": {"model": "s3:input_port"}
-	}
+  "variants": {
+    "": {
+      "model": "s3:block/input_port"
+    }
+  }
 }

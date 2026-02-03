@@ -47,6 +47,7 @@ public abstract class AbstractStorageScreen<T extends StorageCoreMenu> extends A
     protected EditBox searchField;
     protected List<StoredItemStack> filteredItems = new ArrayList<>();
     protected boolean searchActive = false;
+    protected int lastKnownItemCount = -1; // Track inventory changes for filtered list refresh
 
     // Sort functionality
     protected Button sortButton;
@@ -235,6 +236,17 @@ public abstract class AbstractStorageScreen<T extends StorageCoreMenu> extends A
         if (shouldHaveSort != sortActive) {
             sortActive = shouldHaveSort;
             // Refresh will handle adding/removing button
+        }
+
+        // Check if inventory contents changed and update filtered items if search is active
+        if (inventory != null) {
+            int currentItemCount = inventory.getStoredItems().size();
+            if (currentItemCount != lastKnownItemCount) {
+                lastKnownItemCount = currentItemCount;
+                if (searchActive && searchField != null && !searchField.getValue().isEmpty()) {
+                    updateFilteredItems();
+                }
+            }
         }
 
         // Update sort button text to reflect current mode

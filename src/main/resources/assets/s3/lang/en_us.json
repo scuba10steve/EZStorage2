@@ -12,6 +12,8 @@
   "block.s3.crafting_box": "Crafting Box",
   "block.s3.search_box": "Search Box",
   "block.s3.sort_box": "Sort Box",
+  "block.s3.blank_box": "Blank Box",
+  "block.s3.input_port": "Input Port",
 
   "item.s3.key": "EZ Key",
   "item.s3.dolly": "Dolly",

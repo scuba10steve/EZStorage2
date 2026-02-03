@@ -1,5 +1,7 @@
 {
-	"variants": {
-		"normal": {"model": "s3:blank_box"}
-	}
+  "variants": {
+    "": {
+      "model": "s3:block/blank_box"
+    }
+  }
 }

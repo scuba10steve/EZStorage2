@@ -32,17 +32,16 @@ This repository contains Steve's Simple Storage updated for **Minecraft 1.21.1**
 - ✅ Shift-click crafting with automatic ingredient repopulation from storage
 - ✅ JEI recipe/usage lookup (R/U keys) for items in storage grids
 - ✅ Search Box with real-time item filtering and multiple search modes
+- ✅ Sort Box with 6 sorting modes (count, name, mod - each with ascending/descending)
+- ✅ Blank Box (decorative multiblock component)
+- ✅ Input Port (item input automation via hoppers/pipes)
 
 ### Not Yet Ported
 - ❌ Security Box (player access control)
-- ❌ Sort Box (automatic sorting modes)
 - ❌ Access Terminal (remote storage access)
-- ❌ Input Port (item input automation)
 - ❌ Extract Port (item extraction automation)
 - ❌ Eject Port (item ejection)
-- ❌ Blank Box (decorative multiblock component)
 - ❌ Security system with player permissions
-- ❌ Sorting modes (alphabetical, quantity, mod)
 - ❌ Extract list filtering (whitelist/blacklist)
 
 ### Known Issues
