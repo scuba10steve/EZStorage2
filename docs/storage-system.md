@@ -260,3 +260,20 @@ private void syncToClients() {
 - **Auto-Sorting**: Automatic item organization (Sort Box)
 - **Void Overflow**: Option to void items when full
 - **Priority System**: Preferred storage locations for specific items
+
+### Networked Storage (Future Concept)
+Connect multiple Storage Core systems together to create a unified storage network.
+
+**Potential Approaches:**
+- **Network Bridge Block**: Physical block that links two Storage Cores within range
+- **Redstone Conduit**: Cable-based connections between storage systems
+- **Wireless Transmission**: Ender-themed wireless links for long-distance/cross-dimensional connections
+
+**Considerations:**
+- Shared vs. partitioned inventory views
+- Bandwidth/transfer rate limits
+- Security across network nodes
+- Performance implications of large networks
+- Visual feedback for network status
+
+*Note: This is a conceptual feature for future development. No implementation work has been started.*

@@ -48,6 +48,9 @@ This repository contains Steve's Simple Storage updated for **Minecraft 1.21.1**
 ### Known Issues
 - ⚠️ Dolly item (basic & super) - Not functional, needs implementation fix
 
+### Future Ideas
+- 🔮 **Networked Storage** - Connect multiple Storage Core systems via physical bridges, conduits, or wireless links
+
 ### Port Complete! 🎉
 Steve's Simple Storage core functionality has been successfully ported from Minecraft 1.12.2 to 1.21.1. The basic storage system is fully functional with item storage, retrieval, and multiblock capacity scaling. Advanced features listed above are planned for future updates.
 
