@@ -1,25 +1,32 @@
 {
   "itemGroup.s3": "Steve's Simple Storage",
-  
+
   "block.s3.storage_core": "Storage Core",
   "block.s3.storage_box": "Storage Box",
   "block.s3.condensed_storage_box": "Condensed Storage Box",
   "block.s3.compressed_storage_box": "Compressed Storage Box",
-  "block.s3.super_storage_box": "Super Storage Box",
   "block.s3.super_storage_box": "Super Storage Box",
   "block.s3.ultra_storage_box": "Ultra Storage Box",
   "block.s3.hyper_storage_box": "Hyper Storage Box",
   "block.s3.ultimate_storage_box": "Ultimate Storage Box",
   "block.s3.crafting_box": "Crafting Box",
   "block.s3.search_box": "Search Box",
-  
+  "block.s3.sort_box": "Sort Box",
+
   "item.s3.key": "EZ Key",
   "item.s3.dolly": "Dolly",
   "item.s3.dolly_super": "Super Dolly",
-  
+
   "container.ezstorage.storage_core": "Storage Core",
-  
+
   "gui.ezstorage.search": "Search...",
   "gui.ezstorage.sort": "Sort",
-  "gui.ezstorage.clear": "Clear"
+  "gui.ezstorage.clear": "Clear",
+
+  "gui.ezstorage.sort.count_down": "Count Down",
+  "gui.ezstorage.sort.count_up": "Count Up",
+  "gui.ezstorage.sort.name_az": "Name A-Z",
+  "gui.ezstorage.sort.name_za": "Name Z-A",
+  "gui.ezstorage.sort.mod_az": "Mod A-Z",
+  "gui.ezstorage.sort.mod_za": "Mod Z-A"
 }

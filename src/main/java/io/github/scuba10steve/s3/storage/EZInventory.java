@@ -1,5 +1,6 @@
 package io.github.scuba10steve.s3.storage;
 
+import io.github.scuba10steve.s3.util.SortMode;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -16,6 +17,8 @@ public class EZInventory {
     private final List<StoredItemStack> items = new ArrayList<>();
     private long maxItems = 10000; // Default capacity
     private boolean hasSearchBox = false;
+    private boolean hasSortBox = false;
+    private SortMode sortMode = SortMode.COUNT;
     
     public ItemStack insertItem(ItemStack stack) {
         LOGGER.debug("EZInventory.insertItem: {} x{}, current capacity: {}/{}", 
@@ -97,13 +100,45 @@ public class EZInventory {
     public void setHasSearchBox(boolean hasSearchBox) {
         this.hasSearchBox = hasSearchBox;
     }
-    
-    public void syncFromServer(List<StoredItemStack> serverItems, long maxCapacity, boolean hasSearchBox) {
+
+    public boolean hasSortBox() {
+        return hasSortBox;
+    }
+
+    public void setHasSortBox(boolean hasSortBox) {
+        this.hasSortBox = hasSortBox;
+    }
+
+    public SortMode getSortMode() {
+        return sortMode;
+    }
+
+    public void setSortMode(SortMode sortMode) {
+        this.sortMode = sortMode;
+    }
+
+    /**
+     * Returns items sorted by the current sort mode if a Sort Box is present,
+     * otherwise returns items in their natural order.
+     */
+    public List<StoredItemStack> getSortedItems() {
+        if (!hasSortBox || sortMode == null) {
+            return new ArrayList<>(items);
+        }
+        List<StoredItemStack> sorted = new ArrayList<>(items);
+        sorted.sort(sortMode.getComparator());
+        return sorted;
+    }
+
+    public void syncFromServer(List<StoredItemStack> serverItems, long maxCapacity, boolean hasSearchBox, boolean hasSortBox, int sortModeOrdinal) {
         items.clear();
         items.addAll(serverItems);
         this.maxItems = maxCapacity;
         this.hasSearchBox = hasSearchBox;
-        LOGGER.debug("Synced from server: {} items, max capacity: {}, has search box: {}", serverItems.size(), maxCapacity, hasSearchBox);
+        this.hasSortBox = hasSortBox;
+        this.sortMode = SortMode.fromOrdinal(sortModeOrdinal);
+        LOGGER.debug("Synced from server: {} items, max capacity: {}, has search box: {}, has sort box: {}, sort mode: {}",
+                    serverItems.size(), maxCapacity, hasSearchBox, hasSortBox, sortMode);
     }
     
     public CompoundTag save(HolderLookup.Provider registries) {

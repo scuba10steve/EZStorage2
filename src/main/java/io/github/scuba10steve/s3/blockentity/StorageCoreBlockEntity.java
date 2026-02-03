@@ -2,8 +2,10 @@ package io.github.scuba10steve.s3.blockentity;
 
 import io.github.scuba10steve.s3.block.BlockCraftingBox;
 import io.github.scuba10steve.s3.block.BlockSearchBox;
+import io.github.scuba10steve.s3.block.BlockSortBox;
 import io.github.scuba10steve.s3.block.BlockStorage;
 import io.github.scuba10steve.s3.block.StorageMultiblock;
+import io.github.scuba10steve.s3.util.SortMode;
 import io.github.scuba10steve.s3.gui.server.StorageCoreCraftingMenu;
 import io.github.scuba10steve.s3.gui.server.StorageCoreMenu;
 import io.github.scuba10steve.s3.init.EZBlockEntities;
@@ -37,6 +39,8 @@ public class StorageCoreBlockEntity extends EZBlockEntity implements MenuProvide
     private final Set<BlockRef> multiblock = new HashSet<>();
     private boolean hasCraftingBox = false;
     private boolean hasSearchBox = false;
+    private boolean hasSortBox = false;
+    private SortMode sortMode = SortMode.COUNT;
     
     public StorageCoreBlockEntity(BlockPos pos, BlockState state) {
         super(EZBlockEntities.STORAGE_CORE.get(), pos, state);
@@ -53,6 +57,7 @@ public class StorageCoreBlockEntity extends EZBlockEntity implements MenuProvide
         multiblock.clear();
         hasCraftingBox = false;
         hasSearchBox = false;
+        hasSortBox = false;
         
         BlockRef coreRef = new BlockRef(getBlockState().getBlock(), worldPosition);
         multiblock.add(coreRef);
@@ -69,11 +74,14 @@ public class StorageCoreBlockEntity extends EZBlockEntity implements MenuProvide
             } else if (blockRef.block instanceof BlockSearchBox) {
                 hasSearchBox = true;
                 LOGGER.info("Found search box at {}", blockRef.pos);
+            } else if (blockRef.block instanceof BlockSortBox) {
+                hasSortBox = true;
+                LOGGER.info("Found sort box at {}", blockRef.pos);
             }
         }
 
-        LOGGER.info("Multiblock scan complete. Found {} blocks, total capacity: {}, has crafting box: {}, has search box: {}",
-                   multiblock.size(), totalCapacity, hasCraftingBox, hasSearchBox);
+        LOGGER.info("Multiblock scan complete. Found {} blocks, total capacity: {}, has crafting box: {}, has search box: {}, has sort box: {}",
+                   multiblock.size(), totalCapacity, hasCraftingBox, hasSearchBox, hasSortBox);
         inventory.setMaxItems(totalCapacity);
         setChanged();
         syncToClients();
@@ -127,9 +135,9 @@ public class StorageCoreBlockEntity extends EZBlockEntity implements MenuProvide
     private void syncToClients() {
         if (level instanceof ServerLevel serverLevel) {
             PacketDistributor.sendToPlayersTrackingChunk(
-                serverLevel, 
+                serverLevel,
                 level.getChunkAt(worldPosition).getPos(),
-                new StorageSyncPacket(worldPosition, inventory.getStoredItems(), inventory.getMaxItems(), hasSearchBox)
+                new StorageSyncPacket(worldPosition, inventory.getStoredItems(), inventory.getMaxItems(), hasSearchBox, hasSortBox, sortMode.ordinal())
             );
         }
     }
@@ -142,10 +150,23 @@ public class StorageCoreBlockEntity extends EZBlockEntity implements MenuProvide
         return hasSearchBox;
     }
 
+    public boolean hasSortBox() {
+        return hasSortBox;
+    }
+
+    public SortMode getSortMode() {
+        return sortMode;
+    }
+
+    public void setSortMode(SortMode sortMode) {
+        this.sortMode = sortMode;
+    }
+
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
         tag.put("Inventory", inventory.save(registries));
+        tag.putInt("SortMode", sortMode.ordinal());
         LOGGER.debug("Saved inventory data to NBT");
     }
 
@@ -155,6 +176,10 @@ public class StorageCoreBlockEntity extends EZBlockEntity implements MenuProvide
         if (tag.contains("Inventory")) {
             inventory.load(tag.getCompound("Inventory"), registries);
             LOGGER.debug("Loaded inventory data from NBT");
+        }
+        if (tag.contains("SortMode")) {
+            sortMode = SortMode.fromOrdinal(tag.getInt("SortMode"));
+            LOGGER.debug("Loaded sort mode from NBT: {}", sortMode);
         }
     }
 
@@ -169,7 +194,7 @@ public class StorageCoreBlockEntity extends EZBlockEntity implements MenuProvide
         if (level instanceof ServerLevel serverLevel) {
             PacketDistributor.sendToPlayer(
                 (net.minecraft.server.level.ServerPlayer) player,
-                new StorageSyncPacket(worldPosition, inventory.getStoredItems(), inventory.getMaxItems(), hasSearchBox)
+                new StorageSyncPacket(worldPosition, inventory.getStoredItems(), inventory.getMaxItems(), hasSearchBox, hasSortBox, sortMode.ordinal())
             );
         }
         

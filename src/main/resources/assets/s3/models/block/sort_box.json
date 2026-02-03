@@ -1,7 +1,6 @@
 {
-    "parent": "block/cube_all",
-    "textures": {
-        "all": "s3:blocks/sort_box",
-        "particle": "s3:blocks/sort_box"
-    }
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "s3:block/sort_box"
+  }
 }

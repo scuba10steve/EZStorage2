@@ -2,6 +2,7 @@ package io.github.scuba10steve.s3.init;
 
 import io.github.scuba10steve.s3.blockentity.CraftingBoxBlockEntity;
 import io.github.scuba10steve.s3.blockentity.SearchBoxBlockEntity;
+import io.github.scuba10steve.s3.blockentity.SortBoxBlockEntity;
 import io.github.scuba10steve.s3.blockentity.StorageCoreBlockEntity;
 import io.github.scuba10steve.s3.ref.RefStrings;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -23,9 +24,13 @@ public class EZBlockEntities {
         BLOCK_ENTITIES.register("crafting_box", () -> 
             BlockEntityType.Builder.of(CraftingBoxBlockEntity::new, EZBlocks.CRAFTING_BOX.get()).build(null));
 
-    public static final Supplier<BlockEntityType<SearchBoxBlockEntity>> SEARCH_BOX = 
-        BLOCK_ENTITIES.register("search_box", () -> 
+    public static final Supplier<BlockEntityType<SearchBoxBlockEntity>> SEARCH_BOX =
+        BLOCK_ENTITIES.register("search_box", () ->
             BlockEntityType.Builder.of(SearchBoxBlockEntity::new, EZBlocks.SEARCH_BOX.get()).build(null));
+
+    public static final Supplier<BlockEntityType<SortBoxBlockEntity>> SORT_BOX =
+        BLOCK_ENTITIES.register("sort_box", () ->
+            BlockEntityType.Builder.of(SortBoxBlockEntity::new, EZBlocks.SORT_BOX.get()).build(null));
 
     public static void register(IEventBus eventBus) {
         BLOCK_ENTITIES.register(eventBus);

@@ -30,7 +30,8 @@ public class EZCreativeTabs {
                 output.accept(EZItems.ULTIMATE_STORAGE_BOX.get());
                 output.accept(EZItems.CRAFTING_BOX.get());
                 output.accept(EZItems.SEARCH_BOX.get());
-                
+                output.accept(EZItems.SORT_BOX.get());
+
                 // Add all items
                 output.accept(EZItems.KEY.get());
                 output.accept(EZItems.DOLLY.get());

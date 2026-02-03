@@ -1,5 +1,7 @@
 {
-	"variants": {
-		"normal": {"model": "s3:sort_box"}
-	}
+  "variants": {
+    "": {
+      "model": "s3:block/sort_box"
+    }
+  }
 }

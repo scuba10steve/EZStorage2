@@ -40,8 +40,8 @@ public class StorageGuiContainerHandler<T extends AbstractStorageScreen<?>> impl
             return Optional.empty();
         }
 
-        // Get the stored items and check if slot is valid
-        List<StoredItemStack> storedItems = inventory.getStoredItems();
+        // Get the stored items (sorted if sort box is present) and check if slot is valid
+        List<StoredItemStack> storedItems = inventory.hasSortBox() ? inventory.getSortedItems() : inventory.getStoredItems();
         if (slotIndex >= storedItems.size()) {
             return Optional.empty();
         }

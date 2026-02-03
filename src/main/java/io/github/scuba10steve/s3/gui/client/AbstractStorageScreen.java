@@ -1,10 +1,13 @@
 package io.github.scuba10steve.s3.gui.client;
 
 import io.github.scuba10steve.s3.gui.server.StorageCoreMenu;
+import io.github.scuba10steve.s3.network.SortModePacket;
 import io.github.scuba10steve.s3.network.StorageClickPacket;
 import io.github.scuba10steve.s3.storage.EZInventory;
 import io.github.scuba10steve.s3.storage.StoredItemStack;
+import io.github.scuba10steve.s3.util.SortMode;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -45,6 +48,10 @@ public abstract class AbstractStorageScreen<T extends StorageCoreMenu> extends A
     protected List<StoredItemStack> filteredItems = new ArrayList<>();
     protected boolean searchActive = false;
 
+    // Sort functionality
+    protected Button sortButton;
+    protected boolean sortActive = false;
+
     protected AbstractStorageScreen(T menu, Inventory playerInventory, Component title, ResourceLocation texture) {
         super(menu, playerInventory, title);
         this.texture = texture;
@@ -71,8 +78,32 @@ public abstract class AbstractStorageScreen<T extends StorageCoreMenu> extends A
             this.searchField.setFocused(true);
         }
 
+        // Check if sort box is available and create sort button
+        // Position below storage area dynamically based on storageAreaHeight
+        sortActive = inventory != null && inventory.hasSortBox();
+        if (sortActive) {
+            SortMode currentMode = inventory.getSortMode();
+            int sortButtonY = this.topPos + 18 + storageAreaHeight; // Just below storage grid
+            this.sortButton = Button.builder(
+                    Component.literal(currentMode.getDisplayName()),
+                    this::onSortButtonPressed
+                )
+                .bounds(this.leftPos + 118, sortButtonY, 50, 12)
+                .build();
+            this.addRenderableWidget(this.sortButton);
+        }
+
         // Initialize filtered items
         updateFilteredItems();
+    }
+
+    /**
+     * Called when the sort button is pressed
+     */
+    protected void onSortButtonPressed(Button button) {
+        if (minecraft != null && minecraft.getConnection() != null) {
+            minecraft.getConnection().send(new SortModePacket(menu.getPos()));
+        }
     }
 
     /**
@@ -94,7 +125,8 @@ public abstract class AbstractStorageScreen<T extends StorageCoreMenu> extends A
             return;
         }
 
-        List<StoredItemStack> allItems = inventory.getStoredItems();
+        // Get items (sorted if sort box is present)
+        List<StoredItemStack> allItems = sortActive ? inventory.getSortedItems() : inventory.getStoredItems();
 
         if (!searchActive || searchField == null || searchField.getValue().isEmpty()) {
             filteredItems = new ArrayList<>(allItems);
@@ -198,6 +230,19 @@ public abstract class AbstractStorageScreen<T extends StorageCoreMenu> extends A
             updateFilteredItems();
         }
 
+        // Check if sort box status changed
+        boolean shouldHaveSort = inventory != null && inventory.hasSortBox();
+        if (shouldHaveSort != sortActive) {
+            sortActive = shouldHaveSort;
+            // Refresh will handle adding/removing button
+        }
+
+        // Update sort button text to reflect current mode
+        if (sortActive && sortButton != null && inventory != null) {
+            SortMode currentMode = inventory.getSortMode();
+            sortButton.setMessage(Component.literal(currentMode.getDisplayName()));
+        }
+
         // Only render title if search is NOT active (search bar replaces the title area)
         if (!searchActive) {
             guiGraphics.drawString(this.font, this.title, this.titleLabelX, this.titleLabelY, 0x404040, false);
@@ -237,7 +282,7 @@ public abstract class AbstractStorageScreen<T extends StorageCoreMenu> extends A
         } else {
             EZInventory inventory = menu.getInventory();
             if (inventory == null) return;
-            itemsToUse = inventory.getStoredItems();
+            itemsToUse = sortActive ? inventory.getSortedItems() : inventory.getStoredItems();
         }
 
         if (slotIndex >= itemsToUse.size()) return;
@@ -264,7 +309,8 @@ public abstract class AbstractStorageScreen<T extends StorageCoreMenu> extends A
         } else {
             EZInventory inventory = menu.getInventory();
             if (inventory == null) return;
-            itemsToRender = inventory.getStoredItems();
+            // Use sorted items if sort box is present
+            itemsToRender = sortActive ? inventory.getSortedItems() : inventory.getStoredItems();
         }
 
         int startX = 8;
@@ -338,12 +384,12 @@ public abstract class AbstractStorageScreen<T extends StorageCoreMenu> extends A
                     return true;
                 }
 
-                // Use filtered items if searching, otherwise all items
+                // Use filtered items if searching, otherwise all items (sorted if sort box present)
                 List<StoredItemStack> itemsToUse;
                 if (searchActive && searchField != null && !searchField.getValue().isEmpty()) {
                     itemsToUse = filteredItems;
                 } else {
-                    itemsToUse = inventory.getStoredItems();
+                    itemsToUse = sortActive ? inventory.getSortedItems() : inventory.getStoredItems();
                 }
 
                 // Find the actual inventory index for the clicked item
@@ -399,7 +445,7 @@ public abstract class AbstractStorageScreen<T extends StorageCoreMenu> extends A
         } else {
             EZInventory inventory = menu.getInventory();
             if (inventory == null) return false;
-            itemsForScroll = inventory.getStoredItems();
+            itemsForScroll = sortActive ? inventory.getSortedItems() : inventory.getStoredItems();
         }
 
         int maxRows = (itemsForScroll.size() + 8) / 9 - storageRows;

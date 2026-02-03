@@ -15,7 +15,7 @@ import net.neoforged.neoforge.network.handling.IPayloadContext;
 import java.util.ArrayList;
 import java.util.List;
 
-public record StorageSyncPacket(BlockPos pos, List<StoredItemStack> items, long maxCapacity, boolean hasSearchBox) implements CustomPacketPayload {
+public record StorageSyncPacket(BlockPos pos, List<StoredItemStack> items, long maxCapacity, boolean hasSearchBox, boolean hasSortBox, int sortModeOrdinal) implements CustomPacketPayload {
     
     public static final Type<StorageSyncPacket> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("ezstorage", "storage_sync"));
     
@@ -29,6 +29,8 @@ public record StorageSyncPacket(BlockPos pos, List<StoredItemStack> items, long 
         writeItems(buf, packet.items());
         buf.writeLong(packet.maxCapacity());
         buf.writeBoolean(packet.hasSearchBox());
+        buf.writeBoolean(packet.hasSortBox());
+        buf.writeInt(packet.sortModeOrdinal());
     }
 
     private static StorageSyncPacket decode(RegistryFriendlyByteBuf buf) {
@@ -36,7 +38,9 @@ public record StorageSyncPacket(BlockPos pos, List<StoredItemStack> items, long 
         List<StoredItemStack> items = readItems(buf);
         long maxCapacity = buf.readLong();
         boolean hasSearchBox = buf.readBoolean();
-        return new StorageSyncPacket(pos, items, maxCapacity, hasSearchBox);
+        boolean hasSortBox = buf.readBoolean();
+        int sortModeOrdinal = buf.readInt();
+        return new StorageSyncPacket(pos, items, maxCapacity, hasSearchBox, hasSortBox, sortModeOrdinal);
     }
 
     private static void writeItems(RegistryFriendlyByteBuf buf, List<StoredItemStack> items) {
@@ -70,7 +74,7 @@ public record StorageSyncPacket(BlockPos pos, List<StoredItemStack> items, long 
                 BlockEntity blockEntity = mc.level.getBlockEntity(packet.pos());
                 if (blockEntity instanceof StorageCoreBlockEntity storageCore) {
                     // Update client-side storage data
-                    storageCore.getInventory().syncFromServer(packet.items(), packet.maxCapacity(), packet.hasSearchBox());
+                    storageCore.getInventory().syncFromServer(packet.items(), packet.maxCapacity(), packet.hasSearchBox(), packet.hasSortBox(), packet.sortModeOrdinal());
 
                     // Force screen refresh if open
                     if (mc.screen != null) {
