@@ -40,14 +40,6 @@ This repository contains Steve's Simple Storage updated for **Minecraft 1.21.1**
 - ✅ Security Box (player access control with whitelist management)
 - ✅ Access Terminal (remote storage access via multiblock)
 
-### Future Ideas
-- 🔮 **Networked Storage** - Connect multiple Storage Core systems via physical bridges, conduits, or wireless links
-
-### Port Complete! 🎉
-Steve's Simple Storage core functionality has been successfully ported from Minecraft 1.12.2 to 1.21.1. The basic storage system is fully functional with item storage, retrieval, and multiblock capacity scaling. Advanced features listed above are planned for future updates.
-
-The original 1.12.2 source code has been preserved in `src/main/java-backup/` for reference during the porting process.
-
 ## Requirements
 
 - **Java 21** or higher (required for NeoForge)
@@ -101,7 +93,6 @@ open build/reports/tests/test/index.html
 ### Project Structure
 
 - `src/main/java/` - Current NeoForge implementation
-- `src/main/java-backup/` - Original 1.12.2 source code for reference
 - `src/main/resources/` - Mod resources and metadata
 - `src/test/java/` - Unit tests
 - `build.gradle` - Build configuration using ModDevGradle
@@ -109,23 +100,12 @@ open build/reports/tests/test/index.html
 
 ### Key Files
 
-- **Main mod class**: `src/main/java/io/github/scuba10steve/s3/S3.java`
+- **Main mod class**: `src/main/java/io/github/scuba10steve/s3/StevesSimpleStorage.java`
 - **Registration**: `src/main/java/io/github/scuba10steve/s3/init/`
 - **Blocks**: `src/main/java/io/github/scuba10steve/s3/block/`
 - **Items**: `src/main/java/io/github/scuba10steve/s3/item/`
 - **Block Entities**: `src/main/java/io/github/scuba10steve/s3/blockentity/`
 - **Mod metadata**: `src/main/resources/META-INF/neoforge.mods.toml`
-
-## Contributing
-
-This mod is in active development for the 1.21.1 update. The registration foundation is complete and ready for feature implementation. Key areas that need work:
-
-1. **Storage Logic** - Port storage system from 1.12.2 codebase
-2. **GUI System** - Port all user interfaces to modern Minecraft
-3. **Networking** - Update packet system for NeoForge
-4. **Assets** - Create models, textures, and blockstates
-5. **JEI Integration** - Restore JEI compatibility
-6. **Multiblock Logic** - Port storage multiblock system
 
 ## Configuration
 
