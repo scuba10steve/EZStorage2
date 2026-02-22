@@ -25,5 +25,8 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
+      - name: Generate data (structures for game tests)
+        run: ./gradlew runData
+
       - name: Run game tests
         run: ./gradlew runGameTestServer
