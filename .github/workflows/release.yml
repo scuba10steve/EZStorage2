@@ -1,0 +1,79 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release version (defaults to mod_version from gradle.properties)'
+        required: false
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Determine version
+        id: version
+        run: |
+          if [ -n "${{ inputs.version }}" ]; then
+            echo "version=${{ inputs.version }}" >> "$GITHUB_OUTPUT"
+          else
+            version=$(grep '^mod_version=' gradle.properties | cut -d'=' -f2)
+            echo "version=$version" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Setup Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Build and test
+        run: ./gradlew build
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ steps.version.outputs.version }}
+          name: v${{ steps.version.outputs.version }}
+          files: build/libs/s3-${{ steps.version.outputs.version }}.jar
+          generate_release_notes: true
+
+      # - name: Publish to Modrinth
+      #   uses: Kir-Antipov/mc-publish@v3.3
+      #   with:
+      #     modrinth-id: <your-modrinth-project-id>
+      #     modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+      #     files: build/libs/s3-${{ steps.version.outputs.version }}.jar
+      #     name: Steve's Simple Storage v${{ steps.version.outputs.version }}
+      #     version: ${{ steps.version.outputs.version }}
+      #     version-type: release
+      #     loaders: neoforge
+      #     game-versions: 1.21.1
+      #     java: 21
+
+      # - name: Publish to CurseForge
+      #   uses: Kir-Antipov/mc-publish@v3.3
+      #   with:
+      #     curseforge-id: <your-curseforge-project-id>
+      #     curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+      #     files: build/libs/s3-${{ steps.version.outputs.version }}.jar
+      #     name: Steve's Simple Storage v${{ steps.version.outputs.version }}
+      #     version: ${{ steps.version.outputs.version }}
+      #     version-type: release
+      #     loaders: neoforge
+      #     game-versions: 1.21.1
+      #     java: 21
