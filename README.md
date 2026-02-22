@@ -4,41 +4,7 @@ Steve's Simple Storage introduces a storage system that scales and evolves as pl
 
 ## Project Status
 
-This repository contains Steve's Simple Storage updated for **Minecraft 1.21.1** and **NeoForge 21.1.218**. 
-
-✅ **Current Status**: Version 0.1.0-beta - Core storage functionality complete and stable. Advanced features planned for future releases.
-
-### What's Working
-- ✅ Builds successfully with Gradle 8.10.2
-- ✅ Compatible with Minecraft 1.21.1
-- ✅ Uses NeoForge 21.1.218 with ModDevGradle 2.0.139 (stable)
-- ✅ Modern registration system with DeferredRegister
-- ✅ Basic blocks: Storage Box, Storage Core
-- ✅ Tiered storage blocks: Condensed, Compressed, Super, Ultra, Hyper, Ultimate Storage Boxes (textures working, ultimate needs custom texture)
-- ✅ Basic items: Key, Dolly (basic & super), Block Items
-- ✅ Block entities: Storage Core Block Entity with full functionality
-- ✅ GUI system: Storage Core menu and screen with proper item display and interaction
-- ✅ Storage system: Inventory with insert/extract logic, item display, scrolling
-- ✅ Networking: Storage sync and click packets for client-server communication
-- ✅ JEI integration: Recipe transfer and storage item lookup (updated to 19.27.0.336)
-- ✅ Multiblock structures: Core scanning and validation system with dynamic capacity
-- ✅ Assets: Recipes, language files, loot tables, and block tags
-- ✅ Unit tests for core constants
-- ✅ Mod loads and runs successfully in development and production environments
-- ✅ All UI sync issues resolved
-- ✅ Click interactions working correctly (left-click, right-click, shift-click, drag-and-drop)
-- ✅ Capacity updates dynamically when blocks are added/removed
-- ✅ Crafting Box with 3x3 crafting grid connected to storage system
-- ✅ Shift-click crafting with automatic ingredient repopulation from storage
-- ✅ JEI recipe/usage lookup (R/U keys) for items in storage grids
-- ✅ Search Box with real-time item filtering and multiple search modes
-- ✅ Sort Box with 6 sorting modes (count, name, mod - each with ascending/descending)
-- ✅ Blank Box (decorative multiblock component)
-- ✅ Input Port (item input automation via hoppers/pipes)
-- ✅ Extract Port (item extraction with whitelist/blacklist filtering)
-- ✅ Eject Port (item ejection into inventories above, redstone controllable)
-- ✅ Security Box (player access control with whitelist management)
-- ✅ Access Terminal (remote storage access via multiblock)
+Version 0.1.0-beta — fully ported to **Minecraft 1.21.1** / **NeoForge 21.1.218**. Core storage functionality is complete and stable. See [docs/port-overview.md](docs/port-overview.md) for details and [docs/future-ideas.md](docs/future-ideas.md) for planned features.
 
 ## Requirements
 
