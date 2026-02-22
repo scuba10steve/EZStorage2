@@ -158,12 +158,45 @@ public class StorageCoreCraftingMenu extends StorageCoreMenu {
             resultSlot.onTake(player, result);
             craftCount++;
 
+            moveRemaindersToStorage(player, recipePattern);
             tryToPopulateCraftingGrid(recipePattern);
             updateCraftingResult();
         }
 
         LOGGER.debug("craftMax completed: {} craft operations", craftCount);
         return craftCount > 0 ? originalStack : ItemStack.EMPTY;
+    }
+
+    /**
+     * Moves remainder items (e.g., buckets from milk buckets, damaged tools) out of the crafting grid
+     * after a craft operation. Items that don't match the original recipe pattern are considered
+     * remainders and are moved to storage, player inventory, or dropped on the ground.
+     */
+    private void moveRemaindersToStorage(Player player, ItemStack[] recipePattern) {
+        for (int i = 0; i < 9; i++) {
+            ItemStack gridItem = craftMatrix.getItem(i);
+            if (gridItem.isEmpty()) {
+                continue;
+            }
+            if (ItemStack.isSameItemSameComponents(gridItem, recipePattern[i])) {
+                continue;
+            }
+            // This slot has an item that doesn't match the recipe pattern — it's a remainder
+            EZInventory inventory = getInventory();
+            if (inventory != null) {
+                ItemStack remaining = inventory.insertItem(gridItem);
+                if (!remaining.isEmpty()) {
+                    if (!moveItemStackTo(remaining, 10, 46, false)) {
+                        player.drop(remaining, false);
+                    }
+                }
+            } else {
+                if (!moveItemStackTo(gridItem, 10, 46, false)) {
+                    player.drop(gridItem, false);
+                }
+            }
+            craftMatrix.setItem(i, ItemStack.EMPTY);
+        }
     }
 
     /**
