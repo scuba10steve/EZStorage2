@@ -52,20 +52,20 @@ jobs:
           files: build/libs/s3-${{ steps.version.outputs.version }}.jar
           generate_release_notes: true
 
-      # - name: Publish to Modrinth
-      #   uses: Kir-Antipov/mc-publish@v3.3
-      #   with:
-      #     modrinth-id: <your-modrinth-project-id>
-      #     modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
-      #     files: build/libs/s3-${{ steps.version.outputs.version }}.jar
-      #     name: Steve's Simple Storage v${{ steps.version.outputs.version }}
-      #     version: ${{ steps.version.outputs.version }}
-      #     version-type: beta
-      #     loaders: neoforge
-      #     game-versions: 1.21.1
-      #     java: 21
-      #     dependencies: |
-      #       jei@19.27.0.336(optional){modrinth:jei}
+      - name: Publish to Modrinth
+        uses: Kir-Antipov/mc-publish@v3.3
+        with:
+          modrinth-id: ${{ vars.MODRINTH_PROJECT_ID }}
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+          files: build/libs/s3-${{ steps.version.outputs.version }}.jar
+          name: Steve's Simple Storage v${{ steps.version.outputs.version }}
+          version: ${{ steps.version.outputs.version }}
+          version-type: beta
+          loaders: neoforge
+          game-versions: 1.21.1
+          java: 21
+          dependencies: |
+            jei@19.27.0.336(optional){modrinth:jei}
 
       - name: Publish to CurseForge
         uses: Kir-Antipov/mc-publish@v3.3
