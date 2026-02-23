@@ -30,7 +30,7 @@ Version 0.1.0-beta — fully ported to **Minecraft 1.21.1** / **NeoForge 21.1.21
    ```
 
 3. **Find the built mod**:
-   The compiled mod JAR will be located at `build/libs/steves-simple-storage-0.1.0-beta.jar`
+   The compiled mod JAR will be located at `build/libs/s3-0.1.0.jar`
 
 ## Development
 
