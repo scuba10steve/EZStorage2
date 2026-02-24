@@ -14,6 +14,7 @@
     }
   },
   "result": {
-    "item": "s3:storage_core"
+    "id": "s3:storage_core",
+    "count": 1
   }
 }

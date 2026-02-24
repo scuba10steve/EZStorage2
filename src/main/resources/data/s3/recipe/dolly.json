@@ -1,22 +1,23 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    " I ",
-    "IBI",
-    " H "
+    "SIS",
+    "IWI",
+    "SIS"
   ],
   "key": {
-    "H": {
-      "item": "minecraft:hopper"
+    "S": {
+      "item": "minecraft:stick"
     },
     "I": {
       "item": "minecraft:iron_ingot"
     },
-    "B": {
-      "item": "s3:storage_box"
+    "W": {
+      "tag": "minecraft:planks"
     }
   },
   "result": {
-    "item": "s3:extract_port"
+    "id": "s3:dolly",
+    "count": 1
   }
 }

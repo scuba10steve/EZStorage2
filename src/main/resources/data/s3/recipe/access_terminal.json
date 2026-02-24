@@ -17,6 +17,7 @@
     }
   },
   "result": {
-    "item": "s3:access_terminal"
+    "id": "s3:access_terminal",
+    "count": 1
   }
 }

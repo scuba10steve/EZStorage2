@@ -1,19 +1,20 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "III",
-    "ISI",
-    "III"
+    " I ",
+    "IGI",
+    " I "
   ],
   "key": {
     "I": {
       "item": "minecraft:iron_ingot"
     },
-    "S": {
-      "item": "s3:compressed_storage_box"
+    "G": {
+      "item": "minecraft:gold_ingot"
     }
   },
   "result": {
-    "item": "s3:super_storage_box"
+    "id": "s3:key",
+    "count": 1
   }
 }

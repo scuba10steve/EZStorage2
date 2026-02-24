@@ -1,13 +1,13 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    " P ",
+    " I ",
     "IBI",
-    " I "
+    " H "
   ],
   "key": {
-    "P": {
-      "item": "minecraft:piston"
+    "H": {
+      "item": "minecraft:hopper"
     },
     "I": {
       "item": "minecraft:iron_ingot"
@@ -17,6 +17,7 @@
     }
   },
   "result": {
-    "item": "s3:eject_port"
+    "id": "s3:extract_port",
+    "count": 1
   }
 }

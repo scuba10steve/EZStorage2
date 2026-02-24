@@ -11,7 +11,7 @@
     }
   },
   "result": {
-    "item": "s3:blank_box",
+    "id": "s3:blank_box",
     "count": 4
   }
 }

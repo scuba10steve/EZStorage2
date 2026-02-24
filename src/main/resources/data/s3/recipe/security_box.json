@@ -17,6 +17,7 @@
     }
   },
   "result": {
-    "item": "s3:security_box"
+    "id": "s3:security_box",
+    "count": 1
   }
 }

@@ -1,8 +1,6 @@
 package io.github.scuba10steve.s3.jei;
 
 import io.github.scuba10steve.s3.gui.client.AbstractStorageScreen;
-import io.github.scuba10steve.s3.gui.server.StorageCoreMenu;
-import io.github.scuba10steve.s3.storage.StorageInventory;
 import io.github.scuba10steve.s3.storage.StoredItemStack;
 import mezz.jei.api.gui.builder.IClickableIngredientFactory;
 import mezz.jei.api.gui.handlers.IGuiContainerHandler;
@@ -33,15 +31,8 @@ public class StorageGuiContainerHandler<T extends AbstractStorageScreen<?>> impl
             return Optional.empty();
         }
 
-        // Get the inventory from the menu
-        StorageCoreMenu menu = screen.getMenu();
-        StorageInventory inventory = menu.getInventory();
-        if (inventory == null) {
-            return Optional.empty();
-        }
-
-        // Get the stored items (sorted if sort box is present) and check if slot is valid
-        List<StoredItemStack> storedItems = inventory.hasSortBox() ? inventory.getSortedItems() : inventory.getStoredItems();
+        // Get the displayed items (accounts for search filtering and sorting)
+        List<StoredItemStack> storedItems = screen.getDisplayItems();
         if (slotIndex >= storedItems.size()) {
             return Optional.empty();
         }

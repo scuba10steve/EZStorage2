@@ -14,6 +14,7 @@
     }
   },
   "result": {
-    "item": "s3:dolly_super"
+    "id": "s3:dolly_super",
+    "count": 1
   }
 }

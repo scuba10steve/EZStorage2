@@ -14,6 +14,7 @@
     }
   },
   "result": {
-    "item": "s3:storage_box"
+    "id": "s3:storage_box",
+    "count": 1
   }
 }

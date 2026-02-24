@@ -14,6 +14,7 @@
     }
   },
   "result": {
-    "item": "s3:compressed_storage_box"
+    "id": "s3:compressed_storage_box",
+    "count": 1
   }
 }

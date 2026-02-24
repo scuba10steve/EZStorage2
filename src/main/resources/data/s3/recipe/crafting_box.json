@@ -7,19 +7,20 @@
   ],
   "key": {
     "E": {
-      "item": "minecraft:enchanted_book"
+      "item": "minecraft:ender_eye"
     },
     "D": {
-      "item": "minecraft:compass"
+      "item": "minecraft:diamond"
     },
     "C": {
-      "item": "minecraft:iron_block"
+      "item": "minecraft:crafting_table"
     },
     "B": {
       "item": "s3:storage_box"
     }
   },
   "result": {
-    "item": "s3:search_box"
+    "id": "s3:crafting_box",
+    "count": 1
   }
 }

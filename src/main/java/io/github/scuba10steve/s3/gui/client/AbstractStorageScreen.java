@@ -487,8 +487,6 @@ public abstract class AbstractStorageScreen<T extends StorageCoreMenu> extends A
             if (searchField.keyPressed(keyCode, scanCode, modifiers)) {
                 return true;
             }
-            // For any other key while search is focused, consume it to prevent GUI closing
-            return true;
         }
         return super.keyPressed(keyCode, scanCode, modifiers);
     }
@@ -518,6 +516,15 @@ public abstract class AbstractStorageScreen<T extends StorageCoreMenu> extends A
     }
 
     // Getters for JEI integration
+    public List<StoredItemStack> getDisplayItems() {
+        if (searchActive && searchField != null && !searchField.getValue().isEmpty()) {
+            return filteredItems;
+        }
+        StorageInventory inventory = menu.getInventory();
+        if (inventory == null) return List.of();
+        return sortActive ? inventory.getSortedItems() : inventory.getStoredItems();
+    }
+
     public int getStorageRows() {
         return storageRows;
     }

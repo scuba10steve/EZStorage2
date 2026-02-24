@@ -10,7 +10,7 @@
       "item": "minecraft:enchanted_book"
     },
     "D": {
-      "item": "minecraft:comparator"
+      "item": "minecraft:compass"
     },
     "C": {
       "item": "minecraft:iron_block"
@@ -20,6 +20,7 @@
     }
   },
   "result": {
-    "item": "s3:sort_box"
+    "id": "s3:search_box",
+    "count": 1
   }
 }

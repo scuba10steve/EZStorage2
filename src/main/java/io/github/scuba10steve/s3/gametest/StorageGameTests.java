@@ -6,13 +6,20 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.RecipeManager;
 import net.neoforged.neoforge.gametest.GameTestHolder;
 import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @GameTestHolder("s3")
 @PrefixGameTestTemplate(false)
@@ -203,6 +210,38 @@ public class StorageGameTests {
                 return;
             }
 
+            helper.succeed();
+        });
+    }
+
+    @GameTest(template = "core_with_storage_box", setupTicks = 5)
+    public static void all_recipes_registered(GameTestHelper helper) {
+        helper.runAfterDelay(5, () -> {
+            RecipeManager recipeManager = helper.getLevel().getServer().getRecipeManager();
+
+            String[] expectedRecipes = {
+                "access_terminal", "blank_box", "compressed_storage_box", "condensed_storage_box",
+                "crafting_box", "dolly", "dolly_super", "eject_port", "extract_port",
+                "hyper_storage_box", "input_port", "key", "search_box", "security_box",
+                "sort_box", "storage_box", "storage_core", "super_storage_box",
+                "ultimate_storage_box", "ultra_storage_box"
+            };
+
+            List<String> missing = new ArrayList<>();
+            for (String name : expectedRecipes) {
+                ResourceLocation id = ResourceLocation.fromNamespaceAndPath("s3", name);
+                Optional<RecipeHolder<?>> recipe = recipeManager.byKey(id);
+                if (recipe.isEmpty()) {
+                    missing.add(name);
+                }
+            }
+
+            if (!missing.isEmpty()) {
+                helper.fail("Missing " + missing.size() + " recipes: " + String.join(", ", missing));
+                return;
+            }
+
+            LOGGER.info("All {} S3 recipes verified in RecipeManager", expectedRecipes.length);
             helper.succeed();
         });
     }

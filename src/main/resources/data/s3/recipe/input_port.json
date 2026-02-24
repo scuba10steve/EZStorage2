@@ -1,19 +1,23 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    " I ",
-    "IGI",
+    " H ",
+    "IBI",
     " I "
   ],
   "key": {
+    "H": {
+      "item": "minecraft:hopper"
+    },
     "I": {
       "item": "minecraft:iron_ingot"
     },
-    "G": {
-      "item": "minecraft:gold_ingot"
+    "B": {
+      "item": "s3:storage_box"
     }
   },
   "result": {
-    "item": "s3:key"
+    "id": "s3:input_port",
+    "count": 1
   }
 }
