@@ -1,7 +1,9 @@
 package io.github.scuba10steve.s3.gametest;
 
 import io.github.scuba10steve.s3.blockentity.StorageCoreBlockEntity;
+import io.github.scuba10steve.s3.init.ModBlocks;
 import io.github.scuba10steve.s3.storage.StorageInventory;
+import io.github.scuba10steve.s3.storage.StoredItemStack;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.gametest.framework.GameTest;
@@ -242,6 +244,124 @@ public class StorageGameTests {
             }
 
             LOGGER.info("All {} S3 recipes verified in RecipeManager", expectedRecipes.length);
+            helper.succeed();
+        });
+    }
+
+    @GameTest(template = "core_with_storage_box", setupTicks = 5)
+    public static void insert_when_full_returns_original_stack(GameTestHelper helper) {
+        helper.runAfterDelay(5, () -> {
+            StorageCoreBlockEntity core = (StorageCoreBlockEntity) helper.getBlockEntity(CORE_POS);
+            if (core == null) {
+                helper.fail("Storage core block entity not found");
+                return;
+            }
+
+            StorageInventory inv = core.getInventory();
+
+            // Fill storage to capacity (10000 stone)
+            bulkInsert(inv, Items.STONE, inv.getMaxItems());
+
+            long countBefore = inv.getTotalItemCount();
+            if (countBefore != 10000) {
+                helper.fail("Expected storage full at 10000, got " + countBefore);
+                return;
+            }
+
+            // Attempt to insert 1 diamond into full storage
+            ItemStack remainder = inv.insertItem(new ItemStack(Items.DIAMOND, 1));
+
+            if (remainder.getCount() != 1) {
+                helper.fail("Expected remainder count 1, got " + remainder.getCount());
+                return;
+            }
+
+            if (inv.getTotalItemCount() != countBefore) {
+                helper.fail("Total item count changed from " + countBefore + " to " + inv.getTotalItemCount());
+                return;
+            }
+
+            LOGGER.info("insert_when_full_returns_original_stack: PASSED");
+            helper.succeed();
+        });
+    }
+
+    @GameTest(template = "core_with_storage_box", setupTicks = 5, timeoutTicks = 40)
+    public static void core_placement_triggers_multiblock_scan(GameTestHelper helper) {
+        helper.runAfterDelay(5, () -> {
+            StorageCoreBlockEntity core = (StorageCoreBlockEntity) helper.getBlockEntity(CORE_POS);
+            if (core == null) {
+                helper.fail("Storage core block entity not found");
+                return;
+            }
+
+            // Verify initial capacity from template
+            long initialCapacity = core.getInventory().getMaxItems();
+            if (initialCapacity != 10000) {
+                helper.fail("Expected initial capacity 10000, got " + initialCapacity);
+                return;
+            }
+
+            // Remove the core block
+            helper.destroyBlock(CORE_POS);
+
+            // Re-place the core block (triggers onPlace -> attemptMultiblock -> scanMultiblock)
+            helper.setBlock(CORE_POS, ModBlocks.STORAGE_CORE.get().defaultBlockState());
+
+            // Wait a few ticks for the multiblock scan to complete
+            helper.runAfterDelay(10, () -> {
+                StorageCoreBlockEntity newCore = (StorageCoreBlockEntity) helper.getBlockEntity(CORE_POS);
+                if (newCore == null) {
+                    helper.fail("Storage core block entity not found after re-placement");
+                    return;
+                }
+
+                long restoredCapacity = newCore.getInventory().getMaxItems();
+                if (restoredCapacity != 10000) {
+                    helper.fail("Expected capacity 10000 after re-placement, got " + restoredCapacity);
+                    return;
+                }
+
+                LOGGER.info("core_placement_triggers_multiblock_scan: PASSED");
+                helper.succeed();
+            });
+        });
+    }
+
+    @GameTest(template = "core_with_storage_box", setupTicks = 5)
+    public static void stored_items_preserve_insertion_order(GameTestHelper helper) {
+        helper.runAfterDelay(5, () -> {
+            StorageCoreBlockEntity core = (StorageCoreBlockEntity) helper.getBlockEntity(CORE_POS);
+            if (core == null) {
+                helper.fail("Storage core block entity not found");
+                return;
+            }
+
+            StorageInventory inv = core.getInventory();
+
+            // Insert items in a specific order
+            Item[] insertionOrder = { Items.DIAMOND, Items.GOLD_INGOT, Items.IRON_INGOT, Items.EMERALD };
+            for (Item item : insertionOrder) {
+                inv.insertItem(new ItemStack(item, 1));
+            }
+
+            // Retrieve stored items and verify order matches insertion order
+            List<StoredItemStack> storedItems = inv.getStoredItems();
+            if (storedItems.size() != insertionOrder.length) {
+                helper.fail("Expected " + insertionOrder.length + " stored item types, got " + storedItems.size());
+                return;
+            }
+
+            for (int i = 0; i < insertionOrder.length; i++) {
+                Item expected = insertionOrder[i];
+                Item actual = storedItems.get(i).getItemStack().getItem();
+                if (!expected.equals(actual)) {
+                    helper.fail("Order mismatch at index " + i + ": expected " + expected + ", got " + actual);
+                    return;
+                }
+            }
+
+            LOGGER.info("stored_items_preserve_insertion_order: PASSED");
             helper.succeed();
         });
     }
