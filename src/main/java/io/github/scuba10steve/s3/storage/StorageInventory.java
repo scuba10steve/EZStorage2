@@ -9,14 +9,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 public class StorageInventory {
     private static final Logger LOGGER = LoggerFactory.getLogger(StorageInventory.class);
 
-    private final Map<ItemKey, StoredItemStack> items = new HashMap<>();
+    private final Map<ItemKey, StoredItemStack> items = new LinkedHashMap<>();
     private long totalCount = 0;
     private long maxItems = 0;
     private boolean hasSearchBox = false;
