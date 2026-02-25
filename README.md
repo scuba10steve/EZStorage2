@@ -1,5 +1,10 @@
 # Steve's Simple Storage (S3)
 
+[![CI](https://github.com/scuba10steve/steves-simple-storage/actions/workflows/ci.yml/badge.svg)](https://github.com/scuba10steve/steves-simple-storage/actions/workflows/ci.yml)
+[![Game Tests](https://github.com/scuba10steve/steves-simple-storage/actions/workflows/game-tests.yml/badge.svg)](https://github.com/scuba10steve/steves-simple-storage/actions/workflows/game-tests.yml)
+[![Modrinth](https://img.shields.io/modrinth/dt/XsvAJLLz?logo=modrinth&label=Modrinth)](https://modrinth.com/mod/XsvAJLLz)
+[![CurseForge](https://img.shields.io/curseforge/dt/1469363?logo=curseforge&label=CurseForge)](https://www.curseforge.com/minecraft/mc-mods/steves-simple-storage)
+
 Steve's Simple Storage introduces a storage system that scales and evolves as players progress. Want to put 100,000 Cobblestone in 1 slot? No problem. Blocks in the mod can add a search bar, a crafting grid, additional storage, external access, security, and more. Also includes JEI integration for 1-click crafting from the system's internal inventory!
 
 ## Project Status
