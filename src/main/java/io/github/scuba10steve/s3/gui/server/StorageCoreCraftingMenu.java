@@ -13,6 +13,8 @@ import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
 
+import io.github.scuba10steve.s3.config.StorageConfig;
+
 import java.util.Optional;
 
 public class StorageCoreCraftingMenu extends StorageCoreMenu {
@@ -141,7 +143,8 @@ public class StorageCoreCraftingMenu extends StorageCoreMenu {
         ItemStack resultTemplate = originalStack.copy();
         int craftCount = 0;
 
-        while (craftCount < 64) { // Safety limit to prevent infinite loops
+        int craftLimit = StorageConfig.CRAFT_SHIFT_CLICK_LIMIT.get();
+        while (craftCount < craftLimit) {
             ItemStack result = resultSlot.getItem();
 
             if (result.isEmpty() || !ItemStack.isSameItemSameComponents(result, resultTemplate)) {
@@ -164,7 +167,7 @@ public class StorageCoreCraftingMenu extends StorageCoreMenu {
         }
 
         LOGGER.debug("craftMax completed: {} craft operations", craftCount);
-        return craftCount > 0 ? originalStack : ItemStack.EMPTY;
+        return ItemStack.EMPTY;
     }
 
     /**

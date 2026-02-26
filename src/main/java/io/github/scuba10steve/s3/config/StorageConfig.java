@@ -29,6 +29,9 @@ public class StorageConfig {
     // Integration
     public static final ModConfigSpec.BooleanValue JEI_INTEGRATION;
 
+    // Crafting
+    public static final ModConfigSpec.IntValue CRAFT_SHIFT_CLICK_LIMIT;
+
     // Automation
     public static final ModConfigSpec.IntValue EXTRACT_PORT_INTERVAL;
     public static final ModConfigSpec.IntValue MIN_SYNC_INTERVAL;
@@ -111,6 +114,14 @@ public class StorageConfig {
         JEI_INTEGRATION = BUILDER
             .comment("Enable JEI integration features")
             .define("jeiIntegration", true);
+
+        BUILDER.pop();
+
+        BUILDER.comment("Crafting Settings").push("crafting");
+
+        CRAFT_SHIFT_CLICK_LIMIT = BUILDER
+            .comment("Maximum number of items crafted per shift-click operation")
+            .defineInRange("craftShiftClickLimit", 64, 1, 1024);
 
         BUILDER.pop();
 
