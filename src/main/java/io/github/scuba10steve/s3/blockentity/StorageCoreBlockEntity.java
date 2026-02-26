@@ -44,14 +44,23 @@ public class StorageCoreBlockEntity extends BaseBlockEntity implements MenuProvi
     private boolean hasSortBox = false;
     private boolean hasSecurityBox = false;
     private SortMode sortMode = SortMode.COUNT;
+    private boolean needsScan = true;
 
     // Sync throttling to prevent rapid consecutive syncs causing visual flicker
     private long lastSyncTime = 0;
-    
+
     public StorageCoreBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.STORAGE_CORE.get(), pos, state);
         LOGGER.debug("StorageCoreBlockEntity created at {}", pos);
         LOGGER.debug("Initial inventory capacity: {}", inventory.getTotalItemCount());
+    }
+
+    public void tick() {
+        if (level == null || level.isClientSide) return;
+        if (needsScan) {
+            scanMultiblock();
+            needsScan = false;
+        }
     }
 
     public void scanMultiblock() {

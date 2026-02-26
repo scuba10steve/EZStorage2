@@ -33,7 +33,9 @@ public class BlockStorageCore extends StorageMultiblock implements EntityBlock {
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
         return type == ModBlockEntities.STORAGE_CORE.get() ? (level1, pos, state1, blockEntity) -> {
-            // Ticker logic will be implemented later
+            if (blockEntity instanceof StorageCoreBlockEntity storageCore) {
+                storageCore.tick();
+            }
         } : null;
     }
 
