@@ -2,8 +2,6 @@ package io.github.scuba10steve.s3.jei;
 
 import io.github.scuba10steve.s3.gui.client.StorageCoreCraftingScreen;
 import io.github.scuba10steve.s3.gui.client.StorageCoreScreen;
-import io.github.scuba10steve.s3.gui.server.StorageCoreCraftingMenu;
-import io.github.scuba10steve.s3.init.ModMenuTypes;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.RecipeTypes;
@@ -36,13 +34,9 @@ public class StorageJEIPlugin implements IModPlugin {
 
     @Override
     public void registerRecipeTransferHandlers(IRecipeTransferRegistration registration) {
-        // Basic recipe transfer for crafting menu
         registration.addRecipeTransferHandler(
-            StorageCoreCraftingMenu.class,
-            ModMenuTypes.STORAGE_CORE_CRAFTING.get(),
-            RecipeTypes.CRAFTING,
-            1, 9,  // crafting slots: start=1, count=9
-            10, 36 // inventory slots: start=10, count=36
+            new StorageRecipeTransferHandler(registration.getTransferHelper()),
+            RecipeTypes.CRAFTING
         );
     }
 

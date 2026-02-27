@@ -43,6 +43,12 @@ public class ModNetwork {
             SecurityPlayerPacket::handle
         );
 
+        registrar.playToServer(
+            RecipeTransferPacket.TYPE,
+            RecipeTransferPacket.STREAM_CODEC,
+            RecipeTransferPacket::handle
+        );
+
         registrar.playToClient(
             SecuritySyncPacket.TYPE,
             SecuritySyncPacket.STREAM_CODEC,

@@ -15,6 +15,7 @@ import net.minecraft.world.item.crafting.RecipeType;
 
 import io.github.scuba10steve.s3.config.StorageConfig;
 
+import java.util.List;
 import java.util.Optional;
 
 public class StorageCoreCraftingMenu extends StorageCoreMenu {
@@ -69,6 +70,58 @@ public class StorageCoreCraftingMenu extends StorageCoreMenu {
 
             craftResult.setItem(0, itemstack);
             serverPlayer.connection.send(new ClientboundContainerSetSlotPacket(containerId, getStateId(), 0, itemstack));
+        }
+    }
+
+    @Override
+    public void clicked(int slotId, int button, ClickType clickType, Player player) {
+        if (slotId == 0 && clickType == ClickType.QUICK_MOVE && button == 1) {
+            craftOneToCursor(player);
+            return;
+        }
+        super.clicked(slotId, button, clickType, player);
+    }
+
+    private void craftOneToCursor(Player player) {
+        Slot resultSlot = slots.get(0);
+        if (!resultSlot.hasItem()) return;
+
+        ItemStack resultTemplate = resultSlot.getItem().copy();
+        ItemStack carried = getCarried();
+
+        if (!carried.isEmpty() && !ItemStack.isSameItemSameComponents(carried, resultTemplate)) {
+            return;
+        }
+
+        // Save recipe pattern for repopulation
+        ItemStack[] recipePattern = new ItemStack[9];
+        for (int i = 0; i < 9; i++) {
+            recipePattern[i] = craftMatrix.getItem(i).copy();
+        }
+
+        int cursorLimit = Math.min(resultTemplate.getMaxStackSize(), StorageConfig.CRAFT_SHIFT_CLICK_LIMIT.get());
+        int cursorCount = carried.isEmpty() ? 0 : carried.getCount();
+
+        while (cursorCount + resultTemplate.getCount() <= cursorLimit) {
+            ItemStack result = resultSlot.getItem();
+            if (result.isEmpty() || !ItemStack.isSameItemSameComponents(result, resultTemplate)) {
+                break;
+            }
+
+            ItemStack crafted = result.copy();
+            resultSlot.onTake(player, result);
+
+            if (carried.isEmpty()) {
+                carried = crafted;
+                setCarried(carried);
+            } else {
+                carried.grow(crafted.getCount());
+            }
+            cursorCount = carried.getCount();
+
+            moveRemaindersToStorage(player, recipePattern);
+            tryToPopulateCraftingGrid(recipePattern);
+            updateCraftingResult();
         }
     }
 
@@ -141,10 +194,11 @@ public class StorageCoreCraftingMenu extends StorageCoreMenu {
         }
 
         ItemStack resultTemplate = originalStack.copy();
-        int craftCount = 0;
+        int totalResultItems = 0;
+        int resultSize = resultTemplate.getCount();
 
         int craftLimit = StorageConfig.CRAFT_SHIFT_CLICK_LIMIT.get();
-        while (craftCount < craftLimit) {
+        while (totalResultItems < craftLimit) {
             ItemStack result = resultSlot.getItem();
 
             if (result.isEmpty() || !ItemStack.isSameItemSameComponents(result, resultTemplate)) {
@@ -159,14 +213,14 @@ public class StorageCoreCraftingMenu extends StorageCoreMenu {
             }
 
             resultSlot.onTake(player, result);
-            craftCount++;
+            totalResultItems += resultSize;
 
             moveRemaindersToStorage(player, recipePattern);
             tryToPopulateCraftingGrid(recipePattern);
             updateCraftingResult();
         }
 
-        LOGGER.debug("craftMax completed: {} craft operations", craftCount);
+        LOGGER.debug("craftMax completed: produced {} items", totalResultItems);
         return ItemStack.EMPTY;
     }
 
@@ -232,6 +286,43 @@ public class StorageCoreCraftingMenu extends StorageCoreMenu {
     public void removed(Player pPlayer) {
         super.removed(pPlayer);
         clearGrid(pPlayer);
+    }
+
+    public void handleRecipeTransfer(List<ItemStack> recipe) {
+        // Clear grid, returning items to storage
+        clearGrid(player);
+
+        StorageInventory inventory = getInventory();
+        Inventory playerInv = player.getInventory();
+
+        for (int i = 0; i < 9 && i < recipe.size(); i++) {
+            ItemStack template = recipe.get(i);
+            if (template.isEmpty()) continue;
+
+            // Try player inventory first
+            ItemStack extracted = extractOneFromPlayer(playerInv, template);
+
+            // Fall back to storage
+            if (extracted.isEmpty() && inventory != null) {
+                extracted = inventory.extractItem(template, 1);
+            }
+
+            if (!extracted.isEmpty()) {
+                craftMatrix.setItem(i, extracted);
+            }
+        }
+
+        updateCraftingResult();
+    }
+
+    private ItemStack extractOneFromPlayer(Inventory playerInv, ItemStack template) {
+        for (int i = 0; i < playerInv.getContainerSize(); i++) {
+            ItemStack stack = playerInv.getItem(i);
+            if (ItemStack.isSameItemSameComponents(stack, template)) {
+                return stack.split(1);
+            }
+        }
+        return ItemStack.EMPTY;
     }
 
     private void clearGrid(Player playerIn) {
