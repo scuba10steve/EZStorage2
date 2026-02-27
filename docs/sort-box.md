@@ -46,7 +46,7 @@ The Storage Core scans for adjacent Sort Box blocks during multiblock validation
 
 #### Sorting Logic
 
-- Sorting is applied in `EZInventory.getSortedItems()`
+- Sorting is applied in `StorageInventory.getSortedItems()`
 - Items are sorted using the comparator from the current `SortMode`
 - Sorting is applied when:
   - Displaying items in the GUI
@@ -86,7 +86,7 @@ Unit tests are provided in `SortModeTest.java`:
 
 Run tests with:
 ```bash
-./gradlew test --tests "io.github.scuba10steve.s3.util.SortModeTest"
+./gradlew :common:test --tests "io.github.scuba10steve.s3.util.SortModeTest"
 ```
 
 ## Usage

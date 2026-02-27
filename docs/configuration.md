@@ -40,9 +40,8 @@ Toggles for optional mod features:
 ```
 
 **Notes:**
-- Feature toggles are planned for future implementation
-- Currently only capacity values are actively used
-- Security, Terminal, and other features not yet ported
+- All feature toggles are actively used
+- Security Box, Access Terminal, Dolly, and Search Modes are all implemented
 
 ### Recipes Section
 
@@ -55,8 +54,8 @@ Controls recipe difficulty:
 ```
 
 **Notes:**
-- Recipe options planned for future implementation
-- Will affect crafting recipes when implemented
+- Recipe options control which recipe set is used for crafting
+- Changes require a game restart to take effect
 
 ### Integration Section
 
@@ -75,31 +74,32 @@ Controls mod integration features:
 
 ### Config Loading
 
-The configuration is loaded during mod initialization:
+The configuration is loaded during mod initialization in the NeoForge module:
 
 ```java
-modContainer.registerConfig(ModConfig.Type.COMMON, EZConfig.SPEC);
+// neoforge/.../StevesSimpleStorage.java
+modContainer.registerConfig(ModConfig.Type.COMMON, StorageConfig.SPEC);
 ```
 
 ### Accessing Config Values
 
-Config values are accessed through static fields:
+The `common` module accesses config values through the `S3Config` platform abstraction interface:
 
 ```java
-int capacity = EZConfig.BASIC_CAPACITY.get();
-boolean enabled = EZConfig.ENABLE_SECURITY.get();
+// common/.../platform/S3Config.java — interface
+int capacity = S3Platform.getConfig().getBasicCapacity();
+boolean enabled = S3Platform.getConfig().isSecurityEnabled();
 ```
+
+The NeoForge module provides the implementation (`NeoForgeConfig`) that delegates to `StorageConfig`'s `ModConfigSpec` values.
 
 ### Runtime Application
 
-Storage capacities are applied dynamically when blocks are scanned:
+Storage capacities are applied dynamically when blocks are scanned. Each `BlockStorage` instance holds a tier key string and looks up its capacity via the platform config:
 
 ```java
 public int getCapacity() {
-    if (this == EZBlocks.STORAGE_BOX.get()) {
-        return EZConfig.BASIC_CAPACITY.get();
-    }
-    // ... other tiers
+    return S3Platform.getConfig().getCapacityForTier(this.tierKey);
 }
 ```
 

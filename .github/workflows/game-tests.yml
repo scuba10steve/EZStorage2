@@ -26,7 +26,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Generate data (structures for game tests)
-        run: ./gradlew runData
+        run: ./gradlew :neoforge:runData
 
       - name: Run game tests
-        run: ./gradlew runGameTestServer
+        run: ./gradlew :neoforge:runGameTestServer

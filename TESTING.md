@@ -1,48 +1,46 @@
-# EZStorage 2 - Test Suite
+# Steve's Simple Storage - Test Suite
 
 ## Test Coverage
 
-This project includes minimal unit tests that actually test our source code.
+Unit tests live in the `common` module and test pure Java classes without Minecraft runtime dependencies.
 
 ### Test Classes
 
-1. **RefStringsTest** - Tests mod constants from our actual RefStrings class
+1. **RefStringsTest** - Tests mod constants
    - `testModId()` - Validates RefStrings.MODID value
-   - `testModName()` - Validates RefStrings.NAME value  
+   - `testModName()` - Validates RefStrings.NAME value
    - `testModVersion()` - Validates RefStrings.VERSION value
+
+2. **SortModeTest** - Tests sort mode enum behavior
+   - Validates display names, rotation, and comparator logic
+
+3. **ExtractListModeTest** - Tests extract list mode enum behavior
+   - Validates display names, descriptions, and rotation
+
+4. **SecurityBoxTest** - Tests security box data structures
 
 ### Running Tests
 
 ```bash
-# Run all tests
-./gradlew test
+# Run common module unit tests
+./gradlew :common:test
 
 # Run tests with clean build
-./gradlew clean test
+./gradlew :common:clean :common:test
 
 # View test report
-open build/reports/tests/test/index.html
+open common/build/reports/tests/test/index.html
 ```
 
 ### Test Results
 
-- **Total Tests**: 3
-- **Passing**: 3
-- **Failing**: 0
-- **Coverage**: Actual source code constants
+- **Total Tests**: 4 test classes
+- **Passing**: All
+- **Location**: `common/src/test/java/`
 
 ### Notes
 
-- Tests only include those that test actual source code
-- RefStrings is the only class we can test without Minecraft dependencies
-- Registration classes cannot be tested due to ModDevGradle limitations
-- Integration tests would require a full mod environment setup
-
-### Why So Few Tests?
-
-The ModDevGradle plugin makes Minecraft classes unavailable during test compilation, preventing us from testing:
-- Registration classes (depend on DeferredRegister)
-- Block/Item classes (depend on Minecraft base classes)
-- Block entities (depend on Minecraft BlockEntity)
-
-Only pure Java classes without Minecraft dependencies can be unit tested.
+- Tests live in the `common` module alongside the platform-agnostic code they test
+- Only pure Java classes without Minecraft runtime dependencies can be unit tested
+- Registration classes (in `neoforge` module) depend on NeoForge APIs and cannot be unit tested
+- NeoForge game tests (in `neoforge/.../gametest/`) provide integration-level testing

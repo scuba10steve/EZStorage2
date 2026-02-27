@@ -21,7 +21,7 @@ The Steve's Simple Storage GUI system provides a modern Minecraft inventory inte
 ## Components
 
 ### StorageCoreMenu
-**Location**: `io.github.scuba10steve.s3.gui.server.StorageCoreMenu`
+**Location**: `common/.../gui/server/StorageCoreMenu`
 
 The server-side container that manages the storage GUI.
 
@@ -69,7 +69,7 @@ public ItemStack quickMoveStack(Player player, int index) {
 ```
 
 ### StorageCoreScreen
-**Location**: `io.github.scuba10steve.s3.gui.client.StorageCoreScreen`
+**Location**: `common/.../gui/client/StorageCoreScreen`
 
 The client-side screen that renders the storage GUI.
 
@@ -96,12 +96,12 @@ protected void renderBg(GuiGraphics guiGraphics, float partialTick, int mouseX, 
 ```
 
 ### StorageSlot
-**Location**: `io.github.scuba10steve.s3.gui.slot.StorageSlot`
+**Location**: `common/.../gui/slot/StorageSlot`
 
 Custom slot implementation for storage interaction.
 
 **Key Features**:
-- **Item Insertion**: Intercepts item placement to store in EZInventory
+- **Item Insertion**: Intercepts item placement to store in StorageInventory
 - **Drag & Drop**: Supports standard Minecraft drag operations
 - **Remainder Handling**: Returns items that couldn't be stored
 - **Logging**: Comprehensive operation tracking
@@ -219,22 +219,24 @@ The GUI texture uses standard Minecraft GUI conventions:
 ## Menu Registration
 
 ### Menu Type Registration
-**Location**: `io.github.scuba10steve.s3.init.EZMenuTypes`
+**Location**: `neoforge/.../init/ModMenuTypes`
 
 ```java
-public static final Supplier<MenuType<StorageCoreMenu>> STORAGE_CORE = 
-    MENU_TYPES.register("storage_core", () -> 
-        IMenuTypeExtension.create((windowId, inv, data) -> 
+public static final Supplier<MenuType<StorageCoreMenu>> STORAGE_CORE =
+    MENU_TYPES.register("storage_core", () ->
+        IMenuTypeExtension.create((windowId, inv, data) ->
             new StorageCoreMenu(windowId, inv, data.readBlockPos())));
 ```
 
+Menu types are registered in the `neoforge` module and made available to `common` code via `S3Platform` static holders (see [Build System - Platform Abstraction](build-system.md#platform-abstraction)).
+
 ### Screen Registration
-**Location**: `io.github.scuba10steve.s3.events.ClientEvents`
+**Location**: `neoforge/.../client/ClientEvents`
 
 ```java
 @SubscribeEvent
 public static void registerScreens(RegisterMenuScreensEvent event) {
-    event.register(EZMenuTypes.STORAGE_CORE.get(), StorageCoreScreen::new);
+    event.register(ModMenuTypes.STORAGE_CORE.get(), StorageCoreScreen::new);
 }
 ```
 
@@ -283,16 +285,21 @@ LOGGER.debug("StorageSlot.set: {} x{}", stack.getItem(), stack.getCount());
 2. **Search System** ✅ (requires Search Box in multiblock):
    - Search bar for finding specific items
    - Real-time filter display based on search terms
-   - Multiple search modes: standard, `$` tags, `@` mod, `%` name
+   - Multiple search modes: standard, `$` tags, `@` mod, `%` tooltips
+
+3. **Sorting** ✅ (requires Sort Box in multiblock):
+   - 6 sorting modes (count up/down, name A-Z/Z-A, mod A-Z/Z-A)
+   - Persistent sort mode selection
+   - See [Sort Box](sort-box.md) for details
+
+4. **JEI Integration** ✅:
+   - Recipe transfer to crafting grid
+   - Ingredient lookup (R/U keys)
+   - Storage-aware recipe transfer handler
 
 ### Planned Features
 
-1. **Sorting Options**:
-   - Sort by item name, quantity, or type
-   - Auto-sort functionality
-   - Custom sorting preferences
-
-2. **Visual Enhancements**:
+1. **Visual Enhancements**:
    - Item quantity overlays for large stacks
    - Progress bars for storage capacity
    - Visual indicators for full/empty slots

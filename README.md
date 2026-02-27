@@ -26,16 +26,16 @@ Version 0.1.0-beta — fully ported to **Minecraft 1.21.1** / **NeoForge 21.1.21
 
 2. **Build the mod**:
    ```bash
-   ./gradlew build
+   ./gradlew :neoforge:build
    ```
-   
+
    On Windows:
    ```cmd
-   gradlew.bat build
+   gradlew.bat :neoforge:build
    ```
 
 3. **Find the built mod**:
-   The compiled mod JAR will be located at `build/libs/s3-0.1.0.jar`
+   The compiled mod JAR will be located at `neoforge/build/libs/s3-<version>.jar`
 
 ## Development
 
@@ -44,39 +44,56 @@ Version 0.1.0-beta — fully ported to **Minecraft 1.21.1** / **NeoForge 21.1.21
 1. **Import the project** into your IDE (IntelliJ IDEA or Eclipse recommended)
 2. **Run the client** for testing:
    ```bash
-   ./gradlew runClient
+   ./gradlew :neoforge:runClient
    ```
 3. **Run the server** for testing:
    ```bash
-   ./gradlew runServer
+   ./gradlew :neoforge:runServer
    ```
 
 ### Running Tests
 
 ```bash
-# Run unit tests
-./gradlew test
+# Run common module unit tests
+./gradlew :common:test
+
+# Run full build (both modules)
+./gradlew build
 
 # View test report
-open build/reports/tests/test/index.html
+open common/build/reports/tests/test/index.html
 ```
 
 ### Project Structure
 
-- `src/main/java/` - Current NeoForge implementation
-- `src/main/resources/` - Mod resources and metadata
-- `src/test/java/` - Unit tests
-- `build.gradle` - Build configuration using ModDevGradle
-- `gradle.properties` - Mod properties and versions
+This project uses a multi-module Gradle layout for cleaner architecture and future multi-loader readiness:
+
+```
+steves-simple-storage/
+├── common/                  # Platform-agnostic code (vanilla MC only)
+│   └── src/
+│       ├── main/java/       # Blocks, block entities, menus, screens, packets, storage logic
+│       ├── main/resources/  # Assets (textures, models, lang) and data (recipes, loot, tags)
+│       └── test/java/       # Unit tests
+├── neoforge/                # NeoForge-specific code
+│   └── src/
+│       ├── main/java/       # Mod entry point, registration, config, packet handlers, JEI
+│       ├── main/resources/  # neoforge.mods.toml
+│       └── generated/       # Datagen output
+├── build.gradle             # Root: shared subproject config
+├── settings.gradle          # Includes common and neoforge modules
+└── gradle.properties        # Mod version and dependency versions
+```
 
 ### Key Files
 
-- **Main mod class**: `src/main/java/io/github/scuba10steve/s3/StevesSimpleStorage.java`
-- **Registration**: `src/main/java/io/github/scuba10steve/s3/init/`
-- **Blocks**: `src/main/java/io/github/scuba10steve/s3/block/`
-- **Items**: `src/main/java/io/github/scuba10steve/s3/item/`
-- **Block Entities**: `src/main/java/io/github/scuba10steve/s3/blockentity/`
-- **Mod metadata**: `src/main/resources/META-INF/neoforge.mods.toml`
+- **Mod entry point**: `neoforge/.../StevesSimpleStorage.java`
+- **Registration**: `neoforge/.../init/` (ModBlocks, ModItems, ModBlockEntities, ModMenuTypes)
+- **Platform abstraction**: `common/.../platform/` (S3Platform, S3Config, S3NetworkHelper)
+- **Blocks**: `common/.../block/` (most blocks) and `neoforge/.../block/` (port blocks)
+- **Block Entities**: `common/.../blockentity/` (most) and `neoforge/.../blockentity/` (port BEs)
+- **Storage logic**: `common/.../storage/` (StorageInventory, StoredItemStack)
+- **Mod metadata**: `neoforge/src/main/resources/META-INF/neoforge.mods.toml`
 
 ## Configuration
 

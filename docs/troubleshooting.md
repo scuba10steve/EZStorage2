@@ -172,7 +172,7 @@ Items appear on client but not on server
 ```
 
 **Solution**:
-1. Check packet registration in `EZNetwork`
+1. Check packet registration in `ModNetwork`
 2. Verify packet serialization/deserialization
 3. Ensure sync packets are sent after storage changes
 4. Check packet handling on both sides
@@ -205,7 +205,7 @@ Clicking recipes doesn't fill crafting grid
 
 **Issue**: Items not visible in JEI
 ```
-EZStorage items don't appear in ingredient list
+S3 items don't appear in ingredient list
 ```
 
 **Solution**:
@@ -258,7 +258,7 @@ Or use JVM argument:
 
 **Storage Operations**:
 ```
-[DEBUG] EZInventory.insertItem: minecraft:cobblestone x64, current capacity: 0/50000
+[DEBUG] StorageInventory.insertItem: minecraft:cobblestone x64, current capacity: 0/50000
 [DEBUG] Creating new storage entry for minecraft:cobblestone x64
 ```
 
@@ -284,11 +284,11 @@ Or use JVM argument:
 
 **Useful Gradle Tasks**:
 ```bash
-./gradlew build          # Full build
-./gradlew runClient      # Test client
-./gradlew runServer      # Test server
-./gradlew test           # Run unit tests
-./gradlew clean          # Clean build artifacts
+./gradlew :neoforge:build      # Build the installable mod JAR
+./gradlew :neoforge:runClient  # Test client
+./gradlew :neoforge:runServer  # Test server
+./gradlew :common:test         # Run unit tests
+./gradlew clean                # Clean build artifacts
 ```
 
 ## Getting Help
@@ -308,7 +308,7 @@ When reporting issues, include:
 ```
 Minecraft: 1.21.1
 NeoForge: 21.1.218
-Steve's Simple Storage: 0.1.0-beta
+Steve's Simple Storage: 0.3.1
 Java: 21
 Gradle: 8.10.2
 ```

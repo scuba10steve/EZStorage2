@@ -1,0 +1,73 @@
+plugins {
+    id 'net.neoforged.moddev' version '2.0.139'
+}
+
+base {
+    archivesName = 's3'
+}
+
+neoForge {
+    version = neoforge_version
+
+    runs {
+        client {
+            client()
+        }
+        server {
+            server()
+        }
+        gameTestServer {
+            type = "gameTestServer"
+            systemProperty 'neoforge.enabledGameTestNamespaces', 's3'
+        }
+        data {
+            data()
+            programArguments.addAll(
+                '--mod', 's3',
+                '--all',
+                '--output', file('src/generated/resources/').getAbsolutePath(),
+                '--existing', file('src/main/resources/').getAbsolutePath(),
+                '--existing', rootProject.file('common/src/main/resources/').getAbsolutePath()
+            )
+        }
+    }
+
+    mods {
+        s3 {
+            sourceSet sourceSets.main
+            sourceSet project(':common').sourceSets.main
+        }
+    }
+}
+
+// Include common module classes in the neoforge JAR so only one JAR is needed for installation
+jar {
+    from project(':common').sourceSets.main.output
+}
+
+sourceSets.main.resources.srcDir 'src/generated/resources'
+
+processResources {
+    def replaceProperties = [mod_version: mod_version]
+    inputs.properties replaceProperties
+    filesMatching('META-INF/neoforge.mods.toml') {
+        expand(replaceProperties)
+    }
+}
+
+dependencies {
+    implementation project(':common')
+
+    // JEI integration
+    compileOnly "mezz.jei:jei-1.21.1-common-api:19.27.0.336"
+    compileOnly "mezz.jei:jei-1.21.1-neoforge-api:19.27.0.336"
+    runtimeOnly "mezz.jei:jei-1.21.1-neoforge:19.27.0.336"
+
+    // Test dependencies
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.11.4'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+test {
+    useJUnitPlatform()
+}

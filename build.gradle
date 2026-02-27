@@ -1,77 +1,17 @@
-plugins {
-    id 'net.neoforged.moddev' version '2.0.139'
-}
+// Root project: shared configuration only
+subprojects {
+    apply plugin: 'java'
 
-version = mod_version
-group = 'io.github.scuba10steve.s3'
+    version = rootProject.mod_version
+    group = 'io.github.scuba10steve.s3'
 
-repositories {
-    mavenCentral()
-    maven {
-        name = 'ProgrammingLife'
-        url = 'https://maven.blamejared.com'
-    }
-}
+    java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
-base {
-    archivesName = 's3'
-}
-
-java.toolchain.languageVersion = JavaLanguageVersion.of(21)
-
-neoForge {
-    version = '21.1.218'
-    
-    runs {
-        client {
-            client()
-        }
-        server {
-            server()
-        }
-        gameTestServer {
-            type = "gameTestServer"
-            systemProperty 'neoforge.enabledGameTestNamespaces', 's3'
-        }
-        data {
-            data()
-            programArguments.addAll(
-                '--mod', 's3',
-                '--all',
-                '--output', file('src/generated/resources/').getAbsolutePath(),
-                '--existing', file('src/main/resources/').getAbsolutePath()
-            )
+    repositories {
+        mavenCentral()
+        maven {
+            name = 'ProgrammingLife'
+            url = 'https://maven.blamejared.com'
         }
     }
-    
-    mods {
-        s3 {
-            sourceSet sourceSets.main
-        }
-    }
-}
-
-sourceSets.main.resources.srcDir 'src/generated/resources'
-
-processResources {
-    def replaceProperties = [mod_version: mod_version]
-    inputs.properties replaceProperties
-    filesMatching('META-INF/neoforge.mods.toml') {
-        expand(replaceProperties)
-    }
-}
-
-dependencies {
-    // JEI integration
-    compileOnly "mezz.jei:jei-1.21.1-common-api:19.27.0.336"
-    compileOnly "mezz.jei:jei-1.21.1-neoforge-api:19.27.0.336"
-    runtimeOnly "mezz.jei:jei-1.21.1-neoforge:19.27.0.336"
-    
-    // Test dependencies
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.11.4'
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-}
-
-test {
-    useJUnitPlatform()
 }

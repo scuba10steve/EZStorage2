@@ -1,41 +1,42 @@
-#eclipse
-/bin
+# Build outputs (all modules)
+build/
+out/
 /libs
+
+# Gradle
+.gradle/
+
+# Generated resources (datagen output)
+**/src/generated/
+
+# Run directories (dev client/server)
+run/
+
+# Eclipse
 /.settings
 /.classpath
 .project
 .project.swp
 .metadata*
-
-#gradle
-/build
-/.gradle
-/src/generated/
-
-#occupational hazards
 /eclipse/
-/repo/
-/buildSrc
-/run
-/conf
+
+# IntelliJ
+.idea/
+
+# Misc
 *.launch
 *Thumbs.db
-
-# more blah
-/XCF
 *.lnk
-
-#Patch rejects
 *.rej
-/patches-/
-# FML changelog
-changelog.txt
-/patches_old/
-/patches_old_bak/
+*.class
 *.py
 *.7z
-
-*.class
-
-.idea/
+/repo/
+/buildSrc
+/conf
+/XCF
+/patches-/
+/patches_old/
+/patches_old_bak/
+changelog.txt
 logs/

@@ -62,14 +62,14 @@ jobs:
           target_commitish: ${{ github.sha }}
           name: v${{ steps.version.outputs.version }}
           body: ${{ steps.changelog.outputs.content }}
-          files: build/libs/s3-${{ steps.version.outputs.version }}.jar
+          files: neoforge/build/libs/s3-${{ steps.version.outputs.version }}.jar
 
       - name: Publish to Modrinth
         uses: Kir-Antipov/mc-publish@v3.3
         with:
           modrinth-id: ${{ vars.MODRINTH_PROJECT_ID }}
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
-          files: build/libs/s3-${{ steps.version.outputs.version }}.jar
+          files: neoforge/build/libs/s3-${{ steps.version.outputs.version }}.jar
           name: Steve's Simple Storage v${{ steps.version.outputs.version }}
           version: ${{ steps.version.outputs.version }}
           version-type: beta
@@ -85,7 +85,7 @@ jobs:
         with:
           curseforge-id: ${{ vars.CURSEFORGE_PROJECT_ID }}
           curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
-          files: build/libs/s3-${{ steps.version.outputs.version }}.jar
+          files: neoforge/build/libs/s3-${{ steps.version.outputs.version }}.jar
           name: Steve's Simple Storage v${{ steps.version.outputs.version }}
           version: ${{ steps.version.outputs.version }}
           version-type: beta
