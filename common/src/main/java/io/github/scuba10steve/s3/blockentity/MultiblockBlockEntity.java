@@ -1,6 +1,5 @@
 package io.github.scuba10steve.s3.blockentity;
 
-import io.github.scuba10steve.s3.block.BlockStorageCore;
 import io.github.scuba10steve.s3.block.StorageMultiblock;
 import io.github.scuba10steve.s3.util.BlockRef;
 import net.minecraft.core.BlockPos;

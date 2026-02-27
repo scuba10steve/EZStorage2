@@ -1,13 +1,11 @@
 package io.github.scuba10steve.s3.gui.server;
 
 import io.github.scuba10steve.s3.blockentity.StorageCoreBlockEntity;
-import io.github.scuba10steve.s3.gui.slot.StorageSlot;
 import io.github.scuba10steve.s3.platform.S3Platform;
 import io.github.scuba10steve.s3.storage.StorageInventory;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;

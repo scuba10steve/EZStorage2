@@ -2,7 +2,6 @@ package io.github.scuba10steve.s3.init;
 
 import io.github.scuba10steve.s3.item.ItemDolly;
 import io.github.scuba10steve.s3.item.ItemKey;
-import io.github.scuba10steve.s3.ref.ModTab;
 import io.github.scuba10steve.s3.ref.RefStrings;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.BlockItem;
