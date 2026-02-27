@@ -6,9 +6,9 @@ The mod has been successfully rebranded from **EZStorage 2** to **Steve's Simple
 
 ## Brand Identity
 
-**Name**: Steve's Simple Storage  
-**Abbreviation**: S3  
-**Version**: 0.1.0-beta  
+**Name**: Steve's Simple Storage
+**Abbreviation**: S3
+**Version**: 0.3.1
 **Tagline**: TBD
 
 ## Inspiration
@@ -39,29 +39,25 @@ The name is inspired by AWS S3 (Simple Storage Service), creating a fun parallel
   
 **Selected**: _[To be decided]_
 
-### Java Class Naming
-- **Current Convention**: Mix of "EZ" prefix (EZStorage, EZConfig, EZInventory, EZBlock, etc.) and "Storage" prefix
-- **Options**:
-  - Option A: Keep "EZ" prefix for backward compatibility and historical reference
-  - Option B: Rename all "EZ" prefixed classes to "S3" prefix (S3Storage, S3Config, S3Inventory, etc.)
-  - Option C: Rename all "EZ" prefixed classes to "Storage" prefix (StorageConfig, StorageInventory, etc.)
-  
-**Selected**: _[To be decided]_
+### Java Class Naming — COMPLETED ✅
 
-**Special Cases**:
-- **Main Mod Class**: `EZStorage` → `StevesSimpleStorage` (explicit full name)
-- **Mod Name References**: `ezstorage` → `steves-simple-storage` (kebab-case for consistency)
+All EZ-prefixed classes have been renamed. The naming convention uses a mix of "S3", "Storage", and "Mod" prefixes:
 
-**Classes to Consider**:
-- `EZStorage` → `StevesSimpleStorage` (main mod class) ⭐ **Priority**
-- `EZConfig` (configuration)
-- `EZInventory` (storage inventory)
-- `EZBlock` (base block class)
-- `EZBlockEntity` (base block entity)
-- `EZItem` (base item class)
-- `EZTab` (creative tab)
-- `EZNetwork` (networking)
-- `EZStorageJEIPlugin` (JEI integration)
+| Old Name | New Name | Module |
+|----------|----------|--------|
+| `EZStorage` | `StevesSimpleStorage` | neoforge |
+| `EZConfig` | `StorageConfig` | neoforge |
+| `EZInventory` | `StorageInventory` | common |
+| `EZBlock` | `BaseBlock` | common |
+| `EZBlockEntity` | (removed — not needed) | — |
+| `EZItem` | `BaseItem` | common |
+| `EZTab` | `ModTab` | neoforge |
+| `EZNetwork` | `ModNetwork` | neoforge |
+| `EZStorageJEIPlugin` | `S3JEIPlugin` | neoforge |
+| `EZBlocks` | `ModBlocks` | neoforge |
+| `EZItems` | `ModItems` | neoforge |
+| `EZMenuTypes` | `ModMenuTypes` | neoforge |
+| `EZBlockEntities` | `ModBlockEntities` | neoforge |
 
 ### Package Structure
 - **Current**: `io.github.scuba10steve.s3` ✅ (updated from `io.github.scuba10steve.ezstorage`)
@@ -71,18 +67,18 @@ The name is inspired by AWS S3 (Simple Storage Service), creating a fun parallel
 
 ### High Priority - COMPLETED ✅
 - [x] `gradle.properties` - Updated mod_name and mod_description
-- [x] `src/main/resources/META-INF/neoforge.mods.toml` - Updated displayName and description
-- [x] `src/main/resources/assets/s3/lang/en_us.json` - Updated mod name and descriptions
+- [x] `neoforge/src/main/resources/META-INF/neoforge.mods.toml` - Updated displayName and description
+- [x] `common/src/main/resources/assets/s3/lang/en_us.json` - Updated mod name and descriptions
 - [x] Package structure - Renamed from `io.github.scuba10steve.ezstorage` to `io.github.scuba10steve.s3`
 - [x] Mod ID - Changed from `ezstorage` to `s3`
 - [x] Asset directories - Renamed from `assets/ezstorage/` to `assets/s3/`
 - [x] Data directories - Renamed from `data/ezstorage/` to `data/s3/`
 
-### Medium Priority
+### Medium Priority - COMPLETED ✅
 - [x] Creative tab display name - Updated to "Steve's Simple Storage"
-- [ ] In-game tooltips and descriptions
-- [ ] JEI integration display names
-- [ ] Java class names - Rename "EZ" prefixed classes (EZStorage, EZConfig, EZInventory, etc.) to "S3" or "Storage" prefix
+- [x] In-game tooltips and descriptions
+- [x] JEI integration display names
+- [x] Java class names - All EZ-prefixed classes renamed (see table above)
 
 ### Low Priority
 - [ ] Logo/icon design (128x128 for mod icon)
@@ -128,32 +124,22 @@ The name is inspired by AWS S3 (Simple Storage Service), creating a fun parallel
 
 ## Implementation Notes
 
-### Files Requiring Updates
+### Files Updated
 
 **Configuration Files:**
 - `gradle.properties`
-- `src/main/resources/META-INF/neoforge.mods.toml`
+- `neoforge/src/main/resources/META-INF/neoforge.mods.toml`
 
 **Language Files:**
-- `src/main/resources/assets/ezstorage/lang/en_us.json`
+- `common/src/main/resources/assets/s3/lang/en_us.json`
 
 **Documentation:**
-- `README.md`
-- `CHANGELOG.md`
-- `docs/README.md`
-- `docs/port-overview.md`
-- All other docs/*.md files
+- All docs/*.md files updated
 
-**Code (Optional):**
-- Creative tab name in `EZCreativeTabs.java`
-- Display strings in various classes
-
-### Migration Strategy
-1. Update configuration and metadata files first
-2. Update language files for in-game text
-3. Update all documentation
-4. Test in-game to verify all changes
-5. Commit with clear message about rebranding
+**Code:**
+- All EZ-prefixed classes renamed
+- Creative tab in `neoforge/.../ref/ModTab.java`
+- All display strings updated
 
 ## Future Branding Opportunities
 
@@ -173,7 +159,7 @@ When implementing additional features, consider AWS-themed names:
 
 ## Notes
 
-- Keep mod ID as `ezstorage` to avoid breaking changes
-- Package names remain unchanged for stability
-- Focus on user-facing branding (names, descriptions, docs)
-- Technical internals can reference original EZStorage for continuity
+- Mod ID is `s3` (fully migrated from `ezstorage`)
+- Package is `io.github.scuba10steve.s3`
+- All EZ-prefixed classes have been renamed
+- Project uses multi-module layout: `common/` (platform-agnostic) and `neoforge/` (loader-specific)

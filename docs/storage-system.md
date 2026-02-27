@@ -6,8 +6,8 @@ The Steve's Simple Storage system provides massive item storage capacity through
 
 ## Core Components
 
-### EZInventory
-**Location**: `io.github.scuba10steve.s3.storage.EZInventory`
+### StorageInventory
+**Location**: `common/.../storage/StorageInventory`
 
 The central storage inventory that manages all stored items.
 
@@ -32,7 +32,7 @@ void setMaxItems(long maxItems)  // Set storage capacity
 - Tracks: Item types, counts, available space, merge operations
 
 ### StoredItemStack
-**Location**: `io.github.scuba10steve.s3.storage.StoredItemStack`
+**Location**: `common/.../storage/StoredItemStack`
 
 Wrapper class for storing items with large quantities.
 
@@ -48,12 +48,12 @@ private long count;  // Actual quantity stored
 - Simple count manipulation without ItemStack overhead
 
 ### StorageCoreBlockEntity
-**Location**: `io.github.scuba10steve.s3.blockentity.StorageCoreBlockEntity`
+**Location**: `common/.../blockentity/StorageCoreBlockEntity`
 
 The block entity that manages the storage system and multiblock network.
 
 **Responsibilities**:
-- Owns the EZInventory instance
+- Owns the `StorageInventory` instance
 - Scans and validates multiblock structures
 - Handles item insertion/extraction
 - Syncs storage data to clients
@@ -64,7 +64,7 @@ The block entity that manages the storage system and multiblock network.
 void scanMultiblock()  // Scan connected blocks and calculate capacity
 ItemStack insertItem(ItemStack stack)  // Insert items into storage
 ItemStack extractItem(ItemStack template, int amount)  // Extract items
-EZInventory getInventory()  // Get inventory instance
+StorageInventory getInventory()  // Get inventory instance
 ```
 
 ## Storage Capacity System
@@ -139,7 +139,7 @@ items.add(new StoredItemStack(stack.copyWithCount(1), insertAmount));
 ## GUI Integration
 
 ### StorageSlot
-**Location**: `io.github.scuba10steve.s3.gui.slot.StorageSlot`
+**Location**: `common/.../gui/slot/StorageSlot`
 
 Custom slot implementation for storage GUI interaction.
 
@@ -157,7 +157,7 @@ ItemStack remove(int amount)  // Not supported for storage slots
 ```
 
 ### StorageCoreMenu
-**Location**: `io.github.scuba10steve.s3.gui.server.StorageCoreMenu`
+**Location**: `common/.../gui/server/StorageCoreMenu`
 
 Container menu that provides 54 storage slots for item management.
 
@@ -198,14 +198,15 @@ Storage data is synchronized using the `StorageSyncPacket`:
 ```java
 private void syncToClients() {
     if (level instanceof ServerLevel serverLevel) {
-        PacketDistributor.sendToPlayersTrackingChunk(
-            serverLevel, 
-            level.getChunkAt(worldPosition).getPos(),
+        S3Platform.getNetworkHelper().sendToPlayersTrackingChunk(
+            serverLevel, worldPosition,
             new StorageSyncPacket(worldPosition, inventory.getStoredItems())
         );
     }
 }
 ```
+
+The `S3NetworkHelper` platform abstraction decouples the common module from NeoForge's `PacketDistributor`. The NeoForge implementation (`NeoForgeNetworkHelper`) delegates to the actual `PacketDistributor` API.
 
 ## Performance Considerations
 
@@ -245,19 +246,22 @@ private void syncToClients() {
 [INFO] Scanning multiblock at BlockPos{x=100, y=64, z=200}
 [DEBUG] Found storage block at BlockPos{x=101, y=64, z=200} with capacity 10000
 [INFO] Multiblock scan complete. Found 5 blocks, total capacity: 50000
-[DEBUG] EZInventory.insertItem: minecraft:cobblestone x64, current capacity: 0/50000
+[DEBUG] StorageInventory.insertItem: minecraft:cobblestone x64, current capacity: 0/50000
 [DEBUG] Creating new storage entry for minecraft:cobblestone x64
 ```
 
 ## Implemented Enhancements
 
 - **Search System** ✅: Quick item lookup via Search Box with multiple search modes
+- **Sort Box** ✅: Automatic item sorting with 6 configurable modes
+- **Crafting Box** ✅: 3x3 crafting grid connected to storage with auto-repopulation
+- **Security Box** ✅: Player access control with whitelist management
+- **Input/Extract/Eject Ports** ✅: Automation support for item insertion and extraction
 
 ## Future Enhancements
 
 ### Potential Improvements
 - **Item Filtering**: Filter what items can be stored
-- **Auto-Sorting**: Automatic item organization (Sort Box)
 - **Void Overflow**: Option to void items when full
 - **Priority System**: Preferred storage locations for specific items
 

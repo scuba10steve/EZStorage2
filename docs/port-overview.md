@@ -31,6 +31,7 @@ All major features from the original 1.12.2 version have been successfully imple
 - **Complete Asset Package** with all textures and recipes
 - **Comprehensive Logging** for debugging and monitoring
 - **New Package Structure** - Migrated to `io.github.scuba10steve.s3`
+- **Multi-Module Architecture** - Clean separation of platform-agnostic and NeoForge-specific code
 - **Bug-Free Core** - All UI sync and interaction issues resolved
 - **Latest Dependencies** - NeoForge 21.1.218, ModDevGradle 2.0.139, JEI 19.27.0.336
 
@@ -46,9 +47,10 @@ All major features from the original 1.12.2 version have been successfully imple
 ## Major Changes from 1.12.2
 
 ### Build System Migration
-- **Old**: ForgeGradle with Java 8
-- **New**: ModDevGradle 2.0.139 with Java 21
+- **Old**: ForgeGradle with Java 8, single module
+- **New**: ModDevGradle 2.0.139 with Java 21, multi-module Gradle layout
 - **Gradle**: Updated from 4.x to 8.10.2
+- **Architecture**: Split into `common` (vanilla MC only) and `neoforge` (loader-specific) modules with platform abstraction layer
 
 ### Registration System Overhaul
 - **Old**: Registry events and manual registration

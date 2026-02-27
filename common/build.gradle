@@ -1,0 +1,22 @@
+plugins {
+    id 'net.neoforged.moddev' version '2.0.139'
+}
+
+base {
+    archivesName = 's3-common'
+}
+
+neoForge {
+    // neoFormVersion gives us vanilla MC classes only — no NeoForge APIs
+    neoFormVersion = "${minecraft_version}-20240808.144430"
+}
+
+dependencies {
+    // Test dependencies
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.11.4'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+test {
+    useJUnitPlatform()
+}
