@@ -1,6 +1,7 @@
 package io.github.scuba10steve.s3.gametest;
 
 import io.github.scuba10steve.s3.blockentity.StorageCoreBlockEntity;
+import io.github.scuba10steve.s3.gui.server.StorageCoreCraftingMenu;
 import io.github.scuba10steve.s3.init.ModBlocks;
 import io.github.scuba10steve.s3.storage.StorageInventory;
 import io.github.scuba10steve.s3.storage.StoredItemStack;
@@ -9,6 +10,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -418,6 +420,63 @@ public class StorageGameTests {
 
             LOGGER.info("extract_changes_total_count_not_item_types: PASSED (types={}, count {} -> {})",
                 typesBefore, countBefore, countAfter);
+            helper.succeed();
+        });
+    }
+
+    /**
+     * Verifies that StorageCoreCraftingMenu.removed() clears the crafting grid on the server
+     * and returns items to storage. This is a regression test for #25: the fix guards clearGrid()
+     * to only run server-side, so we must confirm server-side cleanup still works correctly.
+     */
+    @GameTest(template = "core_with_storage_box", setupTicks = 5)
+    public static void crafting_menu_removed_clears_grid_server_side(GameTestHelper helper) {
+        helper.runAfterDelay(5, () -> {
+            StorageCoreBlockEntity core = (StorageCoreBlockEntity) helper.getBlockEntity(CORE_POS);
+            if (core == null) {
+                helper.fail("Storage core block entity not found");
+                return;
+            }
+
+            StorageInventory inv = core.getInventory();
+            long countBefore = inv.getTotalItemCount();
+
+            // Create a crafting menu using a mock server player (server-side, isClientSide=false)
+            BlockPos absPos = helper.absolutePos(CORE_POS);
+            ServerPlayer mockPlayer = helper.makeMockServerPlayerInLevel();
+            StorageCoreCraftingMenu menu = new StorageCoreCraftingMenu(0, mockPlayer.getInventory(), absPos);
+
+            // Place items directly in the crafting grid (slots 1-9)
+            menu.getSlot(1).set(new ItemStack(Items.DIAMOND, 1));
+            menu.getSlot(2).set(new ItemStack(Items.GOLD_INGOT, 1));
+            menu.getSlot(3).set(new ItemStack(Items.IRON_INGOT, 1));
+
+            // Verify grid has items
+            if (menu.getSlot(1).getItem().isEmpty()) {
+                helper.fail("Crafting grid slot 1 should have diamond");
+                return;
+            }
+
+            // Call removed() — on the server, this should clear the grid and return items to storage
+            menu.removed(mockPlayer);
+
+            // Verify grid is now empty
+            for (int i = 1; i <= 9; i++) {
+                if (!menu.getSlot(i).getItem().isEmpty()) {
+                    helper.fail("Crafting grid slot " + i + " should be empty after removed(), has " + menu.getSlot(i).getItem());
+                    return;
+                }
+            }
+
+            // Verify items were returned to storage
+            long countAfter = inv.getTotalItemCount();
+            long expectedCount = countBefore + 3; // 3 items placed in grid
+            if (countAfter != expectedCount) {
+                helper.fail("Expected " + expectedCount + " items in storage after grid clear, got " + countAfter);
+                return;
+            }
+
+            LOGGER.info("crafting_menu_removed_clears_grid_server_side: PASSED");
             helper.succeed();
         });
     }
