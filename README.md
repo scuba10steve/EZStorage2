@@ -9,7 +9,7 @@ Steve's Simple Storage introduces a storage system that scales and evolves as pl
 
 ## Project Status
 
-Version 0.1.0-beta — fully ported to **Minecraft 1.21.1** / **NeoForge 21.1.218**. Core storage functionality is complete and stable. See [docs/port-overview.md](docs/port-overview.md) for details and [docs/future-ideas.md](docs/future-ideas.md) for planned features.
+Version 0.5.2 — fully ported to **Minecraft 1.21.1** / **NeoForge 21.1.218**. Core storage functionality is complete and stable. See [docs/port-overview.md](docs/port-overview.md) for details.
 
 ## Requirements
 
@@ -103,7 +103,6 @@ Steve's Simple Storage uses TOML configuration files located at `config/s3-commo
 - `basicCapacity` - Storage Box capacity (default: 10,000)
 - `condensedCapacity` - Condensed Storage Box capacity (default: 40,000)
 - `compressedCapacity` - Compressed Storage Box capacity (default: 80,000)
-- `superCapacity` - Super Storage Box capacity (default: 160,000)
 - `superCapacity` - Super Storage Box capacity (default: 160,000)
 - `ultraCapacity` - Ultra Storage Box capacity (default: 640,000)
 - `hyperCapacity` - Hyper Storage Box capacity (default: 2,560,000)
