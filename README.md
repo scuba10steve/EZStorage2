@@ -54,14 +54,14 @@ Version 0.5.2 — fully ported to **Minecraft 1.21.1** / **NeoForge 21.1.218**. 
 ### Running Tests
 
 ```bash
-# Run common module unit tests
-./gradlew :common:test
+# Run core module unit tests
+./gradlew :core:test
 
 # Run full build (both modules)
 ./gradlew build
 
 # View test report
-open common/build/reports/tests/test/index.html
+open core/build/reports/tests/test/index.html
 ```
 
 ### Project Structure
@@ -70,7 +70,7 @@ This project uses a multi-module Gradle layout for cleaner architecture and futu
 
 ```
 steves-simple-storage/
-├── common/                  # Platform-agnostic code (vanilla MC only)
+├── core/                  # Platform-agnostic code (vanilla MC only)
 │   └── src/
 │       ├── main/java/       # Blocks, block entities, menus, screens, packets, storage logic
 │       ├── main/resources/  # Assets (textures, models, lang) and data (recipes, loot, tags)
@@ -89,10 +89,10 @@ steves-simple-storage/
 
 - **Mod entry point**: `neoforge/.../StevesSimpleStorage.java`
 - **Registration**: `neoforge/.../init/` (ModBlocks, ModItems, ModBlockEntities, ModMenuTypes)
-- **Platform abstraction**: `common/.../platform/` (S3Platform, S3Config, S3NetworkHelper)
-- **Blocks**: `common/.../block/` (most blocks) and `neoforge/.../block/` (port blocks)
-- **Block Entities**: `common/.../blockentity/` (most) and `neoforge/.../blockentity/` (port BEs)
-- **Storage logic**: `common/.../storage/` (StorageInventory, StoredItemStack)
+- **Platform abstraction**: `core/.../platform/` (S3Platform, S3Config, S3NetworkHelper)
+- **Blocks**: `core/.../block/` (most blocks) and `neoforge/.../block/` (port blocks)
+- **Block Entities**: `core/.../blockentity/` (most) and `neoforge/.../blockentity/` (port BEs)
+- **Storage logic**: `core/.../storage/` (StorageInventory, StoredItemStack)
 - **Mod metadata**: `neoforge/src/main/resources/META-INF/neoforge.mods.toml`
 
 ## Configuration

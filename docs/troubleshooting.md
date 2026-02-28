@@ -287,7 +287,7 @@ Or use JVM argument:
 ./gradlew :neoforge:build      # Build the installable mod JAR
 ./gradlew :neoforge:runClient  # Test client
 ./gradlew :neoforge:runServer  # Test server
-./gradlew :common:test         # Run unit tests
+./gradlew :core:test         # Run unit tests
 ./gradlew clean                # Clean build artifacts
 ```
 

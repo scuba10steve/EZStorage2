@@ -3,7 +3,7 @@ plugins {
 }
 
 base {
-    archivesName = 's3-common'
+    archivesName = 's3-core'
 }
 
 neoForge {

@@ -2,7 +2,7 @@
 
 ## Test Coverage
 
-Unit tests live in the `common` module and test pure Java classes without Minecraft runtime dependencies.
+Unit tests live in the `core` module and test pure Java classes without Minecraft runtime dependencies.
 
 ### Test Classes
 
@@ -23,24 +23,24 @@ Unit tests live in the `common` module and test pure Java classes without Minecr
 
 ```bash
 # Run common module unit tests
-./gradlew :common:test
+./gradlew :core:test
 
 # Run tests with clean build
-./gradlew :common:clean :common:test
+./gradlew :core:clean :core:test
 
 # View test report
-open common/build/reports/tests/test/index.html
+open core/build/reports/tests/test/index.html
 ```
 
 ### Test Results
 
 - **Total Tests**: 4 test classes
 - **Passing**: All
-- **Location**: `common/src/test/java/`
+- **Location**: `core/src/test/java/`
 
 ### Notes
 
-- Tests live in the `common` module alongside the platform-agnostic code they test
+- Tests live in the `core` module alongside the platform-agnostic code they test
 - Only pure Java classes without Minecraft runtime dependencies can be unit tested
 - Registration classes (in `neoforge` module) depend on NeoForge APIs and cannot be unit tested
 - NeoForge game tests (in `neoforge/.../gametest/`) provide integration-level testing

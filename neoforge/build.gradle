@@ -27,7 +27,7 @@ neoForge {
                 '--all',
                 '--output', file('src/generated/resources/').getAbsolutePath(),
                 '--existing', file('src/main/resources/').getAbsolutePath(),
-                '--existing', rootProject.file('common/src/main/resources/').getAbsolutePath()
+                '--existing', rootProject.file('core/src/main/resources/').getAbsolutePath()
             )
         }
     }
@@ -35,14 +35,14 @@ neoForge {
     mods {
         s3 {
             sourceSet sourceSets.main
-            sourceSet project(':common').sourceSets.main
+            sourceSet project(':core').sourceSets.main
         }
     }
 }
 
-// Include common module classes in the neoforge JAR so only one JAR is needed for installation
+// Include core module classes in the neoforge JAR so only one JAR is needed for installation
 jar {
-    from project(':common').sourceSets.main.output
+    from project(':core').sourceSets.main.output
 }
 
 sourceSets.main.resources.srcDir 'src/generated/resources'
@@ -56,7 +56,7 @@ processResources {
 }
 
 dependencies {
-    implementation project(':common')
+    implementation project(':core')
 
     // JEI integration
     compileOnly "mezz.jei:jei-1.21.1-common-api:19.27.0.336"

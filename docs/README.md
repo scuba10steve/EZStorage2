@@ -11,6 +11,7 @@ This directory contains comprehensive technical documentation for Steve's Simple
 - **[Build System](build-system.md)** - Multi-module Gradle configuration and build process
 - **[Dependencies](dependencies.md)** - Dependency versions and update tracking
 - **[Troubleshooting](troubleshooting.md)** - Common issues and solutions
+- **[v1.0.0 Release Plan](v1.0.0-release.md)** - Tracking items for the first stable release
 - **[Changelog](../CHANGELOG.md)** - Version history and changes
 
 ## Quick Reference
@@ -24,10 +25,10 @@ This directory contains comprehensive technical documentation for Steve's Simple
 
 ### Architecture
 The project uses a **multi-module Gradle layout**:
-- **`common`** - Platform-agnostic code (vanilla MC classes only via `neoFormVersion`)
+- **`core`** - Platform-agnostic code (vanilla MC classes only via `neoFormVersion`)
 - **`neoforge`** - NeoForge-specific code (registration, config, packet handlers, JEI)
 
-A platform abstraction layer (`S3Platform`, `S3Config`, `S3NetworkHelper`) decouples common code from loader-specific APIs.
+A platform abstraction layer (`S3Platform`, `S3Config`, `S3NetworkHelper`) decouples core code from loader-specific APIs.
 
 ### Project Status
 ✅ **Version 0.3.1** - All features ported and functional

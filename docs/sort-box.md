@@ -86,7 +86,7 @@ Unit tests are provided in `SortModeTest.java`:
 
 Run tests with:
 ```bash
-./gradlew :common:test --tests "io.github.scuba10steve.s3.util.SortModeTest"
+./gradlew :core:test --tests "io.github.scuba10steve.s3.util.SortModeTest"
 ```
 
 ## Usage

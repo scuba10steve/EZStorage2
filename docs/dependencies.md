@@ -35,7 +35,7 @@ Last updated: 2026-01-14
 1. **Backup current working state** - Commit all changes
 2. **Review changelogs** - Check for breaking changes
 3. **Test in development** - Run `./gradlew :neoforge:runClient` after update
-4. **Run tests** - Execute `./gradlew :common:test` to verify compatibility
+4. **Run tests** - Execute `./gradlew :core:test` to verify compatibility
 
 ### Recent Updates
 

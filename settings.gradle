@@ -13,5 +13,5 @@ plugins {
 }
 
 rootProject.name = 'steves-simple-storage'
-include 'common'
+include 'core'
 include 'neoforge'
