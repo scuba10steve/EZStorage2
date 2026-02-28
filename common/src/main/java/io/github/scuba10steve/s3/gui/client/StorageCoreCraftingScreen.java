@@ -1,7 +1,10 @@
 package io.github.scuba10steve.s3.gui.client;
 
 import io.github.scuba10steve.s3.gui.server.StorageCoreCraftingMenu;
+import io.github.scuba10steve.s3.network.ClearCraftingGridPacket;
+import io.github.scuba10steve.s3.platform.S3Platform;
 import io.github.scuba10steve.s3.ref.RefStrings;
+import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
@@ -24,5 +27,18 @@ public class StorageCoreCraftingScreen extends AbstractStorageScreen<StorageCore
         this.storageAreaHeight = 72; // 4 rows * 18px
 
         LOGGER.debug("StorageCoreCraftingScreen created");
+    }
+
+    @Override
+    protected void init() {
+        super.init();
+
+        Button clearButton = Button.builder(
+                Component.translatable("gui.s3.clear"),
+                btn -> S3Platform.getNetworkHelper().sendToServer(new ClearCraftingGridPacket(menu.getPos()))
+            )
+            .bounds(this.leftPos + 108, this.topPos + 137, 30, 12)
+            .build();
+        this.addRenderableWidget(clearButton);
     }
 }

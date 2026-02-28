@@ -44,6 +44,12 @@ public class ModNetwork {
         );
 
         registrar.playToServer(
+            ClearCraftingGridPacket.TYPE,
+            ClearCraftingGridPacket.STREAM_CODEC,
+            PacketHandlers::handleClearCraftingGrid
+        );
+
+        registrar.playToServer(
             RecipeTransferPacket.TYPE,
             RecipeTransferPacket.STREAM_CODEC,
             PacketHandlers::handleRecipeTransfer

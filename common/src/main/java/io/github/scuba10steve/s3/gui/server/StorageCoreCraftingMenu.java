@@ -344,6 +344,11 @@ public class StorageCoreCraftingMenu extends StorageCoreMenu {
         return ItemStack.EMPTY;
     }
 
+    public void handleClearGrid(Player player) {
+        clearGrid(player);
+        updateCraftingResult();
+    }
+
     private void clearGrid(Player playerIn) {
         for (int i = 0; i < 9; i++) {
             ItemStack stack = this.craftMatrix.getItem(i);

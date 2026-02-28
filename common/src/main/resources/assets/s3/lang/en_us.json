@@ -27,5 +27,6 @@
   "item.s3.dolly": "Dolly",
   "item.s3.dolly_super": "Super Dolly",
 
-  "gui.s3.search": "Search..."
+  "gui.s3.search": "Search...",
+  "gui.s3.clear": "Clear"
 }

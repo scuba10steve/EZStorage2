@@ -136,6 +136,32 @@ public final class PacketHandlers {
         });
     }
 
+    public static void handleClearCraftingGrid(ClearCraftingGridPacket packet, IPayloadContext context) {
+        context.enqueueWork(() -> {
+            Player player = context.player();
+            if (!(player.containerMenu instanceof StorageCoreCraftingMenu menu)) {
+                return;
+            }
+
+            menu.handleClearGrid(player);
+
+            if (player.level() instanceof ServerLevel serverLevel) {
+                if (serverLevel.getBlockEntity(menu.getPos()) instanceof StorageCoreBlockEntity core) {
+                    StorageInventory inventory = core.getInventory();
+                    if (inventory != null) {
+                        core.setChanged();
+                        S3Platform.getNetworkHelper().sendToPlayersTrackingChunk(
+                            serverLevel, menu.getPos(),
+                            new StorageSyncPacket(menu.getPos(), inventory.getStoredItems(),
+                                inventory.getMaxItems(), core.hasSearchBox(), core.hasSortBox(),
+                                core.getSortMode().ordinal())
+                        );
+                    }
+                }
+            }
+        });
+    }
+
     public static void handleRecipeTransfer(RecipeTransferPacket packet, IPayloadContext context) {
         context.enqueueWork(() -> {
             Player player = context.player();
