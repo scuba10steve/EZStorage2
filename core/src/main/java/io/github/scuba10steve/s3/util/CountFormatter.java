@@ -14,6 +14,10 @@ public final class CountFormatter {
         return (count / 1_000_000_000) + "B";
     }
 
+    public static String formatExactCount(long count) {
+        return String.format("%,d", count);
+    }
+
     private static String formatWithSuffix(long count, long divisor, String suffix) {
         long whole = count / divisor;
         long fraction = (count % divisor) * 10 / divisor;
