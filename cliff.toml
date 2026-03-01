@@ -36,6 +36,10 @@ tag_pattern = "v[0-9].*"
 sort_commits = "newest"
 
 commit_parsers = [
+    { message = "^Update CHANGELOG", skip = true },
+    { message = "^Bump version", skip = true },
+    { message = "^WIP", skip = true },
+    { message = "^Merge", skip = true },
     { message = "^[Aa]dd ", group = "Added" },
     { message = "^[Ii]mplement ", group = "Added" },
     { message = "^[Cc]omplete ", group = "Added" },
@@ -64,7 +68,5 @@ commit_parsers = [
     { message = "^[Dd]elete ", group = "Removed" },
     { message = "^[Dd]rop ", group = "Removed" },
     { message = "^[Oo]ptimize", group = "Performance" },
-    { message = "^WIP", skip = true },
-    { message = "^Merge", skip = true },
     { message = ".*", group = "Other" },
 ]

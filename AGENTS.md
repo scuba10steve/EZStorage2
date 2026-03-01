@@ -27,6 +27,12 @@ The primary purpose of an AI agent in this repository is to assist human develop
 *   **Shell Commands:** Use `run_shell_command` for executing shell commands. Always explain the purpose and potential impact of commands that modify the file system or system state before execution. Prefer non-interactive commands.
 *   **Efficient Output:** When using `run_shell_command`, prefer flags that reduce output verbosity. Redirect large outputs to temporary files if necessary.
 
+## Version & Release Management
+
+*   **Version Bumps:** Never manually edit `mod_version` in `gradle.properties`. Use the `bump-version` GitHub Actions workflow (`gh workflow run bump-version.yml --ref main -f part=<patch|minor|major>`).
+*   **Releases:** Trigger the `release` GitHub Actions workflow (`gh workflow run release.yml --ref main -f release_type=<beta|release>`). This builds, creates a GitHub Release, and publishes to Modrinth and CurseForge.
+*   **Workflow Order:** Always run `bump-version` first and wait for it to complete before triggering `release`, so the release picks up the correct version.
+
 ## Workflow Example (Software Engineering Tasks)
 
 1.  **Understand:** Analyze the request and context using search and file reading tools.
