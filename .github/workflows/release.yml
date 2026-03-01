@@ -7,6 +7,14 @@ on:
         description: 'Release version (defaults to mod_version from gradle.properties)'
         required: false
         type: string
+      release_type:
+        description: 'Release type'
+        required: true
+        type: choice
+        default: beta
+        options:
+          - beta
+          - release
 
 permissions:
   contents: write
@@ -63,6 +71,7 @@ jobs:
           name: v${{ steps.version.outputs.version }}
           body: ${{ steps.changelog.outputs.content }}
           files: neoforge/build/libs/s3-${{ steps.version.outputs.version }}.jar
+          prerelease: ${{ inputs.release_type == 'beta' }}
 
       - name: Publish to Modrinth
         uses: Kir-Antipov/mc-publish@v3.3
@@ -72,7 +81,7 @@ jobs:
           files: neoforge/build/libs/s3-${{ steps.version.outputs.version }}.jar
           name: Steve's Simple Storage v${{ steps.version.outputs.version }}
           version: ${{ steps.version.outputs.version }}
-          version-type: beta
+          version-type: ${{ inputs.release_type }}
           loaders: neoforge
           game-versions: 1.21.1
           java: 21
@@ -88,7 +97,7 @@ jobs:
           files: neoforge/build/libs/s3-${{ steps.version.outputs.version }}.jar
           name: Steve's Simple Storage v${{ steps.version.outputs.version }}
           version: ${{ steps.version.outputs.version }}
-          version-type: beta
+          version-type: ${{ inputs.release_type }}
           loaders: neoforge
           game-versions: 1.21.1
           java: 21
