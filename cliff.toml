@@ -13,12 +13,18 @@ body = """
 ## [Unreleased]
 {% endif -%}
 
+{% if version and version == "v0.1.0" -%}
+
+Initial release of Steve's Simple Storage (S3), ported from EZStorage 2.
+{% else -%}
+
 {% for group, commits in commits | group_by(attribute="group") %}
 ### {{ group | upper_first }}
 {% for commit in commits %}
 - {{ commit.message | split(pat="\n") | first | trim }}\
 {% endfor %}
 {% endfor %}
+{% endif -%}
 """
 postprocessors = [
     { pattern = "#([0-9]+)", replace = "[#${1}](https://github.com/scuba10steve/steves-simple-storage/issues/${1})" },
