@@ -8,6 +8,7 @@ import io.github.scuba10steve.s3.storage.StorageInventory;
 import io.github.scuba10steve.s3.storage.StoredItemStack;
 import io.github.scuba10steve.s3.util.CountFormatter;
 import io.github.scuba10steve.s3.util.SortMode;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
@@ -29,7 +30,6 @@ import java.util.Locale;
  * Provides common functionality for rendering storage items, scrollbar, and handling storage interactions.
  */
 public abstract class AbstractStorageScreen<T extends StorageCoreMenu> extends AbstractContainerScreen<T> {
-
     // Vanilla scrollbar sprites (1.21+ sprite-based rendering)
     protected static final ResourceLocation SCROLLER_SPRITE =
         ResourceLocation.withDefaultNamespace("container/creative_inventory/scroller");
@@ -55,6 +55,7 @@ public abstract class AbstractStorageScreen<T extends StorageCoreMenu> extends A
 
     // Tooltip: set during renderLabels, consumed during renderTooltip
     private ItemStack hoveredStorageStack = ItemStack.EMPTY;
+    private long hoveredStorageCount = 0;
 
     protected AbstractStorageScreen(T menu, Inventory playerInventory, Component title, ResourceLocation texture) {
         super(menu, playerInventory, title);
@@ -268,7 +269,9 @@ public abstract class AbstractStorageScreen<T extends StorageCoreMenu> extends A
 
         // Render item count
         if (inventory != null) {
-            String amount = formatCount(inventory.getTotalItemCount()) + "/" + formatCount(inventory.getMaxItems());
+            String amount = hasShiftDown()
+                ? CountFormatter.formatExactCount(inventory.getTotalItemCount()) + "/" + CountFormatter.formatExactCount(inventory.getMaxItems())
+                : formatCount(inventory.getTotalItemCount()) + "/" + formatCount(inventory.getMaxItems());
             int stringWidth = font.width(amount);
             guiGraphics.drawString(font, amount, 187 - stringWidth, 6, 0x404040, false);
         }
@@ -281,6 +284,7 @@ public abstract class AbstractStorageScreen<T extends StorageCoreMenu> extends A
 
         // Capture hovered storage item for tooltip rendering
         hoveredStorageStack = ItemStack.EMPTY;
+        hoveredStorageCount = 0;
         Integer slotIndex = getSlotAt(mouseX, mouseY);
         if (slotIndex != null) {
             List<StoredItemStack> items = getDisplayItems();
@@ -288,6 +292,7 @@ public abstract class AbstractStorageScreen<T extends StorageCoreMenu> extends A
                 StoredItemStack stored = items.get(slotIndex);
                 if (stored != null && !stored.getItemStack().isEmpty()) {
                     hoveredStorageStack = stored.getItemStack();
+                    hoveredStorageCount = stored.getCount();
                 }
             }
         }
@@ -354,7 +359,9 @@ public abstract class AbstractStorageScreen<T extends StorageCoreMenu> extends A
                     guiGraphics.renderItem(stored.getItemStack(), x, y);
 
                     // Render count overlay
-                    String countStr = formatCount(stored.getCount());
+                    String countStr = hasShiftDown()
+                        ? CountFormatter.formatExactCount(stored.getCount())
+                        : formatCount(stored.getCount());
                     guiGraphics.pose().pushPose();
                     guiGraphics.pose().translate(0, 0, 200);
                     float scale = (float) S3Platform.getConfig().getCountFontScale();
@@ -385,7 +392,14 @@ public abstract class AbstractStorageScreen<T extends StorageCoreMenu> extends A
         if (!this.menu.getCarried().isEmpty()) return;
         if (hoveredStorageStack.isEmpty()) return;
 
-        guiGraphics.renderTooltip(this.font, this.getTooltipFromContainerItem(hoveredStorageStack),
+        List<Component> tooltip = this.getTooltipFromContainerItem(hoveredStorageStack);
+        if (hasShiftDown() && hoveredStorageCount > 0) {
+            tooltip = new ArrayList<>(tooltip);
+            tooltip.add(Component.literal("Stored: " + CountFormatter.formatExactCount(hoveredStorageCount))
+                .withStyle(ChatFormatting.GRAY));
+        }
+
+        guiGraphics.renderTooltip(this.font, tooltip,
                 hoveredStorageStack.getTooltipImage(), mouseX, mouseY);
     }
 
