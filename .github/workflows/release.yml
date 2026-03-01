@@ -95,3 +95,13 @@ jobs:
           changelog: ${{ steps.changelog.outputs.content }}
           dependencies: |
             jei@19.27.0.336(optional){curseforge:238222}
+
+      - name: Publish to Nexus Mods
+        uses: Nexus-Mods/upload-action@main
+        with:
+          api_key: ${{ secrets.NEXUSMODS_API_KEY }}
+          file_id: ${{ vars.NEXUSMODS_FILE_ID }}
+          game_domain_name: minecraft
+          filename: neoforge/build/libs/s3-${{ steps.version.outputs.version }}.jar
+          version: ${{ steps.version.outputs.version }}
+          display_name: Steve's Simple Storage v${{ steps.version.outputs.version }}
