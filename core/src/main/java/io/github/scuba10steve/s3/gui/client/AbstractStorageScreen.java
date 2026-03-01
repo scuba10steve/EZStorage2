@@ -6,6 +6,7 @@ import io.github.scuba10steve.s3.network.SortModePacket;
 import io.github.scuba10steve.s3.network.StorageClickPacket;
 import io.github.scuba10steve.s3.storage.StorageInventory;
 import io.github.scuba10steve.s3.storage.StoredItemStack;
+import io.github.scuba10steve.s3.util.CountFormatter;
 import io.github.scuba10steve.s3.util.SortMode;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
@@ -19,7 +20,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.TooltipFlag;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -268,10 +268,7 @@ public abstract class AbstractStorageScreen<T extends StorageCoreMenu> extends A
 
         // Render item count
         if (inventory != null) {
-            DecimalFormat formatter = new DecimalFormat("#,###");
-            String totalCount = formatter.format(inventory.getTotalItemCount());
-            String max = formatter.format(inventory.getMaxItems());
-            String amount = totalCount + "/" + max;
+            String amount = formatCount(inventory.getTotalItemCount()) + "/" + formatCount(inventory.getMaxItems());
             int stringWidth = font.width(amount);
             guiGraphics.drawString(font, amount, 187 - stringWidth, 6, 0x404040, false);
         }
@@ -368,10 +365,7 @@ public abstract class AbstractStorageScreen<T extends StorageCoreMenu> extends A
     }
 
     protected String formatCount(long count) {
-        if (count < 1000) return String.valueOf(count);
-        if (count < 1000000) return (count / 1000) + "K";
-        if (count < 1000000000) return (count / 1000000) + "M";
-        return (count / 1000000000) + "B";
+        return CountFormatter.formatCount(count);
     }
 
     @Override
