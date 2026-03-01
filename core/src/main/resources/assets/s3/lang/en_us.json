@@ -28,5 +28,6 @@
   "item.s3.dolly_super": "Super Dolly",
 
   "gui.s3.search": "Search...",
-  "gui.s3.clear": "Clear"
+  "gui.s3.clear": "Clear",
+  "warning.s3.break_storage": "Warning! %s stored items will be lost! Use a Dolly to preserve items."
 }

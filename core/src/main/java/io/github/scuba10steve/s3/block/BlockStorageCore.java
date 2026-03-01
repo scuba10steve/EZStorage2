@@ -2,16 +2,18 @@ package io.github.scuba10steve.s3.block;
 
 import io.github.scuba10steve.s3.blockentity.StorageCoreBlockEntity;
 import io.github.scuba10steve.s3.platform.S3Platform;
+import io.github.scuba10steve.s3.util.CountFormatter;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.Level;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.block.EntityBlock;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.BlockHitResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,5 +49,19 @@ public class BlockStorageCore extends StorageMultiblock implements EntityBlock {
             }
         }
         return InteractionResult.sidedSuccess(level.isClientSide);
+    }
+
+    @Override
+    protected void attack(BlockState state, Level level, BlockPos pos, Player player) {
+        if (!level.isClientSide && level.getBlockEntity(pos) instanceof StorageCoreBlockEntity core) {
+            long itemCount = core.getInventory().getTotalItemCount();
+            if (itemCount > 0) {
+                player.displayClientMessage(
+                    Component.translatable("warning.s3.break_storage",
+                        CountFormatter.formatExactCount(itemCount)),
+                    true);
+            }
+        }
+        super.attack(state, level, pos, player);
     }
 }
