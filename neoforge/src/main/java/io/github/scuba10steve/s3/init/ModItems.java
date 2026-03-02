@@ -49,6 +49,8 @@ public class ModItems {
         () -> new BlockItem(ModBlocks.SECURITY_BOX.get(), new Item.Properties()));
     public static final Supplier<Item> ACCESS_TERMINAL = ITEMS.register("access_terminal",
         () -> new BlockItem(ModBlocks.ACCESS_TERMINAL.get(), new Item.Properties()));
+    public static final Supplier<Item> STORAGE_INTERFACE = ITEMS.register("storage_interface",
+        () -> new BlockItem(ModBlocks.STORAGE_INTERFACE.get(), new Item.Properties()));
 
     // Items
     public static final Supplier<Item> KEY = ITEMS.register("key", ItemKey::new);

@@ -36,6 +36,7 @@ public final class S3Platform {
     private static Supplier<BlockEntityType<?>> extractPortBEType;
     private static Supplier<BlockEntityType<?>> ejectPortBEType;
     private static Supplier<BlockEntityType<?>> securityBoxBEType;
+    private static Supplier<BlockEntityType<?>> storageInterfaceBEType;
 
     public static BlockEntityType<?> getStorageCoreBEType() { return storageCoreBEType.get(); }
     public static BlockEntityType<?> getCraftingBoxBEType() { return craftingBoxBEType.get(); }
@@ -45,6 +46,7 @@ public final class S3Platform {
     public static BlockEntityType<?> getExtractPortBEType() { return extractPortBEType.get(); }
     public static BlockEntityType<?> getEjectPortBEType() { return ejectPortBEType.get(); }
     public static BlockEntityType<?> getSecurityBoxBEType() { return securityBoxBEType.get(); }
+    public static BlockEntityType<?> getStorageInterfaceBEType() { return storageInterfaceBEType.get(); }
 
     public static void setBlockEntityTypes(
             Supplier<BlockEntityType<?>> storageCore,
@@ -54,7 +56,8 @@ public final class S3Platform {
             Supplier<BlockEntityType<?>> inputPort,
             Supplier<BlockEntityType<?>> extractPort,
             Supplier<BlockEntityType<?>> ejectPort,
-            Supplier<BlockEntityType<?>> securityBox) {
+            Supplier<BlockEntityType<?>> securityBox,
+            Supplier<BlockEntityType<?>> storageInterface) {
         storageCoreBEType = storageCore;
         craftingBoxBEType = craftingBox;
         searchBoxBEType = searchBox;
@@ -63,6 +66,7 @@ public final class S3Platform {
         extractPortBEType = extractPort;
         ejectPortBEType = ejectPort;
         securityBoxBEType = securityBox;
+        storageInterfaceBEType = storageInterface;
     }
 
     // --- Menu Types ---

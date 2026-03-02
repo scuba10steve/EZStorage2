@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "s3:block/storage_interface"
+    }
+  }
+}

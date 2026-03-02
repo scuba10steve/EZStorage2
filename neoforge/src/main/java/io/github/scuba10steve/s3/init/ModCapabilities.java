@@ -2,6 +2,7 @@ package io.github.scuba10steve.s3.init;
 
 import io.github.scuba10steve.s3.blockentity.ExtractPortBlockEntity;
 import io.github.scuba10steve.s3.blockentity.InputPortBlockEntity;
+import io.github.scuba10steve.s3.blockentity.StorageInterfaceBlockEntity;
 import io.github.scuba10steve.s3.ref.RefStrings;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -27,6 +28,13 @@ public class ModCapabilities {
         event.registerBlockEntity(
             Capabilities.ItemHandler.BLOCK,
             ModBlockEntities.EXTRACT_PORT.get(),
+            (blockEntity, direction) -> blockEntity.getItemHandler()
+        );
+
+        // Register Storage Interface item handler capability
+        event.registerBlockEntity(
+            Capabilities.ItemHandler.BLOCK,
+            ModBlockEntities.STORAGE_INTERFACE.get(),
             (blockEntity, direction) -> blockEntity.getItemHandler()
         );
     }
