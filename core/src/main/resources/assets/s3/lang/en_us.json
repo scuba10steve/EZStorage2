@@ -18,6 +18,7 @@
   "block.s3.eject_port": "Eject Port",
   "block.s3.security_box": "Security Box",
   "block.s3.access_terminal": "Access Terminal",
+  "block.s3.storage_interface": "Storage Interface",
 
   "container.s3.storage_core": "Storage Core",
   "container.s3.extract_port": "Extract Port",

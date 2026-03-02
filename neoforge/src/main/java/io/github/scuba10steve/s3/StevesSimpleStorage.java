@@ -48,7 +48,8 @@ public class StevesSimpleStorage {
 			() -> ModBlockEntities.INPUT_PORT.get(),
 			() -> ModBlockEntities.EXTRACT_PORT.get(),
 			() -> ModBlockEntities.EJECT_PORT.get(),
-			() -> ModBlockEntities.SECURITY_BOX.get()
+			() -> ModBlockEntities.SECURITY_BOX.get(),
+			() -> ModBlockEntities.STORAGE_INTERFACE.get()
 		);
 
 		S3Platform.setMenuTypes(

@@ -8,6 +8,7 @@ import io.github.scuba10steve.s3.blockentity.SearchBoxBlockEntity;
 import io.github.scuba10steve.s3.blockentity.SecurityBoxBlockEntity;
 import io.github.scuba10steve.s3.blockentity.SortBoxBlockEntity;
 import io.github.scuba10steve.s3.blockentity.StorageCoreBlockEntity;
+import io.github.scuba10steve.s3.blockentity.StorageInterfaceBlockEntity;
 import io.github.scuba10steve.s3.ref.RefStrings;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -51,6 +52,10 @@ public class ModBlockEntities {
     public static final Supplier<BlockEntityType<SecurityBoxBlockEntity>> SECURITY_BOX =
         BLOCK_ENTITIES.register("security_box", () ->
             BlockEntityType.Builder.of(SecurityBoxBlockEntity::new, ModBlocks.SECURITY_BOX.get()).build(null));
+
+    public static final Supplier<BlockEntityType<StorageInterfaceBlockEntity>> STORAGE_INTERFACE =
+        BLOCK_ENTITIES.register("storage_interface", () ->
+            BlockEntityType.Builder.of(StorageInterfaceBlockEntity::new, ModBlocks.STORAGE_INTERFACE.get()).build(null));
 
     public static void register(IEventBus eventBus) {
         BLOCK_ENTITIES.register(eventBus);

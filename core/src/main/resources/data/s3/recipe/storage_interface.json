@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " I ",
+    "EPI",
+    " I "
+  ],
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "E": {
+      "item": "s3:extract_port"
+    },
+    "P": {
+      "item": "s3:input_port"
+    }
+  },
+  "result": {
+    "id": "s3:storage_interface",
+    "count": 1
+  }
+}

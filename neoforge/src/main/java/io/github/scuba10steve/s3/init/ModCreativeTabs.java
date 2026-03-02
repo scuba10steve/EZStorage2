@@ -37,6 +37,7 @@ public class ModCreativeTabs {
                 output.accept(ModItems.EJECT_PORT.get());
                 output.accept(ModItems.SECURITY_BOX.get());
                 output.accept(ModItems.ACCESS_TERMINAL.get());
+                output.accept(ModItems.STORAGE_INTERFACE.get());
 
                 // Add all items
                 output.accept(ModItems.KEY.get());

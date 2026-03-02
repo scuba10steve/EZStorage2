@@ -11,6 +11,7 @@ import io.github.scuba10steve.s3.block.BlockSecurityBox;
 import io.github.scuba10steve.s3.block.BlockSortBox;
 import io.github.scuba10steve.s3.block.BlockStorage;
 import io.github.scuba10steve.s3.block.BlockStorageCore;
+import io.github.scuba10steve.s3.block.BlockStorageInterface;
 import io.github.scuba10steve.s3.ref.RefStrings;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.Block;
@@ -47,6 +48,7 @@ public class ModBlocks {
     public static final Supplier<Block> EJECT_PORT = BLOCKS.register("eject_port", BlockEjectPort::new);
     public static final Supplier<Block> SECURITY_BOX = BLOCKS.register("security_box", BlockSecurityBox::new);
     public static final Supplier<Block> ACCESS_TERMINAL = BLOCKS.register("access_terminal", BlockAccessTerminal::new);
+    public static final Supplier<Block> STORAGE_INTERFACE = BLOCKS.register("storage_interface", BlockStorageInterface::new);
 
     public static void register(IEventBus eventBus) {
         BLOCKS.register(eventBus);
